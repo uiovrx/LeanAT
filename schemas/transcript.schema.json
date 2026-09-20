@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LeanAT full-value transcript v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "profile",
+    "phaseMapping",
+    "artifacts",
+    "toolchainLock",
+    "initialState",
+    "effectiveConfig",
+    "timebase",
+    "captureState",
+    "stopReason",
+    "pendingResponsibilities",
+    "replayCoverage",
+    "records"
+  ],
+  "properties": {
+    "schema": {
+      "const": "leanat.transcript.v1"
+    },
+    "profile": {
+      "enum": [
+        "AT-Core-1.1-draft",
+        "AT-Ext-1.1-draft"
+      ]
+    },
+    "phaseMapping": {
+      "type": "object"
+    },
+    "artifacts": {
+      "type": "object"
+    },
+    "toolchainLock": {
+      "type": "object"
+    },
+    "initialState": {},
+    "effectiveConfig": {
+      "type": "object"
+    },
+    "timebase": {
+      "type": "object"
+    },
+    "captureState": {
+      "enum": [
+        "Complete",
+        "Prefix",
+        "Interrupted"
+      ]
+    },
+    "stopReason": {
+      "type": "string"
+    },
+    "pendingResponsibilities": {
+      "type": "array"
+    },
+    "replayCoverage": {
+      "type": "object",
+      "required": [
+        "eligibility",
+        "scope",
+        "unobservedEffects",
+        "assumptions"
+      ],
+      "properties": {
+        "eligibility": {
+          "enum": [
+            "FullForScope",
+            "BoundaryOnly",
+            "Unsupported"
+          ]
+        },
+        "scope": {
+          "type": "string"
+        },
+        "unobservedEffects": {
+          "type": "array"
+        },
+        "assumptions": {
+          "type": "array"
+        }
+      }
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "recordKind",
+          "apiKind",
+          "observedOrdinal",
+          "domain",
+          "time",
+          "role",
+          "body"
+        ],
+        "properties": {
+          "recordKind": {
+            "enum": [
+              "call",
+              "return",
+              "event"
+            ]
+          },
+          "apiKind": {
+            "enum": [
+              "nbTransport",
+              "blockingTransport",
+              "debugTransport",
+              "dmiQuery",
+              "dmiInvalidate",
+              "managedAccess",
+              "sideband",
+              "reset"
+            ]
+          },
+          "observedOrdinal": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "maxLength": 20
+          },
+          "domain": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "time": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "maxLength": 20
+          },
+          "role": {
+            "enum": [
+              "environment",
+              "model"
+            ]
+          },
+          "body": {
+            "type": "object"
+          },
+          "diagnostics": {}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "u64": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$",
+      "maxLength": 20
+    },
+    "ownedBytes": {
+      "type": "object",
+      "required": [
+        "declaredLength",
+        "base64"
+      ],
+      "properties": {
+        "declaredLength": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "base64": {
+          "type": "string",
+          "contentEncoding": "base64"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

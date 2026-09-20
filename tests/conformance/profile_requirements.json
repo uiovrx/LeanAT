@@ -1,0 +1,38 @@
+{
+  "C-T01": [{"scenario": "wire", "branches": ["native-wire"]}],
+  "C-T02": [
+    {"scenario": "wire", "branches": ["native-accepted-ignored-fields"]},
+    {"scenario": "C-T02", "branches": ["real-gp-accepted-mutation", "native_accepted_phase_mutation_ignored", "native_accepted_delay_mutation_ignored", "annotated_input_milestone"]}
+  ],
+  "C-T03": [{"scenario": "wire", "branches": ["native-wire"]}],
+  "C-T04": [{"scenario": "wire", "branches": ["native-wire"]}],
+  "C-T05": [{"scenario": "wire", "branches": ["native-wire"]}],
+  "C-T06": [{"scenario": "wire", "branches": ["native-wire"]}],
+  "C-T07": [{"scenario": "wire", "branches": ["native-wire"]}],
+  "C-T08": [{"scenario": "wire", "branches": ["native-wire"]}],
+  "C-T09": [{"scenario": "C-T09", "branches": ["same_component_multiple_instances", "independent_connection_ledgers", "shared_domain_call_identity"]}],
+  "C-T10": [{"scenario": "C-T10", "branches": ["bounded-pending-owned-service-vm-retirement"]}],
+  "C-T11": [{"scenario": "C-T11", "branches": ["nb_no_mm_rejected", "blocking_no_mm_owned"]}],
+  "C-T12": [{"scenario": "C-T12", "branches": ["callee_releases_owner_in_callback", "call_pin_protects_return_snapshot", "future_owned_response"]}],
+  "C-T13": [{"scenario": "C-T13", "branches": ["external_buffer_recycled", "call_pin_protects_return_snapshot", "future_owned_response"]}],
+  "C-T14": [{"scenario": "C-T14", "branches": ["timeout_remains_local", "late_response_wire_ack", "pin_retained_until_terminal"]}],
+  "C-T15": [{"scenario": "C-T15", "branches": ["reset_request", "reset_service", "reset_response"]}],
+  "C-T16": [{"scenario": "C-T16", "branches": ["completed-before-registration-compiled-response-wait"]}],
+  "C-T17": [
+    {"scenario": "C-T17", "branches": ["compiled-ready-wait-native-limits"]},
+    {"scenario": "C-T17-systemc", "branches": ["compiled-ready-wait-systemc-yield"]}
+  ],
+  "C-T18": [{"scenario": "C-T18", "branches": ["compiled-object-write-schedule-atomic-rollback"]}],
+  "C-T19": [{"scenario": "C-T19", "branches": ["compiled-local-prefix-real-peer-violation"]}],
+  "C-T20": [{"scenario": "memory", "branches": ["masked-streaming-bytes"]}],
+  "C-T21": [{"scenario": "memory", "branches": ["ignore-overflow-zero"]}],
+  "C-T22": [{"scenario": "memory", "branches": ["debug-rc-partial-noirq"]}],
+  "C-T23": [{"scenario": "memory", "branches": ["mixed-sockets-one-backing"]}],
+  "C-T24": [{"scenario": "callback-orders", "branches": ["callback-order-forward", "callback-order-reverse"]}],
+  "C-T25": [{"scenario": "wire", "branches": ["native-wire"]}],
+  "C-T26": [{"scenario": "descriptor", "branches": ["version", "type", "tag", "index", "valid-execution-control"]}],
+  "C-T27": [{"scenario": "C-T27", "branches": ["runtime-counter-boundaries-compiled-value-overflow"]}],
+  "C-T28": [{"scenario": "C-T28", "branches": ["actual_host_endian", "actual_socket_width_rejected", "declared_big_endian_rejected"]}],
+  "C-T29": [{"scenario": "topology", "branches": ["ooo-routes"]}],
+  "C-T30": [{"scenario": "C-T30", "branches": ["native_gp_freed_before_consume", "owned_result_published", "compiled_result_get_release"]}]
+}

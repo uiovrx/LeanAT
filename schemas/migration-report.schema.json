@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "migration-report",
+  "type": "object",
+  "required": [
+    "schema",
+    "ruleVersion",
+    "targetProfile",
+    "inputHashes",
+    "changes",
+    "reportHash",
+    "checkStatus"
+  ],
+  "properties": {
+    "schema": {
+      "const": "leanat.migration.v1"
+    }
+  }
+}

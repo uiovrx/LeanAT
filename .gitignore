@@ -1,0 +1,10 @@
+/build/
+/.lake/
+/.deps/
+/.tmp/
+__pycache__/
+*.pyc
+*.olean
+*.ilean
+/generated/
+/reports/local/

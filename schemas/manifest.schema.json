@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LeanAT manifest v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "profile",
+    "topSystemId",
+    "optional_enabled",
+    "artifacts",
+    "effectiveConfig",
+    "claims"
+  ],
+  "properties": {
+    "schema": {
+      "const": "leanat.manifest.v1"
+    },
+    "profile": {
+      "enum": [
+        "AT-Core-1.1-draft",
+        "AT-Ext-1.1-draft"
+      ]
+    },
+    "topSystemId": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4294967295
+    },
+    "optional_enabled": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "raw-dmi",
+          "managed-access",
+          "extern-pure",
+          "vendor-protocol-adapter"
+        ]
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "effectiveConfig": {
+      "type": "object"
+    },
+    "claims": {
+      "type": "array"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@PACKAGE_INIT@
+
+if(@LEANAT_WITH_SYSTEMC@)
+  include(CMakeFindDependencyMacro)
+  find_dependency(SystemCLanguage CONFIG)
+  set(LeanAT_SystemC_FOUND TRUE)
+endif()
+include("${CMAKE_CURRENT_LIST_DIR}/LeanATTargets.cmake")
+set(LeanAT_Runtime_FOUND TRUE)
+set(LeanAT_Stdlib_FOUND TRUE)
+check_required_components(LeanAT)

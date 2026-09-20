@@ -1,0 +1,143 @@
+{
+  "schema": "leanat.transport-fixture.v1",
+  "effectiveConfig": {
+    "profile": "AT-Core-1.1-draft",
+    "scope": "two-connection-base-nb-v1",
+    "domain": 1,
+    "instance": 1,
+    "connections": [
+      1,
+      2
+    ],
+    "descriptorIdentity": "base-transport-replay-v1",
+    "timeResolutionUnitsPerTick": 1,
+    "eventCapacity": 256,
+    "pumpBudget": 64,
+    "maxCallbacks": 4,
+    "runtimeCapacities": {
+      "instances": 64,
+      "ledgers": 128,
+      "calls": 256,
+      "callsPerLedger": 64,
+      "intents": 128,
+      "frames": 64,
+      "waits": 128,
+      "live": 64,
+      "drains": 128,
+      "hopsPerTransaction": 8,
+      "results": 128,
+      "consumers": 256,
+      "pins": 128,
+      "maxEvents": 100000,
+      "maxEventsPerTick": 10000,
+      "ingressBytes": 65536,
+      "nesting": 16,
+      "blocking": 128
+    },
+    "rawDmi": false,
+    "managedAccess": false,
+    "extensions": []
+  },
+  "requests": [
+    {
+      "data": [
+        9,
+        9,
+        9,
+        9
+      ],
+      "byteEnable": [
+        255,
+        0
+      ]
+    },
+    {
+      "data": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "byteEnable": [
+        0,
+        255
+      ]
+    }
+  ],
+  "callbacks": [
+    {
+      "time": "3",
+      "connection": 2,
+      "phase": 2,
+      "delay": "1",
+      "data": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "time": "3",
+      "connection": 1,
+      "phase": 2,
+      "delay": "1",
+      "data": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "time": "5",
+      "connection": 2,
+      "phase": 3,
+      "delay": "1",
+      "data": [
+        8,
+        20,
+        8,
+        40
+      ]
+    },
+    {
+      "time": "5",
+      "connection": 1,
+      "phase": 3,
+      "delay": "1",
+      "data": [
+        10,
+        9,
+        30,
+        9
+      ]
+    }
+  ],
+  "feedback": [
+    {
+      "connection": 1,
+      "phase": 1,
+      "sync": 0,
+      "delay": "0"
+    },
+    {
+      "connection": 2,
+      "phase": 1,
+      "sync": 0,
+      "delay": "0"
+    },
+    {
+      "connection": 1,
+      "phase": 4,
+      "sync": 2,
+      "delay": "0"
+    },
+    {
+      "connection": 2,
+      "phase": 4,
+      "sync": 2,
+      "delay": "0"
+    }
+  ]
+}

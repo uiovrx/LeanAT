@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "trace",
+  "type": "object",
+  "required": [
+    "schema",
+    "trace",
+    "captureState"
+  ],
+  "properties": {
+    "schema": {
+      "const": "leanat.trace.v1"
+    }
+  }
+}

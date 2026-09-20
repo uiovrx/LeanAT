@@ -1,0 +1,1337 @@
+{
+  "coverage": "single-domain single-instance single-local-ledger base protocol; socket calls/returns and timed owned snapshots",
+  "engine": "LeanAT.ModelIR.Transport",
+  "eventsAtTick": "4",
+  "hops": [
+    {
+      "connection": "2",
+      "requestReleasedRecorded": true,
+      "response": {
+        "address": "0",
+        "byteEnable": [
+          0,
+          255
+        ],
+        "command": 0,
+        "data": [
+          8,
+          20,
+          8,
+          40
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "responseReadyRecorded": true,
+      "state": "terminal",
+      "terminalRecorded": true,
+      "transaction": "2"
+    },
+    {
+      "connection": "1",
+      "requestReleasedRecorded": true,
+      "response": {
+        "address": "0",
+        "byteEnable": [
+          255,
+          0
+        ],
+        "command": 0,
+        "data": [
+          10,
+          9,
+          30,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "responseReadyRecorded": true,
+      "state": "terminal",
+      "terminalRecorded": true,
+      "transaction": "1"
+    }
+  ],
+  "lastEventTime": "7",
+  "leanVersion": "4.34.0",
+  "pendingCalls": [],
+  "remainingEvents": [],
+  "remainingRecords": [],
+  "reservedEvents": "0",
+  "schema": "leanat.model-transport-output.v1",
+  "stopReason": {
+    "kind": "Quiescent"
+  },
+  "trace": [
+    {
+      "callTime": "1",
+      "connection": "1",
+      "domain": "1",
+      "flow": "forward",
+      "id": "1",
+      "incomingDelay": "0",
+      "instance": "1",
+      "kind": "call",
+      "localSide": "initiator",
+      "ordinal": "0",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          255,
+          0
+        ],
+        "command": 0,
+        "data": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 0,
+        "streamingWidth": "4"
+      },
+      "phase": "beginReq",
+      "raw": {
+        "callTime": "1",
+        "connection": 1,
+        "domain": "1",
+        "flow": "forward",
+        "id": "1",
+        "incomingDelay": "0",
+        "instance": "1",
+        "kind": "call",
+        "localSide": "initiator",
+        "observedKind": "outgoing-call",
+        "ordinal": "0",
+        "payload": {
+          "address": "0",
+          "byteEnable": [
+            255,
+            0
+          ],
+          "command": 0,
+          "data": [
+            9,
+            9,
+            9,
+            9
+          ],
+          "dmiHint": false,
+          "extensions": {},
+          "length": 4,
+          "status": 0,
+          "streamingWidth": 4
+        },
+        "phase": "beginReq",
+        "transaction": "1"
+      },
+      "transaction": "1"
+    },
+    {
+      "callId": "1",
+      "connection": "1",
+      "domain": "1",
+      "id": "1",
+      "instance": "1",
+      "kind": "return",
+      "localSide": "initiator",
+      "ordinal": "1",
+      "outgoingDelay": "0",
+      "phase": null,
+      "raw": {
+        "connection": 1,
+        "domain": "1",
+        "id": "1",
+        "instance": "1",
+        "kind": "return",
+        "localSide": "initiator",
+        "observedKind": "outgoing-return",
+        "ordinal": "1",
+        "outgoingDelay": "0",
+        "phase": null,
+        "response": null,
+        "sync": "accepted"
+      },
+      "response": null,
+      "sync": "accepted"
+    },
+    {
+      "callTime": "1",
+      "connection": "2",
+      "domain": "1",
+      "flow": "forward",
+      "id": "2",
+      "incomingDelay": "0",
+      "instance": "1",
+      "kind": "call",
+      "localSide": "initiator",
+      "ordinal": "2",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          0,
+          255
+        ],
+        "command": 0,
+        "data": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 0,
+        "streamingWidth": "4"
+      },
+      "phase": "beginReq",
+      "raw": {
+        "callTime": "1",
+        "connection": 2,
+        "domain": "1",
+        "flow": "forward",
+        "id": "2",
+        "incomingDelay": "0",
+        "instance": "1",
+        "kind": "call",
+        "localSide": "initiator",
+        "observedKind": "outgoing-call",
+        "ordinal": "2",
+        "payload": {
+          "address": "0",
+          "byteEnable": [
+            0,
+            255
+          ],
+          "command": 0,
+          "data": [
+            8,
+            8,
+            8,
+            8
+          ],
+          "dmiHint": false,
+          "extensions": {},
+          "length": 4,
+          "status": 0,
+          "streamingWidth": 4
+        },
+        "phase": "beginReq",
+        "transaction": "2"
+      },
+      "transaction": "2"
+    },
+    {
+      "callId": "2",
+      "connection": "2",
+      "domain": "1",
+      "id": "2",
+      "instance": "1",
+      "kind": "return",
+      "localSide": "initiator",
+      "ordinal": "3",
+      "outgoingDelay": "0",
+      "phase": null,
+      "raw": {
+        "connection": 2,
+        "domain": "1",
+        "id": "2",
+        "instance": "1",
+        "kind": "return",
+        "localSide": "initiator",
+        "observedKind": "outgoing-return",
+        "ordinal": "3",
+        "outgoingDelay": "0",
+        "phase": null,
+        "response": null,
+        "sync": "accepted"
+      },
+      "response": null,
+      "sync": "accepted"
+    },
+    {
+      "causedByCallId": "1",
+      "causedByOrdinal": "0",
+      "connection": "1",
+      "domain": "1",
+      "event": "input",
+      "instance": "1",
+      "keyConnection": "1",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          255,
+          0
+        ],
+        "command": 0,
+        "data": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 0,
+        "streamingWidth": "4"
+      },
+      "phase": "beginReq",
+      "sequence": "0",
+      "stage": "2",
+      "time": "1",
+      "transaction": "1",
+      "turn": "0"
+    },
+    {
+      "causedByCallId": "2",
+      "causedByOrdinal": "2",
+      "connection": "2",
+      "domain": "1",
+      "event": "input",
+      "instance": "1",
+      "keyConnection": "2",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          0,
+          255
+        ],
+        "command": 0,
+        "data": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 0,
+        "streamingWidth": "4"
+      },
+      "phase": "beginReq",
+      "sequence": "1",
+      "stage": "2",
+      "time": "1",
+      "transaction": "2",
+      "turn": "0"
+    },
+    {
+      "callTime": "3",
+      "connection": "1",
+      "domain": "1",
+      "flow": "backward",
+      "id": "3",
+      "incomingDelay": "1",
+      "instance": "1",
+      "kind": "call",
+      "localSide": "initiator",
+      "ordinal": "4",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          255,
+          0
+        ],
+        "command": 0,
+        "data": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 0,
+        "streamingWidth": "4"
+      },
+      "phase": "endReq",
+      "raw": {
+        "callTime": "3",
+        "connection": 1,
+        "domain": "1",
+        "flow": "backward",
+        "id": "3",
+        "incomingDelay": "1",
+        "instance": "1",
+        "kind": "call",
+        "localSide": "initiator",
+        "observedKind": "callback-call",
+        "ordinal": "4",
+        "payload": {
+          "address": "0",
+          "byteEnable": [
+            255,
+            0
+          ],
+          "command": 0,
+          "data": [
+            9,
+            9,
+            9,
+            9
+          ],
+          "dmiHint": false,
+          "extensions": {},
+          "length": 4,
+          "status": 0,
+          "streamingWidth": 4
+        },
+        "phase": "endReq",
+        "transaction": "1"
+      },
+      "transaction": "1"
+    },
+    {
+      "callId": "3",
+      "connection": "1",
+      "domain": "1",
+      "id": "3",
+      "instance": "1",
+      "kind": "return",
+      "localSide": "initiator",
+      "ordinal": "5",
+      "outgoingDelay": "1",
+      "phase": null,
+      "raw": {
+        "connection": 1,
+        "domain": "1",
+        "id": "3",
+        "instance": "1",
+        "kind": "return",
+        "localSide": "initiator",
+        "observedKind": "callback-return",
+        "ordinal": "5",
+        "outgoingDelay": "1",
+        "phase": null,
+        "response": null,
+        "sync": "accepted"
+      },
+      "response": null,
+      "sync": "accepted"
+    },
+    {
+      "callTime": "3",
+      "connection": "2",
+      "domain": "1",
+      "flow": "backward",
+      "id": "4",
+      "incomingDelay": "1",
+      "instance": "1",
+      "kind": "call",
+      "localSide": "initiator",
+      "ordinal": "6",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          0,
+          255
+        ],
+        "command": 0,
+        "data": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 0,
+        "streamingWidth": "4"
+      },
+      "phase": "endReq",
+      "raw": {
+        "callTime": "3",
+        "connection": 2,
+        "domain": "1",
+        "flow": "backward",
+        "id": "4",
+        "incomingDelay": "1",
+        "instance": "1",
+        "kind": "call",
+        "localSide": "initiator",
+        "observedKind": "callback-call",
+        "ordinal": "6",
+        "payload": {
+          "address": "0",
+          "byteEnable": [
+            0,
+            255
+          ],
+          "command": 0,
+          "data": [
+            8,
+            8,
+            8,
+            8
+          ],
+          "dmiHint": false,
+          "extensions": {},
+          "length": 4,
+          "status": 0,
+          "streamingWidth": 4
+        },
+        "phase": "endReq",
+        "transaction": "2"
+      },
+      "transaction": "2"
+    },
+    {
+      "callId": "4",
+      "connection": "2",
+      "domain": "1",
+      "id": "4",
+      "instance": "1",
+      "kind": "return",
+      "localSide": "initiator",
+      "ordinal": "7",
+      "outgoingDelay": "1",
+      "phase": null,
+      "raw": {
+        "connection": 2,
+        "domain": "1",
+        "id": "4",
+        "instance": "1",
+        "kind": "return",
+        "localSide": "initiator",
+        "observedKind": "callback-return",
+        "ordinal": "7",
+        "outgoingDelay": "1",
+        "phase": null,
+        "response": null,
+        "sync": "accepted"
+      },
+      "response": null,
+      "sync": "accepted"
+    },
+    {
+      "causedByCallId": "3",
+      "causedByOrdinal": "4",
+      "connection": "1",
+      "domain": "1",
+      "event": "input",
+      "instance": "1",
+      "keyConnection": "1",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          255,
+          0
+        ],
+        "command": 0,
+        "data": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 0,
+        "streamingWidth": "4"
+      },
+      "phase": "endReq",
+      "sequence": "2",
+      "stage": "2",
+      "time": "4",
+      "transaction": "1",
+      "turn": "0"
+    },
+    {
+      "causedByCallId": "4",
+      "causedByOrdinal": "6",
+      "connection": "2",
+      "domain": "1",
+      "event": "input",
+      "instance": "1",
+      "keyConnection": "2",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          0,
+          255
+        ],
+        "command": 0,
+        "data": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 0,
+        "streamingWidth": "4"
+      },
+      "phase": "endReq",
+      "sequence": "4",
+      "stage": "2",
+      "time": "4",
+      "transaction": "2",
+      "turn": "0"
+    },
+    {
+      "causedByCallId": "3",
+      "causedByOrdinal": "5",
+      "connection": "1",
+      "domain": "1",
+      "event": "requestReleased",
+      "instance": "1",
+      "keyConnection": "0",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          255,
+          0
+        ],
+        "command": 0,
+        "data": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 0,
+        "streamingWidth": "4"
+      },
+      "phase": null,
+      "sequence": "3",
+      "stage": "3",
+      "time": "4",
+      "transaction": "1",
+      "turn": "0"
+    },
+    {
+      "causedByCallId": "4",
+      "causedByOrdinal": "7",
+      "connection": "2",
+      "domain": "1",
+      "event": "requestReleased",
+      "instance": "1",
+      "keyConnection": "0",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          0,
+          255
+        ],
+        "command": 0,
+        "data": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 0,
+        "streamingWidth": "4"
+      },
+      "phase": null,
+      "sequence": "5",
+      "stage": "3",
+      "time": "4",
+      "transaction": "2",
+      "turn": "0"
+    },
+    {
+      "callTime": "5",
+      "connection": "1",
+      "domain": "1",
+      "flow": "backward",
+      "id": "5",
+      "incomingDelay": "1",
+      "instance": "1",
+      "kind": "call",
+      "localSide": "initiator",
+      "ordinal": "8",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          255,
+          0
+        ],
+        "command": 0,
+        "data": [
+          10,
+          9,
+          30,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "phase": "beginResp",
+      "raw": {
+        "callTime": "5",
+        "connection": 1,
+        "domain": "1",
+        "flow": "backward",
+        "id": "5",
+        "incomingDelay": "1",
+        "instance": "1",
+        "kind": "call",
+        "localSide": "initiator",
+        "observedKind": "callback-call",
+        "ordinal": "8",
+        "payload": {
+          "address": "0",
+          "byteEnable": [
+            255,
+            0
+          ],
+          "command": 0,
+          "data": [
+            10,
+            9,
+            30,
+            9
+          ],
+          "dmiHint": false,
+          "extensions": {},
+          "length": 4,
+          "status": 1,
+          "streamingWidth": 4
+        },
+        "phase": "beginResp",
+        "transaction": "1"
+      },
+      "transaction": "1"
+    },
+    {
+      "callId": "5",
+      "connection": "1",
+      "domain": "1",
+      "id": "5",
+      "instance": "1",
+      "kind": "return",
+      "localSide": "initiator",
+      "ordinal": "9",
+      "outgoingDelay": "1",
+      "phase": null,
+      "raw": {
+        "connection": 1,
+        "domain": "1",
+        "id": "5",
+        "instance": "1",
+        "kind": "return",
+        "localSide": "initiator",
+        "observedKind": "callback-return",
+        "ordinal": "9",
+        "outgoingDelay": "1",
+        "phase": null,
+        "response": null,
+        "sync": "accepted"
+      },
+      "response": null,
+      "sync": "accepted"
+    },
+    {
+      "callTime": "5",
+      "connection": "2",
+      "domain": "1",
+      "flow": "backward",
+      "id": "6",
+      "incomingDelay": "1",
+      "instance": "1",
+      "kind": "call",
+      "localSide": "initiator",
+      "ordinal": "10",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          0,
+          255
+        ],
+        "command": 0,
+        "data": [
+          8,
+          20,
+          8,
+          40
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "phase": "beginResp",
+      "raw": {
+        "callTime": "5",
+        "connection": 2,
+        "domain": "1",
+        "flow": "backward",
+        "id": "6",
+        "incomingDelay": "1",
+        "instance": "1",
+        "kind": "call",
+        "localSide": "initiator",
+        "observedKind": "callback-call",
+        "ordinal": "10",
+        "payload": {
+          "address": "0",
+          "byteEnable": [
+            0,
+            255
+          ],
+          "command": 0,
+          "data": [
+            8,
+            20,
+            8,
+            40
+          ],
+          "dmiHint": false,
+          "extensions": {},
+          "length": 4,
+          "status": 1,
+          "streamingWidth": 4
+        },
+        "phase": "beginResp",
+        "transaction": "2"
+      },
+      "transaction": "2"
+    },
+    {
+      "callId": "6",
+      "connection": "2",
+      "domain": "1",
+      "id": "6",
+      "instance": "1",
+      "kind": "return",
+      "localSide": "initiator",
+      "ordinal": "11",
+      "outgoingDelay": "1",
+      "phase": null,
+      "raw": {
+        "connection": 2,
+        "domain": "1",
+        "id": "6",
+        "instance": "1",
+        "kind": "return",
+        "localSide": "initiator",
+        "observedKind": "callback-return",
+        "ordinal": "11",
+        "outgoingDelay": "1",
+        "phase": null,
+        "response": null,
+        "sync": "accepted"
+      },
+      "response": null,
+      "sync": "accepted"
+    },
+    {
+      "causedByCallId": "5",
+      "causedByOrdinal": "8",
+      "connection": "1",
+      "domain": "1",
+      "event": "input",
+      "instance": "1",
+      "keyConnection": "1",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          255,
+          0
+        ],
+        "command": 0,
+        "data": [
+          10,
+          9,
+          30,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "phase": "beginResp",
+      "sequence": "6",
+      "stage": "2",
+      "time": "6",
+      "transaction": "1",
+      "turn": "0"
+    },
+    {
+      "causedByCallId": "6",
+      "causedByOrdinal": "10",
+      "connection": "2",
+      "domain": "1",
+      "event": "input",
+      "instance": "1",
+      "keyConnection": "2",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          0,
+          255
+        ],
+        "command": 0,
+        "data": [
+          8,
+          20,
+          8,
+          40
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "phase": "beginResp",
+      "sequence": "8",
+      "stage": "2",
+      "time": "6",
+      "transaction": "2",
+      "turn": "0"
+    },
+    {
+      "causedByCallId": "5",
+      "causedByOrdinal": "9",
+      "connection": "1",
+      "domain": "1",
+      "event": "responseReady",
+      "instance": "1",
+      "keyConnection": "0",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          255,
+          0
+        ],
+        "command": 0,
+        "data": [
+          10,
+          9,
+          30,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "phase": null,
+      "sequence": "7",
+      "stage": "3",
+      "time": "6",
+      "transaction": "1",
+      "turn": "0"
+    },
+    {
+      "causedByCallId": "6",
+      "causedByOrdinal": "11",
+      "connection": "2",
+      "domain": "1",
+      "event": "responseReady",
+      "instance": "1",
+      "keyConnection": "0",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          0,
+          255
+        ],
+        "command": 0,
+        "data": [
+          8,
+          20,
+          8,
+          40
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "phase": null,
+      "sequence": "9",
+      "stage": "3",
+      "time": "6",
+      "transaction": "2",
+      "turn": "0"
+    },
+    {
+      "callTime": "7",
+      "connection": "1",
+      "domain": "1",
+      "flow": "forward",
+      "id": "7",
+      "incomingDelay": "0",
+      "instance": "1",
+      "kind": "call",
+      "localSide": "initiator",
+      "ordinal": "12",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          255,
+          0
+        ],
+        "command": 0,
+        "data": [
+          10,
+          9,
+          30,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "phase": "endResp",
+      "raw": {
+        "callTime": "7",
+        "connection": 1,
+        "domain": "1",
+        "flow": "forward",
+        "id": "7",
+        "incomingDelay": "0",
+        "instance": "1",
+        "kind": "call",
+        "localSide": "initiator",
+        "observedKind": "outgoing-call",
+        "ordinal": "12",
+        "payload": {
+          "address": "0",
+          "byteEnable": [
+            255,
+            0
+          ],
+          "command": 0,
+          "data": [
+            10,
+            9,
+            30,
+            9
+          ],
+          "dmiHint": false,
+          "extensions": {},
+          "length": 4,
+          "status": 1,
+          "streamingWidth": 4
+        },
+        "phase": "endResp",
+        "transaction": "1"
+      },
+      "transaction": "1"
+    },
+    {
+      "callId": "7",
+      "connection": "1",
+      "domain": "1",
+      "id": "7",
+      "instance": "1",
+      "kind": "return",
+      "localSide": "initiator",
+      "ordinal": "13",
+      "outgoingDelay": "0",
+      "phase": null,
+      "raw": {
+        "connection": 1,
+        "domain": "1",
+        "id": "7",
+        "instance": "1",
+        "kind": "return",
+        "localSide": "initiator",
+        "observedKind": "outgoing-return",
+        "ordinal": "13",
+        "outgoingDelay": "0",
+        "phase": null,
+        "response": null,
+        "sync": "completed"
+      },
+      "response": null,
+      "sync": "completed"
+    },
+    {
+      "callTime": "7",
+      "connection": "2",
+      "domain": "1",
+      "flow": "forward",
+      "id": "8",
+      "incomingDelay": "0",
+      "instance": "1",
+      "kind": "call",
+      "localSide": "initiator",
+      "ordinal": "14",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          0,
+          255
+        ],
+        "command": 0,
+        "data": [
+          8,
+          20,
+          8,
+          40
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "phase": "endResp",
+      "raw": {
+        "callTime": "7",
+        "connection": 2,
+        "domain": "1",
+        "flow": "forward",
+        "id": "8",
+        "incomingDelay": "0",
+        "instance": "1",
+        "kind": "call",
+        "localSide": "initiator",
+        "observedKind": "outgoing-call",
+        "ordinal": "14",
+        "payload": {
+          "address": "0",
+          "byteEnable": [
+            0,
+            255
+          ],
+          "command": 0,
+          "data": [
+            8,
+            20,
+            8,
+            40
+          ],
+          "dmiHint": false,
+          "extensions": {},
+          "length": 4,
+          "status": 1,
+          "streamingWidth": 4
+        },
+        "phase": "endResp",
+        "transaction": "2"
+      },
+      "transaction": "2"
+    },
+    {
+      "callId": "8",
+      "connection": "2",
+      "domain": "1",
+      "id": "8",
+      "instance": "1",
+      "kind": "return",
+      "localSide": "initiator",
+      "ordinal": "15",
+      "outgoingDelay": "0",
+      "phase": null,
+      "raw": {
+        "connection": 2,
+        "domain": "1",
+        "id": "8",
+        "instance": "1",
+        "kind": "return",
+        "localSide": "initiator",
+        "observedKind": "outgoing-return",
+        "ordinal": "15",
+        "outgoingDelay": "0",
+        "phase": null,
+        "response": null,
+        "sync": "completed"
+      },
+      "response": null,
+      "sync": "completed"
+    },
+    {
+      "causedByCallId": "7",
+      "causedByOrdinal": "12",
+      "connection": "1",
+      "domain": "1",
+      "event": "input",
+      "instance": "1",
+      "keyConnection": "1",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          255,
+          0
+        ],
+        "command": 0,
+        "data": [
+          10,
+          9,
+          30,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "phase": "endResp",
+      "sequence": "10",
+      "stage": "2",
+      "time": "7",
+      "transaction": "1",
+      "turn": "0"
+    },
+    {
+      "causedByCallId": "8",
+      "causedByOrdinal": "14",
+      "connection": "2",
+      "domain": "1",
+      "event": "input",
+      "instance": "1",
+      "keyConnection": "2",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          0,
+          255
+        ],
+        "command": 0,
+        "data": [
+          8,
+          20,
+          8,
+          40
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "phase": "endResp",
+      "sequence": "12",
+      "stage": "2",
+      "time": "7",
+      "transaction": "2",
+      "turn": "0"
+    },
+    {
+      "causedByCallId": "7",
+      "causedByOrdinal": "13",
+      "connection": "1",
+      "domain": "1",
+      "event": "terminal",
+      "instance": "1",
+      "keyConnection": "0",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          255,
+          0
+        ],
+        "command": 0,
+        "data": [
+          10,
+          9,
+          30,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "phase": null,
+      "sequence": "11",
+      "stage": "3",
+      "time": "7",
+      "transaction": "1",
+      "turn": "0"
+    },
+    {
+      "causedByCallId": "8",
+      "causedByOrdinal": "15",
+      "connection": "2",
+      "domain": "1",
+      "event": "terminal",
+      "instance": "1",
+      "keyConnection": "0",
+      "kind": "timed",
+      "localSide": "initiator",
+      "payload": {
+        "address": "0",
+        "byteEnable": [
+          0,
+          255
+        ],
+        "command": 0,
+        "data": [
+          8,
+          20,
+          8,
+          40
+        ],
+        "dmiHint": false,
+        "extensions": {},
+        "length": "4",
+        "status": 1,
+        "streamingWidth": "4"
+      },
+      "phase": null,
+      "sequence": "13",
+      "stage": "3",
+      "time": "7",
+      "transaction": "2",
+      "turn": "0"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+#include "leanat/result_store.hpp"
+#include "test_support.hpp"
+using namespace leanat;
+int main() {
+  PayloadShadow shadow(8, 128);
+  LEANAT_CHECK(shadow.register_extension("request", {8, true, false, false, true, false}));
+  LEANAT_CHECK(shadow.register_extension("response", {8, false, true, true, false, true}));
+  Handle txn{HandleKind::Transaction, DomainId{1}, 1, 0, 1, 7},
+      hop{HandleKind::Hop, DomainId{1}, 2, 0, 1, 7};
+  PayloadViewKey target{txn, hop, InstanceId{1}, 1}, initiator{txn, hop, InstanceId{2}, 0};
+  ExecutionContext tc;
+  tc.domain = DomainId{1};
+  tc.instance = InstanceId{1};
+  tc.owner = 7;
+  ExecutionContext ic = tc;
+  ic.instance = InstanceId{2};
+  PayloadSnapshot request;
+  request.command = Command::Read;
+  request.data = {1, 2};
+  request.byte_enable = {255, 0};
+  request.extensions["request"] = {3};
+  LEANAT_CHECK(shadow.create(target, request, tc, PayloadRole::Target, true));
+  LEANAT_CHECK(shadow.create(initiator, request, ic, PayloadRole::Initiator, false));
+  PayloadAccessContext req;
+  req.hop = hop;
+  req.local_side = 1;
+  req.validated = true;
+  req.response_write_permit = true;
+  PayloadAccessContext resp = req;
+  resp.flow = Flow::Backward;
+  resp.call_phase = begin_resp;
+  EventTxn t({}, tc);
+  LEANAT_CHECK(!shadow.project_response(target, resp, t));
+  LEANAT_CHECK(!shadow.buffer_extension(target, "request", Bytes{9}, req, t));
+  LEANAT_CHECK(
+      !shadow.buffer_field(target, PayloadField::Address, Value(std::uint64_t{9}), req, t));
+  LEANAT_CHECK(shadow.buffer_field(target, PayloadField::Data, Value(Bytes{8, 9}), req, t));
+  LEANAT_CHECK(shadow.buffer_field(target, PayloadField::Status,
+                                   Value(static_cast<std::uint64_t>(ResponseStatus::Ok)), req, t));
+  LEANAT_CHECK(shadow.buffer_field(target, PayloadField::DmiHint, Value(true), req, t));
+  LEANAT_CHECK(shadow.buffer_extension(target, "response", Bytes{5}, req, t));
+  auto out = shadow.project_response(target, resp, t);
+  LEANAT_CHECK(out);
+  LEANAT_CHECK(out.value().data == Bytes({8, 2}) && out.value().dmi_hint &&
+               out.value().extensions.size() == 1);
+  auto frozen = shadow.project_call(target, req, t);
+  LEANAT_CHECK(frozen && frozen.value().data == Bytes({1, 2}));
+  LEANAT_CHECK(frozen.value().extensions.size() == 1 && frozen.value().extensions.count("request"));
+  auto ack = resp;
+  ack.call_phase = end_resp;
+  ack.flow = Flow::Forward;
+  ack.stage = PayloadAccessStage::Return;
+  ack.sync = Sync::Completed;
+  LEANAT_CHECK(!shadow.project_response(target, ack, t));
+  auto accepted = req;
+  accepted.stage = PayloadAccessStage::Return;
+  accepted.returned_phase = begin_resp;
+  LEANAT_CHECK(!shadow.project_response(target, accepted, t));
+  LEANAT_CHECK(shadow.project_call(target, accepted, t).value().data.empty());
+  auto shortcut = accepted;
+  shortcut.sync = Sync::Updated;
+  LEANAT_CHECK(shadow.project_response(target, shortcut, t));
+  shortcut.returned_phase = end_req;
+  LEANAT_CHECK(!shadow.project_response(target, shortcut, t));
+  shortcut.sync = Sync::Completed;
+  LEANAT_CHECK(shadow.project_response(target, shortcut, t));
+  auto wrong = resp;
+  wrong.local_side = 0;
+  LEANAT_CHECK(!shadow.project_response(target, wrong, t));
+  LEANAT_CHECK(t.commit());
+  resp.local_side = 0;
+  SegmentBudget tight;
+  tight.writes = 1;
+  EventTxn failed(tight, ic);
+  LEANAT_CHECK(!shadow.deliver_response(initiator, out.value(), resp, failed));
+  LEANAT_CHECK(shadow.snapshot(initiator, failed).value().data == Bytes({1, 2}));
+  LEANAT_CHECK(failed.commit());
+  EventTxn receive({}, ic);
+  LEANAT_CHECK(shadow.deliver_response(initiator, out.value(), resp, receive));
+  LEANAT_CHECK(!shadow.deliver_response(initiator, out.value(), resp, receive));
+  auto incoming = shadow.snapshot(initiator, receive);
+  LEANAT_CHECK(incoming && incoming.value().data == Bytes({8, 2}));
+  LEANAT_CHECK(incoming.value().extensions.at("request") == Bytes{3} &&
+               incoming.value().extensions.at("response") == Bytes{5});
+  LEANAT_CHECK(incoming.value().dmi_hint);
+  LEANAT_CHECK(receive.commit());
+  EventTxn wrong_owner({}, tc);
+  LEANAT_CHECK(!shadow.snapshot(initiator, wrong_owner));
+  auto wt = target;
+  wt.txn.generation = 2;
+  auto wi = initiator;
+  wi.txn.generation = 2;
+  request.command = Command::Write;
+  LEANAT_CHECK(shadow.create(wt, request, tc, PayloadRole::Target, true));
+  LEANAT_CHECK(shadow.create(wi, request, ic, PayloadRole::Initiator, false));
+  EventTxn write_target({}, tc);
+  req.local_side = 1;
+  resp.local_side = 1;
+  LEANAT_CHECK(!shadow.buffer_data(wt, Value(Bytes{4, 4}), write_target));
+  LEANAT_CHECK(shadow.buffer_extension(wt, "response", Bytes{6}, req, write_target));
+  LEANAT_CHECK(shadow.project_response(wt, resp, write_target).value().data.empty());
+  auto write_result = out.value();
+  write_result.data = {9, 9};
+  resp.local_side = 0;
+  EventTxn write_receive({}, ic);
+  LEANAT_CHECK(shadow.deliver_response(wi, write_result, resp, write_receive));
+  LEANAT_CHECK(shadow.snapshot(wi, write_receive).value().data == Bytes({1, 2}));
+}

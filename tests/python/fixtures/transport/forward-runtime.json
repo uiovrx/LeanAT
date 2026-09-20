@@ -1,0 +1,645 @@
+{
+  "schema": "leanat.transport-run.v1",
+  "complete": true,
+  "stop": "Quiescent",
+  "records": [
+    {
+      "observedOrdinal": "0",
+      "callOrdinal": "1",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "outgoing-call",
+      "time": "1",
+      "connection": 1,
+      "transport": "1",
+      "phase": 1,
+      "flow": "fw",
+      "delay": "0",
+      "payload": {
+        "command": "Read",
+        "address": "0",
+        "data": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "byteEnable": [
+          255,
+          0
+        ],
+        "streamingWidth": "4",
+        "status": 0,
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "observedOrdinal": "1",
+      "callOrdinal": "1",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "outgoing-return",
+      "connection": 1,
+      "callPhase": 1,
+      "sync": 0,
+      "phase": null,
+      "delay": "0",
+      "response": null
+    },
+    {
+      "observedOrdinal": "2",
+      "callOrdinal": "2",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "outgoing-call",
+      "time": "1",
+      "connection": 2,
+      "transport": "2",
+      "phase": 1,
+      "flow": "fw",
+      "delay": "0",
+      "payload": {
+        "command": "Read",
+        "address": "0",
+        "data": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "byteEnable": [
+          0,
+          255
+        ],
+        "streamingWidth": "4",
+        "status": 0,
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "observedOrdinal": "3",
+      "callOrdinal": "2",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "outgoing-return",
+      "connection": 2,
+      "callPhase": 1,
+      "sync": 0,
+      "phase": null,
+      "delay": "0",
+      "response": null
+    },
+    {
+      "observedOrdinal": "4",
+      "callOrdinal": "3",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "callback-call",
+      "time": "3",
+      "connection": 1,
+      "transport": "1",
+      "phase": 2,
+      "flow": "bw",
+      "delay": "1",
+      "payload": {
+        "command": "Read",
+        "address": "0",
+        "data": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "byteEnable": [
+          255,
+          0
+        ],
+        "streamingWidth": "4",
+        "status": 0,
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "observedOrdinal": "5",
+      "callOrdinal": "3",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "callback-return",
+      "connection": 1,
+      "callPhase": 2,
+      "sync": 0,
+      "phase": null,
+      "delay": "1",
+      "response": null
+    },
+    {
+      "observedOrdinal": "6",
+      "callOrdinal": "4",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "callback-call",
+      "time": "3",
+      "connection": 2,
+      "transport": "2",
+      "phase": 2,
+      "flow": "bw",
+      "delay": "1",
+      "payload": {
+        "command": "Read",
+        "address": "0",
+        "data": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "byteEnable": [
+          0,
+          255
+        ],
+        "streamingWidth": "4",
+        "status": 0,
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "observedOrdinal": "7",
+      "callOrdinal": "4",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "callback-return",
+      "connection": 2,
+      "callPhase": 2,
+      "sync": 0,
+      "phase": null,
+      "delay": "1",
+      "response": null
+    },
+    {
+      "observedOrdinal": "8",
+      "callOrdinal": "5",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "callback-call",
+      "time": "5",
+      "connection": 1,
+      "transport": "1",
+      "phase": 3,
+      "flow": "bw",
+      "delay": "1",
+      "payload": {
+        "command": "Read",
+        "address": "0",
+        "data": [
+          10,
+          9,
+          30,
+          9
+        ],
+        "byteEnable": [
+          255,
+          0
+        ],
+        "streamingWidth": "4",
+        "status": 1,
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "observedOrdinal": "9",
+      "callOrdinal": "5",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "callback-return",
+      "connection": 1,
+      "callPhase": 3,
+      "sync": 0,
+      "phase": null,
+      "delay": "1",
+      "response": null
+    },
+    {
+      "observedOrdinal": "10",
+      "callOrdinal": "6",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "callback-call",
+      "time": "5",
+      "connection": 2,
+      "transport": "2",
+      "phase": 3,
+      "flow": "bw",
+      "delay": "1",
+      "payload": {
+        "command": "Read",
+        "address": "0",
+        "data": [
+          8,
+          20,
+          8,
+          40
+        ],
+        "byteEnable": [
+          0,
+          255
+        ],
+        "streamingWidth": "4",
+        "status": 1,
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "observedOrdinal": "11",
+      "callOrdinal": "6",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "callback-return",
+      "connection": 2,
+      "callPhase": 3,
+      "sync": 0,
+      "phase": null,
+      "delay": "1",
+      "response": null
+    },
+    {
+      "observedOrdinal": "12",
+      "callOrdinal": "7",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "outgoing-call",
+      "time": "7",
+      "connection": 1,
+      "transport": "1",
+      "phase": 4,
+      "flow": "fw",
+      "delay": "0",
+      "payload": {
+        "command": "Read",
+        "address": "0",
+        "data": [
+          10,
+          9,
+          30,
+          9
+        ],
+        "byteEnable": [
+          255,
+          0
+        ],
+        "streamingWidth": "4",
+        "status": 1,
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "observedOrdinal": "13",
+      "callOrdinal": "7",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "outgoing-return",
+      "connection": 1,
+      "callPhase": 4,
+      "sync": 2,
+      "phase": null,
+      "delay": "0",
+      "response": null
+    },
+    {
+      "observedOrdinal": "14",
+      "callOrdinal": "8",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "outgoing-call",
+      "time": "7",
+      "connection": 2,
+      "transport": "2",
+      "phase": 4,
+      "flow": "fw",
+      "delay": "0",
+      "payload": {
+        "command": "Read",
+        "address": "0",
+        "data": [
+          8,
+          20,
+          8,
+          40
+        ],
+        "byteEnable": [
+          0,
+          255
+        ],
+        "streamingWidth": "4",
+        "status": 1,
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "observedOrdinal": "15",
+      "callOrdinal": "8",
+      "domain": 1,
+      "instance": 1,
+      "localSide": "initiator",
+      "kind": "outgoing-return",
+      "connection": 2,
+      "callPhase": 4,
+      "sync": 2,
+      "phase": null,
+      "delay": "0",
+      "response": null
+    }
+  ],
+  "semantic": [
+    {
+      "time": "4",
+      "turn": "0",
+      "connection": 1,
+      "phase": 2,
+      "payload": {
+        "command": "Ignore",
+        "address": "0",
+        "data": [],
+        "byteEnable": [],
+        "streamingWidth": "1",
+        "status": 0,
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "time": "4",
+      "turn": "0",
+      "connection": 2,
+      "phase": 2,
+      "payload": {
+        "command": "Ignore",
+        "address": "0",
+        "data": [],
+        "byteEnable": [],
+        "streamingWidth": "1",
+        "status": 0,
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "time": "6",
+      "turn": "0",
+      "connection": 1,
+      "phase": 3,
+      "payload": {
+        "command": "Ignore",
+        "address": "0",
+        "data": [
+          10,
+          9,
+          30,
+          9
+        ],
+        "byteEnable": [],
+        "streamingWidth": "1",
+        "status": 1,
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "time": "6",
+      "turn": "0",
+      "connection": 2,
+      "phase": 3,
+      "payload": {
+        "command": "Ignore",
+        "address": "0",
+        "data": [
+          8,
+          20,
+          8,
+          40
+        ],
+        "byteEnable": [],
+        "streamingWidth": "1",
+        "status": 1,
+        "dmiHint": false,
+        "extensions": {}
+      }
+    }
+  ],
+  "milestones": [
+    {
+      "kind": "requestReleased",
+      "key": {
+        "time": "4",
+        "turn": "0",
+        "stage": 3,
+        "instance": 1,
+        "connection": 0,
+        "sequence": "9"
+      },
+      "domain": 1,
+      "instance": 1,
+      "connection": 1,
+      "transport": "1",
+      "transportGeneration": "1",
+      "callId": "3",
+      "milestoneTime": "4",
+      "implicit": false,
+      "event": {
+        "kind": 2,
+        "domain": 1,
+        "store": 1,
+        "slot": 0,
+        "generation": "3",
+        "owner": "0"
+      },
+      "response": null
+    },
+    {
+      "kind": "requestReleased",
+      "key": {
+        "time": "4",
+        "turn": "0",
+        "stage": 3,
+        "instance": 1,
+        "connection": 0,
+        "sequence": "14"
+      },
+      "domain": 1,
+      "instance": 1,
+      "connection": 2,
+      "transport": "2",
+      "transportGeneration": "1",
+      "callId": "4",
+      "milestoneTime": "4",
+      "implicit": false,
+      "event": {
+        "kind": 2,
+        "domain": 1,
+        "store": 1,
+        "slot": 1,
+        "generation": "4",
+        "owner": "0"
+      },
+      "response": null
+    },
+    {
+      "kind": "responseReady",
+      "key": {
+        "time": "6",
+        "turn": "0",
+        "stage": 3,
+        "instance": 1,
+        "connection": 0,
+        "sequence": "19"
+      },
+      "domain": 1,
+      "instance": 1,
+      "connection": 1,
+      "transport": "1",
+      "transportGeneration": "1",
+      "callId": "5",
+      "milestoneTime": "6",
+      "implicit": false,
+      "event": {
+        "kind": 2,
+        "domain": 1,
+        "store": 1,
+        "slot": 0,
+        "generation": "4",
+        "owner": "0"
+      },
+      "response": {
+        "status": 1,
+        "data": [
+          10,
+          9,
+          30,
+          9
+        ],
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "kind": "responseReady",
+      "key": {
+        "time": "6",
+        "turn": "0",
+        "stage": 3,
+        "instance": 1,
+        "connection": 0,
+        "sequence": "24"
+      },
+      "domain": 1,
+      "instance": 1,
+      "connection": 2,
+      "transport": "2",
+      "transportGeneration": "1",
+      "callId": "6",
+      "milestoneTime": "6",
+      "implicit": false,
+      "event": {
+        "kind": 2,
+        "domain": 1,
+        "store": 1,
+        "slot": 1,
+        "generation": "6",
+        "owner": "0"
+      },
+      "response": {
+        "status": 1,
+        "data": [
+          8,
+          20,
+          8,
+          40
+        ],
+        "dmiHint": false,
+        "extensions": {}
+      }
+    },
+    {
+      "kind": "terminal",
+      "key": {
+        "time": "7",
+        "turn": "0",
+        "stage": 3,
+        "instance": 1,
+        "connection": 0,
+        "sequence": "29"
+      },
+      "domain": 1,
+      "instance": 1,
+      "connection": 1,
+      "transport": "1",
+      "transportGeneration": "1",
+      "callId": "7",
+      "milestoneTime": "7",
+      "implicit": false,
+      "event": {
+        "kind": 2,
+        "domain": 1,
+        "store": 1,
+        "slot": 0,
+        "generation": "5",
+        "owner": "0"
+      },
+      "response": null
+    },
+    {
+      "kind": "terminal",
+      "key": {
+        "time": "7",
+        "turn": "0",
+        "stage": 3,
+        "instance": 1,
+        "connection": 0,
+        "sequence": "33"
+      },
+      "domain": 1,
+      "instance": 1,
+      "connection": 2,
+      "transport": "2",
+      "transportGeneration": "1",
+      "callId": "8",
+      "milestoneTime": "7",
+      "implicit": false,
+      "event": {
+        "kind": 2,
+        "domain": 1,
+        "store": 1,
+        "slot": 1,
+        "generation": "8",
+        "owner": "0"
+      },
+      "response": null
+    }
+  ],
+  "terminalTransports": [
+    "1",
+    "2"
+  ]
+}

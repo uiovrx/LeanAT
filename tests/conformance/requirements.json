@@ -1,0 +1,3347 @@
+{
+  "schema": "leanat.requirements.v1",
+  "entries": [
+    {
+      "id": "M01-A01",
+      "scenario": "Core 三个命令、Ext 四个命令的最小正例",
+      "acceptance": "各生成对应 ModelIR，所有源节点有来源"
+    },
+    {
+      "id": "M01-A02",
+      "scenario": "在 Core 使用 at_protocol／select 扩展",
+      "acceptance": "编译失败，明确缺失 capability 和位置"
+    },
+    {
+      "id": "M01-A03",
+      "scenario": "两个同类实例、不同配置和 binding",
+      "acceptance": "DefinitionId 相同，InstanceId 与可变槽分离"
+    },
+    {
+      "id": "M01-A04",
+      "scenario": "未登记语句、timed returnTransport、返回后 schedule",
+      "acceptance": "均在发出 C++ 前失败，不产生假 valid"
+    },
+    {
+      "id": "M01-A05",
+      "scenario": "source 文件或声明枚举顺序变化但语义集合相同",
+      "acceptance": "ID 分配／序列化遵循稳定规则；非语义路径差异可解释"
+    },
+    {
+      "id": "M01-A06",
+      "scenario": "全部 Core／Ext 示例补齐业务 helper 后编译",
+      "acceptance": "grammar→ModelIR→ExecIR 有完整对应表；无悬空 surface form"
+    },
+    {
+      "id": "M01-A07",
+      "scenario": "requires 为假／证据缺失／checker 失败",
+      "acceptance": "两个导出声明均不发布；保留命题、实例配置和失败位置"
+    },
+    {
+      "id": "M01-A08",
+      "scenario": "race 头部 awaitAll、reset 条件、无目标 detach",
+      "acceptance": "在 elaboration 明确拒绝；合法聚合 task 与监督 scope 对例可通过"
+    },
+    {
+      "id": "M01-A09",
+      "scenario": "仅有 Unit 成功返回的 checker，无 soundness/证书",
+      "acceptance": "仅输出 checked 结果，不生成声称已证明的 valid 命题"
+    },
+    {
+      "id": "M01-A10",
+      "scenario": "重复导入、namespace 别名、先使用后收集的依赖及身份冲突",
+      "acceptance": "合法引用都指向唯一规范定义且不受收集顺序影响；冲突／悬空引用在发布导出声明前失败"
+    },
+    {
+      "id": "M01-A11",
+      "scenario": "连续 elaboration 两个不同 profile/limit 的项目",
+      "acceptance": "每个 Project 只含本次有效配置；第二次不误用第一次的 capability、限额或与本次环境不符的类型类缓存结果"
+    },
+    {
+      "id": "M02-A01",
+      "scenario": "每个支持类型的边界值",
+      "acceptance": "encode/decode 往返一致，证明项由锁定 Lean kernel 检查"
+    },
+    {
+      "id": "M02-A02",
+      "scenario": "带 payload 的两个不同 constructor",
+      "acceptance": "tag 与各自字段保真，不退化为无数据 enum"
+    },
+    {
+      "id": "M02-A03",
+      "scenario": "长度 capacity、capacity+1，非法 tag／descriptor 偏移",
+      "acceptance": "合法边界值成功；长度／tag 由值 codec 拒绝，畸形偏移由布局／descriptor 校验拒绝，均在相应解引用前失败"
+    },
+    {
+      "id": "M02-A04",
+      "scenario": "Nat、无界 ByteArray、递归 List、closure",
+      "acceptance": "运行时布局生成失败，含来源诊断"
+    },
+    {
+      "id": "M02-A05",
+      "scenario": "extension 注册顺序改变",
+      "acceptance": "稳定 key/hash 不变，C++ 本地 ID 可变且不影响往返"
+    },
+    {
+      "id": "M02-A06",
+      "scenario": "host endian/BUSWIDTH 未支持组合",
+      "acceptance": "明确拒绝；受支持转换与参考字节序一致"
+    },
+    {
+      "id": "M02-A07",
+      "scenario": "Fin n 的 n−1/n、Fin 0 与空容器",
+      "acceptance": "合法值往返；越界或空 Fin 拒绝；合法空容器可编码，精化约束穿过两 IR"
+    },
+    {
+      "id": "M02-A08",
+      "scenario": "已注册 extension 缺失及 request/response 分阶段必需",
+      "acceptance": "base 返回 None 并走声明默认值；standalone 在声明有效阶段检查，未要求请求提前带 response extension"
+    },
+    {
+      "id": "M02-A09",
+      "scenario": "同一逻辑类型的 descriptor 与 native ABI 有不同 padding",
+      "acceptance": "各布局身份不同且转换保真；不能通过同 TypeId 直接 reinterpret"
+    },
+    {
+      "id": "M02-A10",
+      "scenario": "普通 ByteArray 的 max/max+1 长度及声明的有界包装",
+      "acceptance": "max 值经显式校验后可编码；max+1 拒绝；证明项的量化类型是有界类型，不伪造全局 ATRepr ByteArray"
+    },
+    {
+      "id": "M02-A11",
+      "scenario": "结构合法的 stale handle、错误 owner、非法 kind",
+      "acceptance": "stale 身份可纯往返但在使用点拒绝，错误 owner 不获得权限；非法 kind 在结构 decode 时拒绝"
+    },
+    {
+      "id": "M02-A12",
+      "scenario": "Record 自引用、两类型互相按值引用、普通 Handle 字段",
+      "acceptance": "前两项在布局计算前拒绝并指出环；Handle 仅编码身份而不递归展开 store"
+    },
+    {
+      "id": "M03-A01",
+      "scenario": "位操作、record/match、有界循环",
+      "acceptance": "Lean 函数、PureProgram、C++ evaluator 对测试域结果一致"
+    },
+    {
+      "id": "M03-A02",
+      "scenario": "checked 时间溢出、除零、min/-1、超宽 shift",
+      "acceptance": "两端返回同一分类错误，无 UB"
+    },
+    {
+      "id": "M03-A03",
+      "scenario": "显式 bit-vector 截断与隐式地址截断",
+      "acceptance": "前者按定义执行，后者拒绝"
+    },
+    {
+      "id": "M03-A04",
+      "scenario": "unsafe/partial/IO/未支持实例",
+      "acceptance": "重化失败，报告展开后的违规来源"
+    },
+    {
+      "id": "M03-A05",
+      "scenario": "关闭 extern-pure 再运行函数",
+      "acceptance": "reference 仍可执行，输出与开启后的合格 native 样本一致"
+    },
+    {
+      "id": "M03-A06",
+      "scenario": "只有 validator 成功没有 correct 证明",
+      "acceptance": "evidence 保持 checked，不能显示 proved"
+    },
+    {
+      "id": "M03-A07",
+      "scenario": "源 UInt/BitVec 边界运算与不同语义 checked helper",
+      "acceptance": "每项按源操作映射或明确拒绝；不得把源的合法值变为新 evaluator error"
+    },
+    {
+      "id": "M03-A08",
+      "scenario": "返回 Except 的除零与短 budget",
+      "acceptance": "前者为编码的业务 Error；后者为 LimitReached；均不伪装成彼此或正常数值"
+    },
+    {
+      "id": "M03-A09",
+      "scenario": "条件性证明或纯逻辑假设式 extern",
+      "acceptance": "前提与假设可见；没有可执行 reference 时拒绝可执行/差分构建，不标全输入 correct"
+    },
+    {
+      "id": "M03-A10",
+      "scenario": "同一多态函数的两种类型与两种同类型类实现",
+      "acceptance": "生成各自闭合的 FunctionId/程序/reference；未解隐式参数拒绝，缓存不混用不同实例"
+    },
+    {
+      "id": "M03-A11",
+      "scenario": "if/match 未选分支含会失败的检查或越界读取",
+      "acceptance": "只执行所选分支并保留其结果；重化及两 IR lowering 不因提前求值制造错误"
+    },
+    {
+      "id": "M03-A12",
+      "scenario": "reference 通过 helper 调用另一带 extern 标记的函数；native gate 失败",
+      "acceptance": "reference 闭包不进入 native；native 失败经内部执行错误通道报告，PureCall 的逻辑 TypeId 不变且无伪造 T 值"
+    },
+    {
+      "id": "M04-A01",
+      "scenario": "handler 经两层 helper 调用 awaitSlot",
+      "acceptance": "编译失败，调用链完整"
+    },
+    {
+      "id": "M04-A02",
+      "scenario": "同步入口未来读内存、缺 permit 的 UPDATED",
+      "acceptance": "在生成前失败"
+    },
+    {
+      "id": "M04-A03",
+      "scenario": "两实例 multi sockets、合法 map",
+      "acceptance": "分配独立 connection，预算可计算"
+    },
+    {
+      "id": "M04-A04",
+      "scenario": "重叠 map、双 sideband writer、不兼容 traits",
+      "acceptance": "精确定位双方声明并拒绝"
+    },
+    {
+      "id": "M04-A05",
+      "scenario": "同 pool 递归 spawn 等待",
+      "acceptance": "可识别情形产生资源依赖诊断，不承诺自动解决"
+    },
+    {
+      "id": "M04-A06",
+      "scenario": "未配置容量／未知 capability／raw 混 timing-strict",
+      "acceptance": "前两项必须拒绝；第三项拒绝或仅接受已明确记录的语义降级"
+    },
+    {
+      "id": "M04-A07",
+      "scenario": "scope handle 重复 attach／无目标 detach",
+      "acceptance": "静态可见错误拒绝；动态情况生成检查"
+    },
+    {
+      "id": "M04-A08",
+      "scenario": "handler while／缺返回／错 phase 方向／错返回类型",
+      "acceptance": "生成前拒绝，诊断指出具体路径与上下文"
+    },
+    {
+      "id": "M04-A09",
+      "scenario": "未准备 response 的 UPDATED/BEGIN_RESP 与 COMPLETED",
+      "acceptance": "均拒绝或生成明确有界 guard；合法外部返回仍由完整 base 矩阵接收"
+    },
+    {
+      "id": "M04-A10",
+      "scenario": "race 混型、非法嵌套 condition、自毁 cancel observer",
+      "acceptance": "违规拒绝；合法 Variant/Record、重复句柄 all 与空 all 可通过并保留 pin/预算要求"
+    },
+    {
+      "id": "M04-A11",
+      "scenario": "objectCall 伪造较小 effectMask",
+      "acceptance": "checker 与注册表效果闭包比较后拒绝，不因 helper 包装漏检"
+    },
+    {
+      "id": "M04-A12",
+      "scenario": "动态下标／response 条件需要 guard，及只有文字承诺的检查",
+      "acceptance": "合格 guard 有输入、上下文、执行位置和失败策略并支配所保护操作；缺实现节点／非法读取权限者拒绝"
+    },
+    {
+      "id": "M04-A13",
+      "scenario": "top input→两个实例 input、实例 output→top output 及第二驱动者",
+      "acceptance": "合法扇出与方向可通过并保留完整连接记录；第二驱动者及错误 top/instance 方向拒绝"
+    },
+    {
+      "id": "M05-A01",
+      "scenario": "ProbeV1 八条规则与 TraceMarkerV1",
+      "acceptance": "schema、表与图对应一致，每种允许／禁止返回有夹具"
+    },
+    {
+      "id": "M05-A02",
+      "scenario": "相同 call，不同 sync／returnedPhase",
+      "acceptance": "选取正确独立规则"
+    },
+    {
+      "id": "M05-A03",
+      "scenario": "重叠 guard 无/同 priority；显式不同 priority",
+      "acceptance": "前者拒绝或有可检查互斥证据；后者低数值优先，改变声明顺序不改变 winner，证据不假称 guard 互斥"
+    },
+    {
+      "id": "M05-A04",
+      "scenario": "releasePayload、silentTerminal、任意函数 guard",
+      "acceptance": "grammar／validator 拒绝"
+    },
+    {
+      "id": "M05-A05",
+      "scenario": "ignorable 覆盖 base exclusion／返回表",
+      "acceptance": "保守扩展检查失败"
+    },
+    {
+      "id": "M05-A06",
+      "scenario": "不同 mandatory traits 直接 bind",
+      "acceptance": "静态拒绝，只有显式合格 adapter 可接入"
+    },
+    {
+      "id": "M05-A07",
+      "scenario": "请求缺 response extension，响应时仍缺；guard 重新读取 mutable 值",
+      "acceptance": "前者请求可接纳、响应阶段拒绝；后者 guard 验证失败，快照阶段可追踪"
+    },
+    {
+      "id": "M05-A08",
+      "scenario": "response lane 被其他 hop 占有时尝试立即 completed",
+      "acceptance": "call 入口拒绝绕过排他；合法 shortcut 不释放别人的 lane"
+    },
+    {
+      "id": "M05-A09",
+      "scenario": "DSL 省略 role，且 source/target 处理同一 CallId",
+      "acceptance": "两侧各自关联一次合法 exchange；同一 local ledger 重复应用被拒绝"
+    },
+    {
+      "id": "M05-A10",
+      "scenario": "guard 读取 returnSync/response，入口尚未返回",
+      "acceptance": "call 阶段不读取未产生字段；end_call 用实际快照选择对应行；依赖未来字段的入口动作声明拒绝"
+    },
+    {
+      "id": "M05-A11",
+      "scenario": "同一 call 的 shortcut 行无 AcquireLane，或 return 行入口动作不一致",
+      "acceptance": "shortcut 仍执行显式 entry lane 检查且动作总共一次；无法受检拆分的规则在表生成前拒绝"
+    },
+    {
+      "id": "M06-A01",
+      "scenario": "覆盖全部表达式／语句 constructor 的模型",
+      "acceptance": "每个节点完整保存 operand/operator/source，无 kind+无类型数组替代"
+    },
+    {
+      "id": "M06-A02",
+      "scenario": "record、带数据 variant、异构 awaitAll",
+      "acceptance": "类型和布局完整，无丢失 constructor payload"
+    },
+    {
+      "id": "M06-A03",
+      "scenario": "同类组件多实例及多 hop",
+      "acceptance": "定义、实例、connection 身份分别可查询"
+    },
+    {
+      "id": "M06-A04",
+      "scenario": "未声明引用、非法标签、未知 capability",
+      "acceptance": "schema/checker 拒绝且定位 source"
+    },
+    {
+      "id": "M06-A05",
+      "scenario": "协议 priority、managed service、extern reference",
+      "acceptance": "从 DSL 至 ModelIR 均保留，后续可追踪"
+    },
+    {
+      "id": "M06-A06",
+      "scenario": "逐一构造全部 WaitSpec、shortcut 与异构结果",
+      "acceptance": "参数、结果 TypeId、owner、deadline 单位齐全；phase/response 不混同；无匿名无布局结果"
+    },
+    {
+      "id": "M06-A07",
+      "scenario": "result 读取、消费后读取、未就绪读取",
+      "acceptance": "ReadResult 有完整语义/lowering；正常返回 owned Value，其余按合同失败且不偷偷等待或释放"
+    },
+    {
+      "id": "M06-A08",
+      "scenario": "协议 required extension/ignorePolicy、endpoint debug/DMI/businessKey",
+      "acceptance": "原 DSL 声明经 elaboration 与序列化/反序列化后逐字段相等，不靠外部隐式配置补回"
+    },
+    {
+      "id": "M06-A09",
+      "scenario": "Fin bound、requires、extern constructor 与契约",
+      "acceptance": "两 IR 对应字段和证据引用不丢失；缺少必需字段在结构校验失败"
+    },
+    {
+      "id": "M06-A10",
+      "scenario": "含 top/instance connect、reset when、内部事件和动态 return 增量的项目",
+      "acceptance": "序列化往返逐字段保真，所有连接／trigger／时间 operand 可由本 Project 独立解析，不靠显示名称或运行时指针恢复"
+    },
+    {
+      "id": "M06-A11",
+      "scenario": "if/match 未选失败分支、错 constructor binder、动态 operand 写成真实运行时 handle",
+      "acceptance": "合法分支仅执行选中项；错 binder／非法嵌入值在结构校验失败，不生成不可执行 ModelIR"
+    },
+    {
+      "id": "M06-A12",
+      "scenario": "CallRule/ExchangeRule 的入口 guard 读取返参，或同动作双阶段应用",
+      "acceptance": "schema/validator 拒绝；合法两阶段映射保留完整 source exchange 且各动作只应用一次"
+    },
+    {
+      "id": "M06-A13",
+      "scenario": "原子 RequestGateReady 注册中即时授予、注册容量失败、旧代／Consumed 票",
+      "acceptance": "即时授予 latch 可观察且包含同一 ticket；创建失败无残留，旧代／重复消费拒绝，不漏唤醒或提前产生 wire phase"
+    },
+    {
+      "id": "M07-A01",
+      "scenario": "call=100/in=10/out=25",
+      "acceptance": "输入110、返回125，wire 与 timed 消费分离"
+    },
+    {
+      "id": "M07-A02",
+      "scenario": "队列空但存在 drain／外部请求",
+      "acceptance": "WaitingForEnvironment，不报 Quiescent"
+    },
+    {
+      "id": "M07-A03",
+      "scenario": "object 写后 prepare 失败",
+      "acceptance": "前后业务状态一致，错误前缀可重放"
+    },
+    {
+      "id": "M07-A04",
+      "scenario": "宿主前缀预算、段 fuel、零时间循环及恰足完成的预算",
+      "acceptance": "有限返回并区分 RunBudgetReached/FuelExhausted/ZenoDetected；恰足完成不改报限制，续调度不清零每 Tick 累计值"
+    },
+    {
+      "id": "M07-A05",
+      "scenario": "同 transcript 重复运行",
+      "acceptance": "全语义 trace 和稳定快照一致"
+    },
+    {
+      "id": "M07-A06",
+      "scenario": "同 Tick 不同 turn 的 timeout/response",
+      "acceptance": "较早 ready 胜出，迟到输入不逆转结果"
+    },
+    {
+      "id": "M07-A07",
+      "scenario": "ModelIR／Lean ExecIR 同模型",
+      "acceptance": "约定观察层一致；内部微步可 stutter"
+    },
+    {
+      "id": "M07-A08",
+      "scenario": "请求数据或 callback 序改动，但复用原返参 transcript",
+      "acceptance": "首个实际调用不匹配处报告 EnvironmentViolation，附完整期望/实际值"
+    },
+    {
+      "id": "M07-A09",
+      "scenario": "horizon 前发出请求、其响应在 horizon 后",
+      "acceptance": "保留已发生 wire/pin/drain 状态，返回有限前缀与 HorizonReached，不提前消费响应"
+    },
+    {
+      "id": "M07-A10",
+      "scenario": "CompleteNow 与同请求 ordinary beginReq fixture",
+      "acceptance": "同步路径执行业务一次；默认 deferred 路径在有效时间执行一次，无双执行"
+    },
+    {
+      "id": "M07-A11",
+      "scenario": "当前 batch 候选收集及 resolver epilogue 分别耗尽预算，再续跑",
+      "acceptance": "独立 cursor/候选/pins 保留，无下一批普通 resolver event 或批次互等；每次有限返回，续跑结果与足够预算一致，resume 进入后继 turn"
+    },
+    {
+      "id": "M07-A12",
+      "scenario": "Select 的未选越界分支、Match 的未选 constructor 字段读取",
+      "acceptance": "只执行选中表达式与 case 绑定；不产生未选分支的错误、外调或额外语义 trace"
+    },
+    {
+      "id": "M08-A01",
+      "scenario": "每项 proved 记录",
+      "acceptance": "可定位 theorem、复核 kernel、取得 axioms 和 artifact hash"
+    },
+    {
+      "id": "M08-A02",
+      "scenario": "只有差分报告或 monitor 日志",
+      "acceptance": "保持 tested／runtime-monitored，不升级 proved"
+    },
+    {
+      "id": "M08-A03",
+      "scenario": "修改 descriptor／native binary",
+      "acceptance": "原证据标不匹配，要求重新建立对应"
+    },
+    {
+      "id": "M08-A04",
+      "scenario": "活性 theorem 去掉环境进展前提",
+      "acceptance": "评审／checker 不能发布无条件活性声称"
+    },
+    {
+      "id": "M08-A05",
+      "scenario": "scope 重复取消、lane owner 转移等关键性质",
+      "acceptance": "证明项或明确尚未完成的义务逐项展示"
+    },
+    {
+      "id": "M08-A06",
+      "scenario": "端到端报告",
+      "acceptance": "未完成 RuntimeRefines/AdapterRefines 列在 assumptions 中"
+    },
+    {
+      "id": "M08-A07",
+      "scenario": "checker 返回 ok，但缺 soundness/证书",
+      "acceptance": "记录 checked，不能从此自动导出证明式 Valid 或端到端 proved"
+    },
+    {
+      "id": "M08-A08",
+      "scenario": "lower/emit 失败或不可执行逻辑假设 reference",
+      "acceptance": "不能以空 trace/占位 run 构造发布成功；对应 artifact 与可执行路径义务保持未完成"
+    },
+    {
+      "id": "M08-A09",
+      "scenario": "同一外部依赖部分 proved、部分 tested、仍有 assumed 属性",
+      "acceptance": "manifest 保留每项 scope/状态及原标签，不被综合评级抹去"
+    },
+    {
+      "id": "M08-A10",
+      "scenario": "lowering 增加内部微步后，以同数字 fuel 截断两端",
+      "acceptance": "按匹配的已完成观察前缀及停止原因报告；不误报全程相等或将未完成当语义差异"
+    },
+    {
+      "id": "M08-A11",
+      "scenario": "合法输入下立即 Fail 的候选执行器或 native ABI 错误",
+      "acceptance": "空前缀仅满足的安全包含不升级为完整对应／进展；错误不被 observation 隐藏，剩余关系／环境前提明确"
+    },
+    {
+      "id": "M09-A01",
+      "scenario": "每个 Core/Ext opcode 的合法与非法 operand",
+      "acceptance": "validator 与 Lean evaluator 均有对应分支，无未知同义 opcode"
+    },
+    {
+      "id": "M09-A02",
+      "scenario": "未定义寄存器、不支配使用、错 block arity、错 live 集",
+      "acceptance": "启动前拒绝，定位 program/block/instruction/source"
+    },
+    {
+      "id": "M09-A03",
+      "scenario": "Suspend 后指令／handler Suspend",
+      "acceptance": "validator 拒绝"
+    },
+    {
+      "id": "M09-A04",
+      "scenario": "malformed table/tag/type/capability",
+      "acceptance": "不进入 evaluator"
+    },
+    {
+      "id": "M09-A05",
+      "scenario": "同 Core-only descriptor 在 Core／Ext evaluator",
+      "acceptance": "L1/L2 trace 一致，空扩展表不改变顺序"
+    },
+    {
+      "id": "M09-A06",
+      "scenario": "注入算术／generation 边界值",
+      "acceptance": "明确错误，无回绕或错误值继续运行"
+    },
+    {
+      "id": "M09-A07",
+      "scenario": "缺/重复 waitArm、错误结果 type、single/group handle 混用",
+      "acceptance": "validator 可知部分在加载拒绝，动态身份在使用前失败，无丢唤醒或乱读结果"
+    },
+    {
+      "id": "M09-A08",
+      "scenario": "Pending SpawnTicket 被提前消费，grant 后取消，正常 grant 后 spawn",
+      "acceptance": "前者失败；取消归还预留；正常只消费一次，所有 outcome 有合法恢复分支"
+    },
+    {
+      "id": "M09-A09",
+      "scenario": "descriptor 缺 endpoint/extension/初始化/精化字段、sideband/reset/map/region 引用，或 intrinsic effect 伪装",
+      "acceptance": "完整性校验失败，不能用默认值或隐藏 ModelIR 表补回不同语义"
+    },
+    {
+      "id": "M09-A10",
+      "scenario": "非法 Switch/Return 类型与 malformed 常量",
+      "acceptance": "加载拒绝，未运行任何程序；合法边界常量与两端 evaluator 相同"
+    },
+    {
+      "id": "M09-A11",
+      "scenario": "frame 与声明的 live 次序冲突、缺 WaitOutcome、旧 suspension outcome、Switch 参数交换",
+      "acceptance": "静态布局／边映射冲突在加载拒绝；动态旧通知不恢复新段；合法边按同时绑定执行，源码顺序保持另由 M10 检验"
+    },
+    {
+      "id": "M09-A12",
+      "scenario": "TypeId 全存在但 Record 内联自环，或 pure body 偷渡未受界递归／错误签名",
+      "acceptance": "完整验证拒绝；有限共享 DAG 与 Handle 身份布局仍可用，不把 decode 当 liveness 证明"
+    },
+    {
+      "id": "M10-A01",
+      "scenario": "handler/service 示例",
+      "acceptance": "send/schedule 时间与本地 commit 顺序与 ModelIR 一致"
+    },
+    {
+      "id": "M10-A02",
+      "scenario": "response shortcut + await",
+      "acceptance": "等待 responseReady，不强制等待被跳过的 END_REQ"
+    },
+    {
+      "id": "M10-A03",
+      "scenario": "Select response/timeout，resolver 跨 work budget 续跑",
+      "acceptance": "priority/ordinal 保留；未选 branch 无 effect；无下一批普通 resolver event，当前 batch epilogue 完成后 resume 才进入后继 turn"
+    },
+    {
+      "id": "M10-A04",
+      "scenario": "process awaitSlot 与 handler awaitSlot",
+      "acceptance": "前者产生合法 Suspend；后者在前端拒绝"
+    },
+    {
+      "id": "M10-A05",
+      "scenario": "跨挂起 record/variant/handle",
+      "acceptance": "frame 保留全部 live 值，不存 GP 借用指针"
+    },
+    {
+      "id": "M10-A06",
+      "scenario": "两端解释器执行相同 transcript",
+      "acceptance": "L1/L2 结果一致，差异可定位到 pass/source"
+    },
+    {
+      "id": "M10-A07",
+      "scenario": "删除某扩展 opcode/reference/source，或丢失 sideband 接线／reset predicate／map owner／region owner",
+      "acceptance": "完整性检查失败，不交付残缺 descriptor；有效字段逐一对应源 schema"
+    },
+    {
+      "id": "M10-A08",
+      "scenario": "task ticket Pending/Granted/取消、Queue/Reject 资源满",
+      "acceptance": "生成可执行错误 CFG；仅 Granted 消费一次，取消无残留预留，没有隐含阻塞 C++ 调用"
+    },
+    {
+      "id": "M10-A09",
+      "scenario": "All 空集/重复 handle/失败、Select 所有出口",
+      "acceptance": "结果布局/consumer 计数正确；每个 group release 路径可追踪，loser 业务仍按 scope 合同运行"
+    },
+    {
+      "id": "M10-A10",
+      "scenario": "requestManaged Denied/错误、源 PureCall T 的 ABI error／源业务 Except.error",
+      "acceptance": "仅声明的 Denied 进入 fallback；ABI error 停止本段，不改变源 T；源业务 Except 保持可匹配；关闭 extern 执行 reference"
+    },
+    {
+      "id": "M10-A11",
+      "scenario": "resultGet/taskResultGet 与 release、scope return/fail",
+      "acceptance": "owned 结果先取得；释放和 ownership cleanup 可达且恰一次；两 IR 的语义观察一致"
+    },
+    {
+      "id": "M10-A12",
+      "scenario": "`if i < length then bytes[i] else zero` 的越界 else 路径、两同类型 live 值跨 await 交换／分支 join",
+      "acceptance": "未选索引不执行；恢复与 join 保留源变量对应关系，不能只凭类型相同声称布局正确"
+    },
+    {
+      "id": "M10-A13",
+      "scenario": "dynamic After、脱离项目调用 process pass、依赖返回字段的协议 guard",
+      "acceptance": "checked 指令／失败 CFG 有实际定义且支配时间 operand；缺上下文拒绝；入口不读尚未存在的返回值"
+    },
+    {
+      "id": "M10-A14",
+      "scenario": "gate Granted 后释放 wait 再发送、gate 输给 deadline、取消票据或重复使用",
+      "acceptance": "许可从登记转到发送 owner 后仍有效且仅消费一次；未选／取消路径无发送且归还本票，无隐藏 opcode／隐式等待"
+    },
+    {
+      "id": "M11-A01",
+      "scenario": "serialize→deserialize→serialize",
+      "acceptance": "规范字节完全相同；语义结构一致"
+    },
+    {
+      "id": "M11-A02",
+      "scenario": "改变宿主 map 枚举、机器字节序",
+      "acceptance": "同输入产生相同格式；不支持主机布局另明确拒绝"
+    },
+    {
+      "id": "M11-A03",
+      "scenario": "截断、巨大长度、深度、offset 溢出",
+      "acceptance": "有界失败，无越界读／无限分配"
+    },
+    {
+      "id": "M11-A04",
+      "scenario": "hash 正确但 CFG/type/tag 非法",
+      "acceptance": "validateExec 失败，不启动 Runtime"
+    },
+    {
+      "id": "M11-A05",
+      "scenario": "Core loader 装载 Ext；未知 major",
+      "acceptance": "明确兼容错误"
+    },
+    {
+      "id": "M11-A06",
+      "scenario": "参数／runtime ABI/hash 不一致",
+      "acceptance": "装载拒绝并列出差异，不静默降级"
+    },
+    {
+      "id": "M11-A07",
+      "scenario": "重叠/重复 section、目录被覆盖、尾随字节、非规范 Bool",
+      "acceptance": "按版本格式有界拒绝；不得将部分文件误作完整 ValidatedProject"
+    },
+    {
+      "id": "M11-A08",
+      "scenario": "文件自述超大 LoadPolicy 或同 nameHash 不同完整 key",
+      "acceptance": "不提高宿主上限；不同 key 不合并，冲突不绕过验证"
+    },
+    {
+      "id": "M11-A09",
+      "scenario": "按已定义覆盖域重算 integrity 与 manifest hash",
+      "acceptance": "计算无自引用循环；篡改头/表/依赖任一字节导致对应检查失败"
+    },
+    {
+      "id": "M11-A10",
+      "scenario": "解码末阶段失败或分配失败",
+      "acceptance": "无 Runtime/Host/native 执行，临时资源清理；不留下半装载成功对象"
+    },
+    {
+      "id": "M11-A11",
+      "scenario": "浅层文件包含深 TypeId 链、共享 DAG 或引用环，触达宿主验证工作上限",
+      "acceptance": "遍历与内存有界，环按 M09 拒绝；共享节点不指数展开，超限不产出已验证对象"
+    },
+    {
+      "id": "M11-A12",
+      "scenario": "文件自报兼容但宿主 provider/codec 不匹配，或验证后替换运行表／registry",
+      "acceptance": "不能靠文件 hash／旧检查记录启动；按实际冻结依赖拒绝或重新验证，检查过程不调用 native symbol"
+    },
+    {
+      "id": "M12-A01",
+      "scenario": "Memory/DMA/Crossbar/多实例 Top",
+      "acceptance": "在锁定 C++17/SystemC 工具链完整编译链接"
+    },
+    {
+      "id": "M12-A02",
+      "scenario": "Inspect 生成 Top 及 sideband/reset 接线",
+      "acceptance": "全部生成实例引用同一 domain；top/instance 端口、初值及 reset predicate 与 descriptor 对应，不复制调度器或猜接线"
+    },
+    {
+      "id": "M12-A03",
+      "scenario": "引号、反斜线、Unicode、冲突名字",
+      "acceptance": "生成源码可编译且字符串值保真"
+    },
+    {
+      "id": "M12-A04",
+      "scenario": "Probe phase 跨 TU／插件加载顺序变化",
+      "acceptance": "stable key codec 正确，不依赖注册数值"
+    },
+    {
+      "id": "M12-A05",
+      "scenario": "同输入连续 emit",
+      "acceptance": "描述符和语义源码字节稳定；非语义构建时间单列"
+    },
+    {
+      "id": "M12-A06",
+      "scenario": "所有输出 hash／source map",
+      "acceptance": "与实际文件一致，每个 handler/op 可定位源"
+    },
+    {
+      "id": "M12-A07",
+      "scenario": "可选能力关闭",
+      "acceptance": "不链接未启用库，base 互操作完整"
+    },
+    {
+      "id": "M12-A08",
+      "scenario": "独立模块与多实例 Top、回调/对象销毁顺序",
+      "acceptance": "domain 边界与 manifest 一致；无构造期 Host 调用、callback 悬空或因析构伪造 completed"
+    },
+    {
+      "id": "M12-A09",
+      "scenario": "nb/b/debug/启用 raw 的交替访问及 initiator invalidation",
+      "acceptance": "共享功能 backing，copy-back/Count/hint 正确；失效范围和 connection 回程正确"
+    },
+    {
+      "id": "M12-A10",
+      "scenario": "ACCEPTED/UPDATED/COMPLETED/END_RESP 返回夹具",
+      "acceptance": "生成 façade 按合法参数类别处理，END_RESP/ACCEPTED 仍 terminal；无未检查 .value()"
+    },
+    {
+      "id": "M12-A11",
+      "scenario": "中途写失败、未经验证的单独 binding/ABI emit",
+      "acceptance": "不发布成功 manifest 或可误用半包，输出准确失败原因"
+    },
+    {
+      "id": "M12-A12",
+      "scenario": "Foo/foo、Windows 保留名、Unicode 归一化冲突及含父目录片段的名称",
+      "acceptance": "生成路径与 include/CMake 引用确定且无冲突；不越出输出目录、不覆盖另一组件或手写源"
+    },
+    {
+      "id": "M12-A13",
+      "scenario": "静态表与 bin 各自 hash 有效但初始 state／协议表不同，或静态表损坏",
+      "acceptance": "运行来源明确，一致性／完整启动检查失败；不能检查一种表示后执行另一种"
+    },
+    {
+      "id": "M13-A01",
+      "scenario": "独立 C4 fake Host 运行",
+      "acceptance": "无 SystemC 链接依赖，执行接口可完整驱动"
+    },
+    {
+      "id": "M13-A02",
+      "scenario": "同域受控一次外发、receiver ingress、同步 return",
+      "acceptance": "同一 CallId 的两端各一次 call/return；sender record_return 不重放 receiver"
+    },
+    {
+      "id": "M13-A03",
+      "scenario": "prepare 失败与不同阶段的 Host 失败",
+      "acceptance": "前者无本地半提交；后者按 socketCallStarted/GP 可见写回记录真实前缀并停止／报告，不虚构未发生的调用"
+    },
+    {
+      "id": "M13-A04",
+      "scenario": "callback 调用 ingress",
+      "acceptance": "不递归执行未来业务，wire 可即时更新"
+    },
+    {
+      "id": "M13-A05",
+      "scenario": "单 batch 超过 budget",
+      "acceptance": "有限返回并重新 arm，不饿死外部过程"
+    },
+    {
+      "id": "M13-A06",
+      "scenario": "队列空但 drain 存在",
+      "acceptance": "WaitingForEnvironment；无虚假完成"
+    },
+    {
+      "id": "M13-A07",
+      "scenario": "intent 在 T=100 创建，T=200 才外发；期间取消另一请求",
+      "acceptance": "200 前无该 intent 的 WireCall/lane 变化，未发撤销不制造 terminal"
+    },
+    {
+      "id": "M13-A08",
+      "scenario": "外部入口、跨域、同向多 hop 转发",
+      "acceptance": "本域 ID 可独立；新 hop 新真实调用 ID；不要求 GP 携带 CallId"
+    },
+    {
+      "id": "M13-A09",
+      "scenario": "同步 CompleteNow 与 deferredAccepted 对照",
+      "acceptance": "前者业务恰执行一次；后者直到 inTime 执行，ACCEPTED 原参数保留"
+    },
+    {
+      "id": "M13-A10",
+      "scenario": "嵌套入口插入更早事件，再返回较晚外层调用",
+      "acceptance": "arm 最终指向全队列最早事件；无 lost wakeup；pump 重入明确拒绝"
+    },
+    {
+      "id": "M13-A11",
+      "scenario": "result handle 别名及两独立 consumer",
+      "acceptance": "一个别名 take 后其余别名报已消费；独立 consumer 仍有效"
+    },
+    {
+      "id": "M13-A12",
+      "scenario": "切片 budget 耗尽与累计 Zeno/Fuel 限制分别触发",
+      "acceptance": "前者有限让出后续跑原 cursor；后者 Stopped 并取消 wake，后续 arm 不复活运行、不重置限额计数"
+    },
+    {
+      "id": "M14-A01",
+      "scenario": "上表所有合法／非法单元格",
+      "acceptance": "合法产生准确里程碑；非法拒绝并记录 call 上下文"
+    },
+    {
+      "id": "M14-A02",
+      "scenario": "未来 END_REQ 已调用后新 BEGIN_REQ",
+      "acceptance": "按 wire 顺序允许，业务仍按有效时间"
+    },
+    {
+      "id": "M14-A03",
+      "scenario": "shortcut 与 END_RESP/ACCEPTED",
+      "acceptance": "terminal 恰一次，无伪造 phase／多余 ack"
+    },
+    {
+      "id": "M14-A04",
+      "scenario": "重复 end_call 或重复有效事件",
+      "acceptance": "拒绝重复 ticket；事件不重放 wire 转换"
+    },
+    {
+      "id": "M14-A05",
+      "scenario": "反向嵌套／错误 lane owner",
+      "acceptance": "立即协议诊断，不修改其他事务 lane"
+    },
+    {
+      "id": "M14-A06",
+      "scenario": "取消任一线上状态",
+      "acceptance": "产生 DrainPlan，不 forceTerminal/free"
+    },
+    {
+      "id": "M14-A07",
+      "scenario": "同 call 不同返参的 Ext exchange",
+      "acceptance": "按完整返回匹配，不能仅 phase 匹配"
+    },
+    {
+      "id": "M14-A08",
+      "scenario": "ACCEPTED 返参 phase/delay 被恶意改写，含不可 decode phase/溢出 delay",
+      "acceptance": "不消费改写返参；call milestone 使用输入点；生成方仍保持原参数"
+    },
+    {
+      "id": "M14-A09",
+      "scenario": "BEGIN_RESP(inTime=110)→COMPLETED(outTime=125)；END_RESP→COMPLETED",
+      "acceptance": "前者响应110/terminal125，后者只 terminal；不要求 ACK 新快照"
+    },
+    {
+      "id": "M14-A10",
+      "scenario": "A 已 END_REQ；B 获 request lane；随后 A BEGIN_RESP",
+      "acceptance": "A 的 implicit release 不释放 B；双方合法 lane 状态可核算"
+    },
+    {
+      "id": "M14-A11",
+      "scenario": "返回容量耗尽/非法 return、重复 ticket",
+      "acceptance": "调用前有容量担保；错误保留真实 call trace，无半次重放/伪 terminal"
+    },
+    {
+      "id": "M14-A12",
+      "scenario": "END_RESP 的 inTime=110，返回 COMPLETED/outTime=125",
+      "acceptance": "wire 在 call 边结束；phase 可在110观察，semantic terminal只在125一次生效，不能提前在110唤醒 awaitTerminal"
+    },
+    {
+      "id": "M15-A01",
+      "scenario": "父事件在 T 产生同 T cancel/reset 子事件",
+      "acceptance": "子事件晚 turn，不能排到父事件前"
+    },
+    {
+      "id": "M15-A02",
+      "scenario": "同时间全部 stage",
+      "acceptance": "同批按固定顺序，空 stage 不改变 Core 行为"
+    },
+    {
+      "id": "M15-A03",
+      "scenario": "budget 切开 batch",
+      "acceptance": "后续恢复保持原闭合边界；WaitGroup 不提前选 winner"
+    },
+    {
+      "id": "M15-A04",
+      "scenario": "后到同 Tick 外部 callback",
+      "acceptance": "记录入口序，已有 winner／commit 不改变"
+    },
+    {
+      "id": "M15-A05",
+      "scenario": "time/turn/sequence 最大值及过去调度",
+      "acceptance": "明确失败，无 UInt64 回绕"
+    },
+    {
+      "id": "M15-A06",
+      "scenario": "长时间循环 cancel/重排",
+      "acceptance": "event/tombstone 占用始终有界，可回收"
+    },
+    {
+      "id": "M15-A07",
+      "scenario": "无限零时间行为",
+      "acceptance": "在配置限制内报告 Zeno／fuel，C5 可获得控制"
+    },
+    {
+      "id": "M15-A08",
+      "scenario": "batch 两个候选，budget=1；分片间插入更晚 turn reset",
+      "acceptance": "原 batch 候选集合不变；不提前 resolve，不回滚首个已提交事件"
+    },
+    {
+      "id": "M15-A09",
+      "scenario": "同批 resume 阶段完成任务；resolver预算跨dispatch耗尽",
+      "acceptance": "直接续跑原batch收尾cursor，不依赖下一批次才能完成；原ReadyKey不改、不倒序/死锁"
+    },
+    {
+      "id": "M15-A10",
+      "scenario": "先完成后注册 wait；旧 latch 与新 timeout",
+      "acceptance": "原子纳入当前收集批次，按候选原 ReadyKey 比较，不重开历史 batch"
+    },
+    {
+      "id": "M15-A11",
+      "scenario": "取消最后成员、重复取消、callback 中插入更早 wake",
+      "acceptance": "continuation/pins 可回收；无重复归还；最终 arm 不丢最早工作"
+    },
+    {
+      "id": "M15-A12",
+      "scenario": "最多 budget 个提交后返回并继续",
+      "acceptance": "committed cursor 精确推进；trace 中每个事件段只有一次 commit/外发"
+    },
+    {
+      "id": "M15-A13",
+      "scenario": "pumpBudget=1 连续分片；同 Tick 达到 event/turn 硬上限",
+      "acceptance": "分片不清零计数；软预算正常续跑，硬上限返回 Stopped/明确原因，保留前缀且不自动重试"
+    },
+    {
+      "id": "M16-A01",
+      "scenario": "N 服务槽占满再收到合法 N+1 请求",
+      "acceptance": "保存 pending，暂缓 END_REQ，后续可服务"
+    },
+    {
+      "id": "M16-A02",
+      "scenario": "多实例／multi binding 并发",
+      "acceptance": "gate 与 route 独立，不因 local endpointId 相同串扰"
+    },
+    {
+      "id": "M16-A03",
+      "scenario": "readyOrder 中后请求先完成",
+      "acceptance": "按 ready 序回复原 GP，业务 key 重复不混淆"
+    },
+    {
+      "id": "M16-A04",
+      "scenario": "inOrder 同 workload",
+      "acceptance": "依接纳顺序回响应，response phase 不重叠"
+    },
+    {
+      "id": "M16-A05",
+      "scenario": "地址变换后多级 response",
+      "acceptance": "正确返回原 upstream，不按新地址误路由"
+    },
+    {
+      "id": "M16-A06",
+      "scenario": "连续槽复用、溢出、迟到 callback",
+      "acceptance": "generation 校验，不能命中新交易"
+    },
+    {
+      "id": "M16-A07",
+      "scenario": "服务槽有空但 response/result/cleanup 各池分别满",
+      "acceptance": "不提前 END_REQ；已有承诺仍有完整收尾预算；无隐藏 heap"
+    },
+    {
+      "id": "M16-A08",
+      "scenario": "inOrder 的首个已接纳请求尚未 ready，后请求先 ready",
+      "acceptance": "在同一 ordering connection 中不越过首请求；跨 connection 不互相阻塞"
+    },
+    {
+      "id": "M16-A09",
+      "scenario": "response permit 已取得但真实调用尚未发；随后 reset",
+      "acceptance": "wire lane 未假占，permit/快照恰好转回或交 drain；已提供响应则保持原值"
+    },
+    {
+      "id": "M16-A10",
+      "scenario": "wire terminal 后最终 timing 未到，GP 已无本桥协议工作",
+      "acceptance": "允许安全释放 GP pin；值事件正常完成，结果消费者不延长 GP 引用"
+    },
+    {
+      "id": "M16-A11",
+      "scenario": "服务满时收到合法第 N+1 请求与非法重叠 request 两种输入",
+      "acceptance": "前者 pending/延迟 END_REQ，后者协议诊断；不会都当成容量满重试"
+    },
+    {
+      "id": "M16-A12",
+      "scenario": "同域 initiator/target 共用物理 TransportId，并分别访问 hop/服务 permit",
+      "acceptance": "两端局部账本、容量、payload权限独立；相同物理身份不能借用另一端的 owner/permit"
+    },
+    {
+      "id": "M16-A13",
+      "scenario": "drainThenReset 旧父任务必须创建子交易才能完成，另有无关联新请求",
+      "acceptance": "受检 cohort 子交易有界继续，reset可等待其正常结束；无关联新请求仍 pending，不能伪造 cohort 绕过 barrier"
+    },
+    {
+      "id": "M16-A14",
+      "scenario": "A 占 request lane，B/C 等 gate；B 在 grant 前或取得 permit 后、真实发送前超时",
+      "acceptance": "B仅归还自身票据/许可，C按有界FIFO获得资格；无B的WireCall、不释放A的lane；grant后再注册不漏唤醒"
+    },
+    {
+      "id": "M17-A01",
+      "scenario": "COMPLETED 后 GP 回收，再取结果",
+      "acceptance": "数据/status 完整有效，不读旧 GP"
+    },
+    {
+      "id": "M17-A02",
+      "scenario": "完成后再注册 await",
+      "acceptance": "立即取到 latch，不丢通知"
+    },
+    {
+      "id": "M17-A03",
+      "scenario": "被 shortcut 跳过的 phase",
+      "acceptance": "返回 Skipped/Terminated，无伪造 call"
+    },
+    {
+      "id": "M17-A04",
+      "scenario": "两 consumer 和 awaitAll 重复 handle",
+      "acceptance": "都可读，最后引用消失才回收"
+    },
+    {
+      "id": "M17-A05",
+      "scenario": "terminal frame 回收后保留结果",
+      "acceptance": "结果仍可读，容量受 result pool 限制"
+    },
+    {
+      "id": "M17-A06",
+      "scenario": "dropOnTerminal 后才 publish",
+      "acceptance": "任务继续，发布不复活已放弃 consumer；终结后按剩余 refs 回收，不提前 free GP"
+    },
+    {
+      "id": "M17-A07",
+      "scenario": "未来标注 response 后外部 buffer 变化",
+      "acceptance": "未来业务消费接收时快照"
+    },
+    {
+      "id": "M17-A08",
+      "scenario": "A consumer 有两个别名，另有 B consumer；A take 后再经别名 release",
+      "acceptance": "第二次报 ResultConsumed；B 的数据/consumer/pin 全保持有效"
+    },
+    {
+      "id": "M17-A09",
+      "scenario": "两 consumer 加独立 pin，take 时目的结果容量不足",
+      "acceptance": "take 失败不消费；容量足够后复制；pin 持有期可继续读"
+    },
+    {
+      "id": "M17-A10",
+      "scenario": "Task/frame/WaitGroup 工作槽复用后持旧 ResultHandle",
+      "acceptance": "结果仍按自己的 slot/generation 有效；新任务/新 group 不被误命中"
+    },
+    {
+      "id": "M17-A11",
+      "scenario": "local timeout 后迟到 BEGIN_RESP 与最终 ACK",
+      "acceptance": "local outcome 不变；terminal time 原为空，真实最终时间仅在独立 drain/milestone 中更新"
+    },
+    {
+      "id": "M17-A12",
+      "scenario": "显式 BEGIN_RESP、UPDATED/END_REQ、END_RESP/COMPLETED",
+      "acceptance": "仅真实提供响应的阶段需要快照；ACK 不误读旧/未定义返参数据"
+    },
+    {
+      "id": "M17-A13",
+      "scenario": "T=100 捕获有效时间200的响应，T=300才订阅该结果",
+      "acceptance": "200前所有业务读取 NotReady；200发布时持久记录真正 ReadyKey，300订阅保留此键，不用100或300重标"
+    },
+    {
+      "id": "M17-A14",
+      "scenario": "同域 target 已提交 READ shadow，initiator 尚未收到有效响应",
+      "acceptance": "两端 payload view/权限独立；initiator不能凭相同TransportId提前读写target shadow，收到有效快照后才可见"
+    },
+    {
+      "id": "M18-A01",
+      "scenario": "memory 写＋resource reserve 后 event 分配失败",
+      "acceptance": "store/resource/state/shadow 全部保持事务前值"
+    },
+    {
+      "id": "M18-A02",
+      "scenario": "先写再读同 slot/object",
+      "acceptance": "读到自己最新值，commit 后外部才可见"
+    },
+    {
+      "id": "M18-A03",
+      "scenario": "commit 前 epoch 改变",
+      "acceptance": "旧业务不提交，进入规定 reset/error drain"
+    },
+    {
+      "id": "M18-A04",
+      "scenario": "commit 后 Host 违约",
+      "acceptance": "trace 保留 commit/外调事实，不声称回滚"
+    },
+    {
+      "id": "M18-A05",
+      "scenario": "二次 commit/discard-after-commit",
+      "acceptance": "明确错误，无重复 action／重复归还"
+    },
+    {
+      "id": "M18-A06",
+      "scenario": "事务边界内调用外部 socket",
+      "acceptance": "effect/运行时检查拒绝"
+    },
+    {
+      "id": "M18-A07",
+      "scenario": "先 stage spawn/wait/ref release，再在末尾失败",
+      "acceptance": "frame、wait registry、consumer 与 owner 计数均不半提交，原 handle 仍有效"
+    },
+    {
+      "id": "M18-A08",
+      "scenario": "最后一个 provider 版本预检失败",
+      "acceptance": "所有 backing/state/event 队列保持原值；不先 apply 前面 provider"
+    },
+    {
+      "id": "M18-A09",
+      "scenario": "三项输出在第二项 Host 失败，随后误调用 publish",
+      "acceptance": "第一次输出恰一次、cursor/失败事实保留；不重发已外调项，不宣称回滚"
+    },
+    {
+      "id": "M18-A10",
+      "scenario": "commit 时注入分配器失败",
+      "acceptance": "正常 commit 应无需新分配；所需分配已在 prepare 显式失败，无半提交"
+    },
+    {
+      "id": "M18-A11",
+      "scenario": "DSL 可恢复 Except.error 与 Runtime invalid handle 对照",
+      "acceptance": "前者走错误 CFG 可正常 commit 恢复，后者 discard/报告，不混为一类"
+    },
+    {
+      "id": "M18-A12",
+      "scenario": "先暂存 state 写，再作失败无效果的接纳；该调用在第二项预留失败，随后恢复分支 Return",
+      "acceptance": "仅撤销失败调用的局部预留/动作，先前 state 写和恢复分支正常一次 commit；无半任务、半 access 或残留容量"
+    },
+    {
+      "id": "M19-A01",
+      "scenario": "完成前／后／注册临界点到达",
+      "acceptance": "每次恰好一次恢复，结果不丢"
+    },
+    {
+      "id": "M19-A02",
+      "scenario": "在 Suspend 前保存复合 live 值",
+      "acceptance": "恢复后值保真且 layout 合法"
+    },
+    {
+      "id": "M19-A03",
+      "scenario": "同值 sideband 写与注册前 internal edge",
+      "acceptance": "不产生虚假 change／历史完成"
+    },
+    {
+      "id": "M19-A04",
+      "scenario": "槽复用后旧通知",
+      "acceptance": "generation 拒绝，不改变新 frame"
+    },
+    {
+      "id": "M19-A05",
+      "scenario": "连续 await 已 ready 条件循环",
+      "acceptance": "有限 fuel/turn 诊断，SystemC 获得控制"
+    },
+    {
+      "id": "M19-A06",
+      "scenario": "maxInstances 满额／handler awaitSlot",
+      "acceptance": "非阻塞 spawn 失败；非法挂起编译拒绝"
+    },
+    {
+      "id": "M19-A07",
+      "scenario": "同一 frame 完成 await A 后进入 await B，再收到 A 通知",
+      "acceptance": "A 的 SuspensionToken 被拒绝；B 仍等待，不误用 A 的 outcome"
+    },
+    {
+      "id": "M19-A08",
+      "scenario": "waiter/result/resume-event 任一容量不足",
+      "acceptance": "原 frame/owner/consumer 未半提交，不出现永远 Suspended 的 process"
+    },
+    {
+      "id": "M19-A09",
+      "scenario": "until 小于 now、after 溢出、edge 注册前已发生",
+      "acceptance": "前者当前 ready，溢出显式错误，旧 edge 不触发"
+    },
+    {
+      "id": "M19-A10",
+      "scenario": "Core timed handler 使用 trySpawn，资源满后执行恢复分支",
+      "acceptance": "合法上下文可编译/解释；失败有类型值可匹配，不能当 Ext-only 或 fatal"
+    },
+    {
+      "id": "M19-A11",
+      "scenario": "结果发布后立即复用 frame；旧 Task/Result consumer 后读取",
+      "acceptance": "通过独立结果身份读到原结果，新 frame 不受旧 wait callback 影响"
+    },
+    {
+      "id": "M19-A12",
+      "scenario": "按 Core 10.6 编译 awaitResponse；捕获恢复 outcome 后释放 wait 控制记录",
+      "acceptance": "恢复 block 按 outcome＋live 顺序取得原值，readWaitResult 不再查旧 WaitHandle；错类型/旧 SuspensionToken 不启动过程"
+    },
+    {
+      "id": "M20-A01",
+      "scenario": "每个启用 opcode 的合法／失败路径",
+      "acceptance": "与 M09 Lean evaluator 相同值、错误和 effect"
+    },
+    {
+      "id": "M20-A02",
+      "scenario": "混合分支、Suspend 恢复、TransportReturn",
+      "acceptance": "terminator 唯一，block 参数和 frame 正确"
+    },
+    {
+      "id": "M20-A03",
+      "scenario": "边界 arithmetic/tag/index",
+      "acceptance": "sanitizer 无检测到的 UB／越界，返回规定错误"
+    },
+    {
+      "id": "M20-A04",
+      "scenario": "fuel 0、小 fuel、无限零时间循环",
+      "acceptance": "在预算内返回，不无限占用线程"
+    },
+    {
+      "id": "M20-A05",
+      "scenario": "错误 objectCall／事件槽满",
+      "acceptance": "本段无部分 commit"
+    },
+    {
+      "id": "M20-A06",
+      "scenario": "Core-only 在 Ext runtime 执行",
+      "acceptance": "完整数据和 L1/L2 trace 无语义回归"
+    },
+    {
+      "id": "M20-A07",
+      "scenario": "Jump 的目标参数交换/重叠，branch 参数包含复合值",
+      "acceptance": "与同时替换的 Lean 语义一致，不因原地顺序赋值损坏"
+    },
+    {
+      "id": "M20-A08",
+      "scenario": "普通 Lean 位向量边界运算与显式 checked helper",
+      "acceptance": "各自按原定义返回值/Except；不凭 C++ 策略改变可达错误路径"
+    },
+    {
+      "id": "M20-A09",
+      "scenario": "task/managed 接纳拒绝、extern ABI 失败和源函数正常 Except.error 对照",
+      "acceptance": "前者可经 typed Value 恢复；ABI 失败停段/discard；源声明的业务 Except 保持原类型，非法 handle 不伪装成正常错误值"
+    },
+    {
+      "id": "M20-A10",
+      "scenario": "内层 callPure 递归耗 fuel，外层反复调用",
+      "acceptance": "全段共用预算并有界失败，不通过每次重新给 fuel 绕过限制"
+    },
+    {
+      "id": "M20-A11",
+      "scenario": "registerWait/resultRelease/spawn 后段末 Fail",
+      "acceptance": "store/owner/frame 无半提交，输出 intent 未外发"
+    },
+    {
+      "id": "M20-A12",
+      "scenario": "相同 ExecIR 在两解释器用恰够 Return 的 fuel、差一步 fuel、嵌套纯调用 fuel",
+      "acceptance": "相同计费点、终点和消耗；恰够终结成功，缺一步不执行该步且整段不 commit"
+    },
+    {
+      "id": "M20-A13",
+      "scenario": "恢复已有 frame 后改寄存器，随后 Runtime 失败／fuel 耗尽",
+      "acceptance": "原 frame 的 live 值与 suspension 身份不被写穿；两端返回相同已提交前缀，未留下可自动重试的半段"
+    },
+    {
+      "id": "M21-A01",
+      "scenario": "timeout 后迟到 response",
+      "acceptance": "本地仍 timeout，wire 正常 ack/terminal，无提前释放"
+    },
+    {
+      "id": "M21-A02",
+      "scenario": "请求／服务／响应阶段 reset",
+      "acceptance": "旧业务不写新 epoch；已提供响应不被篡改"
+    },
+    {
+      "id": "M21-A03",
+      "scenario": "target 请求被 reset 抑制",
+      "acceptance": "发合法 error response，不凭空 END_RESP"
+    },
+    {
+      "id": "M21-A04",
+      "scenario": "重复 cancel/reset",
+      "acceptance": "不重复转移／释放，drain 计数可核算"
+    },
+    {
+      "id": "M21-A05",
+      "scenario": "永不响应对端",
+      "acceptance": "状态 WaitingForEnvironment 或明确停止，报告未完引用"
+    },
+    {
+      "id": "M21-A06",
+      "scenario": "drain 堆积至限额",
+      "acceptance": "有界背压／资源诊断，不无界 heap，不丢 cleanup"
+    },
+    {
+      "id": "M21-A07",
+      "scenario": "drainThenReset 时已有 pending 请求；barrier 后又有新合法请求",
+      "acceptance": "旧 pending 可 promote 完成；新请求有界保留、reset 后入新 epoch；无自造成的永远等待"
+    },
+    {
+      "id": "M21-A08",
+      "scenario": "response 已排队、已提供、wire terminal 但未来 timing 三种 reset",
+      "acceptance": "排队态按抑制/继续策略产生唯一合法响应，已提供值保持不变，terminal态仅保留timing；不重复响应/ACK"
+    },
+    {
+      "id": "M21-A09",
+      "scenario": "活跃 Host 调用内请求 reset，随后 return/对端 release",
+      "acceptance": "栈 pin/ticket 保留至安全边界，return 单次记录，再转 cleanup"
+    },
+    {
+      "id": "M21-A10",
+      "scenario": "多 hop 之一 terminal，其他 hop 仍在线；releaseReceipt",
+      "acceptance": "未完 hop/route/pin 继续可达；receipt 释放不 force free"
+    },
+    {
+      "id": "M21-A11",
+      "scenario": "abort-reset 升级等待中的 drainThenReset，再次 reset",
+      "acceptance": "原 receipt 有明确 Superseded/合并结果；每个已执行 reset 只切一次 epoch，无重复 adopt"
+    },
+    {
+      "id": "M21-A12",
+      "scenario": "reset 前已 commit 写与成功结果，reset 后迟到业务/response",
+      "acceptance": "旧未提交写被禁止，已 commit 事实不声称回滚；成功结果不可改写，late response 只清理"
+    },
+    {
+      "id": "M21-A13",
+      "scenario": "旧请求在 barrier 后才 spawn child/newTxn 并等待；并有无关联新请求到达",
+      "acceptance": "有界后继经 owner/cohort 校验继承旧根并完成；新根仍 pending，reset 等最后后继责任结束，无屏障自设死锁"
+    },
+    {
+      "id": "M21-A14",
+      "scenario": "上述 child hop 已发出后把 drainThenReset 升级为 abort；另有 deferred 新根",
+      "acceptance": "已创建后继全部转 drain 且不能再扩旧根；deferred 新根保留并归实际新 epoch，无遗漏 child/错误取消新业务"
+    },
+    {
+      "id": "M22-A01",
+      "scenario": "task/COMPLETED response 在注册前完成或处于注册临界点；E-T01、C-T16",
+      "acceptance": "latch 与订阅路径得到完整相同值，恢复计数=1；未来有效时间前无恢复"
+    },
+    {
+      "id": "M22-A02",
+      "scenario": "response/timeout 同 ReadyKey；E-T02",
+      "acceptance": "交换 record 顺序仍按 priority/ordinal 选同一 winner；只出现 winner body effect"
+    },
+    {
+      "id": "M22-A03",
+      "scenario": "同 Tick、不同 turn；E-T03",
+      "acceptance": "较早 ReadyKey 胜；晚到 callback 不逆转 timeout；开放环境按已收 transcript 解释"
+    },
+    {
+      "id": "M22-A04",
+      "scenario": "loser 迟到＋取消＋控制槽复用；E-T04",
+      "acceptance": "旧通知不恢复旧／新 waiter，线上 cleanup 继续，consumer/pin 无重复释放"
+    },
+    {
+      "id": "M22-A05",
+      "scenario": "All 失败、取消、重复 handle、空集合；E-T05",
+      "acceptance": "collectAll 等全部 terminal，布局顺序正确；重复项各计引用；空集合成功且计入零时间预算"
+    },
+    {
+      "id": "M22-A06",
+      "scenario": "候选生产中 budget 耗尽",
+      "acceptance": "分片与未分片 winner 相同；未闭合无 resume，不倒排 stage，候选 pin 始终有效"
+    },
+    {
+      "id": "M22-A07",
+      "scenario": "释放／复用 group 控制槽，延迟消费独立结果",
+      "acceptance": "旧 ResultHandle 仍读原值；最后 consumer/pin 释放前结果槽不复用"
+    },
+    {
+      "id": "M22-A08",
+      "scenario": "多 owner、多 consumer、alias、双 release",
+      "acceptance": "只释放指定 consumer；结果 token 不授予他人的 group/suspension 控制权；alias 不增引用，非法释放不改控制状态或导致计数下溢"
+    },
+    {
+      "id": "M22-A09",
+      "scenario": "第 k 次 arm 类型／预算失败",
+      "acceptance": "整段无已发表 subscription/resume，前序预留归还，源工作状态不变"
+    },
+    {
+      "id": "M22-A10",
+      "scenario": "failFast 尚有未完成分支",
+      "acceptance": "提前结果明确未观察项、触发项确定；其余工作继续或显式 cancel/drain，不伪造全体 terminal"
+    },
+    {
+      "id": "M22-A11",
+      "scenario": "shortcut phase、历史 edge、同 scope／后代 observer",
+      "acceptance": "phase 返回 Skipped/Terminated；历史 edge 不唤醒；process 或 wait owner 将随观察对象销毁时拒绝注册／非法转移"
+    },
+    {
+      "id": "M23-A01",
+      "scenario": "controller 取消 child scope；E-T06",
+      "acceptance": "child 停止业务，controller 仍执行错误记录与 return；未被误登记为 child 的 task"
+    },
+    {
+      "id": "M23-A02",
+      "scenario": "已发请求取消，迟到 response；E-T09、C-T14",
+      "acceptance": "本地结果不变；route/gate/必要引用归 DrainOwner，完成合法 ACK 后才释放"
+    },
+    {
+      "id": "M23-A03",
+      "scenario": "重复 attach、无目标 detach、父子 scope 环",
+      "acceptance": "对应操作被拒绝；owner 集合与计数不改变，无双重归属"
+    },
+    {
+      "id": "M23-A04",
+      "scenario": "transfer 目标满额／stale／已取消，或源已被取消冻结",
+      "acceptance": "源与目标均保持操作前状态；不能逃逸已生效取消，既有计划仍负责后续收尾"
+    },
+    {
+      "id": "M23-A05",
+      "scenario": "scope epilogue 与严格 close",
+      "acceptance": "terminal consumer 自动释放；未处理 live 工作返回 ScopeNotEmpty；已移交 drain 的 scope 可关闭且 Runtime 仍显示 outstanding"
+    },
+    {
+      "id": "M23-A06",
+      "scenario": "重复 cancel、CancelPlan 分片／重复执行、旧 generation",
+      "acceptance": "同代状态／动作幂等；计划未落实时 close 拒绝且 cursor/owner 保留，完成后可关闭；stale 拒绝，无重复 release/drain 转移或计数下溢"
+    },
+    {
+      "id": "M23-A07",
+      "scenario": "多层 child scope 与 Pending/Granted ticket",
+      "acceptance": "后代均冻结；获准 ticket 预留全部归还，未生成 task 不出现虚假 TaskOutcome"
+    },
+    {
+      "id": "M23-A08",
+      "scenario": "一个 scope 取消，另一个 consumer 持有已成功结果",
+      "acceptance": "原成功值仍可读；只释放取消 scope 的 capability，剩余 consumer/pin 延长结果寿命"
+    },
+    {
+      "id": "M23-A09",
+      "scenario": "取消遇见当前原子段／重复 reset；E-T37 协作",
+      "acceptance": "已 commit effect 不回滚；只抑制未 commit 业务，协议 cleanup 不被 epoch 丢弃"
+    },
+    {
+      "id": "M23-A10",
+      "scenario": "对端永不响应、scope 已 close",
+      "acceptance": "本地 timeout 可完成但 drain 保留；停止原因是等待环境／outstanding／受控终止，不标 quiescent"
+    },
+    {
+      "id": "M23-A11",
+      "scenario": "observer 注册后转移 process／wait／祖先 scope",
+      "acceptance": "任一转移会令 observer 与 source 同被取消时原子拒绝；原 owner/订阅有效，合法外部 observer 仍只收到同代取消通知"
+    },
+    {
+      "id": "M24-A01",
+      "scenario": "Reject／AwaitSlot／Queue 满额",
+      "acceptance": "分别立即失败／有界 Pending 票据挂起／有限入队或失败；各预算计数不越上界"
+    },
+    {
+      "id": "M24-A02",
+      "scenario": "handler 直接或经 helper 调用 awaitSlot；E-T07",
+      "acceptance": "编译失败并指向 effect 调用链；C++ 不 wait；合法 timed trySpawn 可执行"
+    },
+    {
+      "id": "M24-A03",
+      "scenario": "frame terminal 后延迟消费；E-T08、C-T30",
+      "acceptance": "frame 可复用；旧 task identity/result 仍有效，结果数量与字节预算分别可检查"
+    },
+    {
+      "id": "M24-A04",
+      "scenario": "Queued 取消，Pending/Granted 票据取消",
+      "acceptance": "Queued 恰有一个 Cancelled outcome；无 task 的票据没有虚构 outcome，所有预留恰归还一次"
+    },
+    {
+      "id": "M24-A05",
+      "scenario": "多 consumer＋重复 awaitAll＋scope 退出",
+      "acceptance": "一个 release 不破坏其余值；alias 不增计数，只有最后 consumer/pin/owner 消失才回收身份／结果"
+    },
+    {
+      "id": "M24-A06",
+      "scenario": "同 pool 递归等待；E-T10",
+      "acceptance": "产生静态／运行时资源依赖诊断，不声称 await 保证进展"
+    },
+    {
+      "id": "M24-A07",
+      "scenario": "TaskSlotReady 先于注册；重复消费、跨 pool/owner、旧 ticket",
+      "acceptance": "latch 恢复一次；只 Granted 可成功一次，非法消费不创建第二任务，也不取消／释放合法持有者的票据预留"
+    },
+    {
+      "id": "M24-A08",
+      "scenario": "frame 空闲但 result/identity 满",
+      "acceptance": "try/submit 明确失败，AwaitSlot 不假 grant；消费旧结果释放容量后按声明政策继续"
+    },
+    {
+      "id": "M24-A09",
+      "scenario": "参数复制失败或授权消费 grant 后参数校验失败",
+      "acceptance": "无悬挂借用视图／半任务；后者票据 Failed 且预留全部归还，错误可审计；创建成功同时安装初始 consumer 映射"
+    },
+    {
+      "id": "M24-A10",
+      "scenario": "counter/generation 边界、dropOnTerminal",
+      "acceptance": "达上界显式停止／退休无 ABA；drop consumer 不停止任务或释放线上 GP"
+    },
+    {
+      "id": "M25-A01",
+      "scenario": "managed-only 标准 DMI 查询；E-T27",
+      "acceptance": "返回 false，无伪 pointer／dmi hint；功能仍可走 AT"
+    },
+    {
+      "id": "M25-A02",
+      "scenario": "AT 与 managed 同地址读写；E-T31",
+      "acceptance": "相同服务条件下数据、grant/finish/commit 顺序一致；包括宿主先提交未来 arrival 的反例"
+    },
+    {
+      "id": "M25-A03",
+      "scenario": "backing 替换，旧操作在途；E-T30",
+      "acceptance": "原版本活到最后实际 pin；新操作不能用旧 generation；旧读结果消费不借用已释放 storage"
+    },
+    {
+      "id": "M25-A04",
+      "scenario": "未 admit／已 admit／已 commit 普通失效；E-T32",
+      "acceptance": "分别 Invalidated／声明策略／不回滚；cancelBeforeCommit 不重排既有他人 grant"
+    },
+    {
+      "id": "M25-A05",
+      "scenario": "reset 取消未 commit 写，包括普通 invalidation 后 allowToComplete 的写；E-T32、E-T37 协作",
+      "acceptance": "旧操作恰有一个 Reset 结果且不污染新 epoch；资源 cleanup 继续，已 commit 写按 reset handler 规格处理"
+    },
+    {
+      "id": "M25-A06",
+      "scenario": "边界、权限、长度、begin／arrival 容量及计数溢出",
+      "acceptance": "begin 失败无公开半操作；成功 begin 后 arrival 失败产生唯一 Error/NotCommitted，无半写、永久 PendingArrival、隐式扩容或句柄 ABA"
+    },
+    {
+      "id": "M25-A07",
+      "scenario": "协商 Denied 与标准 AT fallback",
+      "acceptance": "Denied 明确未开始 fast operation；AT request/response/必要 ACK/结果释放完整"
+    },
+    {
+      "id": "M25-A08",
+      "scenario": "未来 invalidation、PendingArrival／Admitted lease release 和 scope 退出",
+      "acceptance": "按声明时点／状态发布唯一结果或转完成 owner；必要 ticket/pin/event 保留，结果 consumer 分别释放，重复计划不重复归还"
+    },
+    {
+      "id": "M25-A09",
+      "scenario": "结果先完成后注册，多 consumer 延迟读取",
+      "acceptance": "持久 latch 恢复一次；一个 consumer 释放不破坏其余结果，无悬挂 backing view"
+    },
+    {
+      "id": "M25-A10",
+      "scenario": "byte policy、raw latency 与 service；E-T28 协作",
+      "acceptance": "不支持 fast 操作明确 fallback；managed 使用声明 service，raw 每字节计费独立"
+    },
+    {
+      "id": "M25-A11",
+      "scenario": "bus 映射／裁剪／失效回程；E-T33 协作",
+      "acceptance": "地址、权限与时间按显式 adapter 合同转换；不把 lease 跨 domain 直接使用"
+    },
+    {
+      "id": "M25-A12",
+      "scenario": "timing-strict raw alias；E-T34",
+      "acceptance": "构建拒绝或显式降级并更新 manifest，不能仍报告严格 timed 等价"
+    },
+    {
+      "id": "M26-A01",
+      "scenario": "输入长度 0/上界/超界、结构 tag/endian；E-T21",
+      "acceptance": "正确编解码；超界／布局错误在外调前拒绝；输出容量／schema 非法不产生 Value"
+    },
+    {
+      "id": "M26-A02",
+      "scenario": "error status、C++ vendor 异常；E-T22",
+      "acceptance": "status 保留为 ExternalError；可捕获异常在 C adapter 内转换，不越 ABI；业务 Error 与 gate 失败区分"
+    },
+    {
+      "id": "M26-A03",
+      "scenario": "故意错误 CRC/native；E-T23",
+      "acceptance": "与 reference 差分失败，报告完整输入和两端结果／build id；不以 hash-only 相等代替 byte/value 比较"
+    },
+    {
+      "id": "M26-A04",
+      "scenario": "关闭 native capability，reference 内再调用一个可替换函数",
+      "acceptance": "Lean 与 C++ ExecIR 的完整 reference 闭包不调用任何 native symbol；逻辑函数／布局定义不变，缺少可执行依赖时拒绝装载"
+    },
+    {
+      "id": "M26-A05",
+      "scenario": "所有差分输入通过但无证书；E-T24",
+      "acceptance": "只记录 tested，等价／纯度等未证明属性仍列 assumed，不能变成 proved"
+    },
+    {
+      "id": "M26-A06",
+      "scenario": "修改 native binary／ABI／reference",
+      "acceptance": "不匹配绑定被拒绝或显式重建；旧证据不无条件沿用，manifest 对应新 artifact"
+    },
+    {
+      "id": "M26-A07",
+      "scenario": "无 body／无法重化／类型不一致 reference",
+      "acceptance": "前端拒绝 extern-pure 路径，不以 attribute 或 opaque 假装可执行 reference"
+    },
+    {
+      "id": "M26-A08",
+      "scenario": "precondition 失败／无可用判定、scratch 满额、native 失败；源函数返回 T 或业务 Except",
+      "acceptance": "缺所需检查的绑定拒绝；调用前失败不进 native，gate 错误经内部失败 CFG discard 本段，无伪 T／BusinessError；成功时保持原源码结果类型"
+    },
+    {
+      "id": "M26-A09",
+      "scenario": "native 越界／隐藏 side effect／不返回的故障夹具",
+      "acceptance": "已检测违约报告合同破坏／受控停止；超时标无进展；未覆盖错误明确保留为 assumption，不声称全部可拦截"
+    },
+    {
+      "id": "M27-A01",
+      "scenario": "call100/in10/out25",
+      "acceptance": "输入110、返回125，绝非135"
+    },
+    {
+      "id": "M27-A02",
+      "scenario": "不整除网格输入",
+      "acceptance": "返回 OffGrid，不四舍五入"
+    },
+    {
+      "id": "M27-A03",
+      "scenario": "最大 tick 加法／转换乘法",
+      "acceptance": "可表示时精确；超限显式失败"
+    },
+    {
+      "id": "M27-A04",
+      "scenario": "多个合法时间单位往返",
+      "acceptance": "from/to 往返整数完全一致"
+    },
+    {
+      "id": "M27-A05",
+      "scenario": "nb 回调前后 sc_time_stamp",
+      "acceptance": "时间不推进，违约可被 M29 检测"
+    },
+    {
+      "id": "M27-A06",
+      "scenario": "project tick 小于／非整数倍 resolution",
+      "acceptance": "启动前拒绝"
+    },
+    {
+      "id": "M27-A07",
+      "scenario": "now、delay 各自离网格但和落网格",
+      "acceptance": "仍返回 OffGrid；不能通过先加后除绕过输入规则"
+    },
+    {
+      "id": "M27-A08",
+      "scenario": "wake deadline 等于／早于 now",
+      "acceptance": "前者精确零，后者明确失败；无 unsigned 下溢"
+    },
+    {
+      "id": "M27-A09",
+      "scenario": "ACCEPTED 对端改写无效返回 delay",
+      "acceptance": "不用该值创建事件；返参违约由 M29 独立报告，不误消费或二次计费"
+    },
+    {
+      "id": "M27-A10",
+      "scenario": "交易 A 标注100、交易 B 标注50",
+      "acceptance": "codec 各自精确转换；只由各自协议账本检查本交易回退"
+    },
+    {
+      "id": "M28-A01",
+      "scenario": "无 MM nb，包括即时 COMPLETED",
+      "acceptance": "一律拒绝；blocking 交专用 clone bridge"
+    },
+    {
+      "id": "M28-A02",
+      "scenario": "对端 callback 内释放自己的引用",
+      "acceptance": "本桥仍可安全复制返参，最终 acquire/release 平衡"
+    },
+    {
+      "id": "M28-A03",
+      "scenario": "GP 回收后延迟消费响应",
+      "acceptance": "消费 owned snapshot，不引用旧 buffer"
+    },
+    {
+      "id": "M28-A04",
+      "scenario": "地址相同 GP 槽复用",
+      "acceptance": "内部旧 handle/事件 generation 拒绝；外部仅裸 GP 的不可区分情形明确列为环境假设"
+    },
+    {
+      "id": "M28-A05",
+      "scenario": "缺可选／mandatory extension",
+      "acceptance": "可选用声明默认；mandatory 在正确阶段失败"
+    },
+    {
+      "id": "M28-A06",
+      "scenario": "clone 未知 opaque extension",
+      "acceptance": "有受审计 C5 opaque clone/copy_from 合同时保留并正确释放；空 clone／不安全借用／无容量合同拒绝，不静默丢字段"
+    },
+    {
+      "id": "M28-A07",
+      "scenario": "buffer 长度/unsigned 转换边界",
+      "acceptance": "分配和 copy 前检查，无已测越界"
+    },
+    {
+      "id": "M28-A08",
+      "scenario": "UPDATED/END_REQ 与显式 BEGIN_RESP",
+      "acceptance": "前者不要求响应，后者在输入栈内立即快照；不能只按返回 Sync 决定"
+    },
+    {
+      "id": "M28-A09",
+      "scenario": "READ mask、WRITE 响应及地址转换",
+      "acceptance": "disabled READ byte 保持，WRITE data/请求字段不变，地址按原 route 恢复"
+    },
+    {
+      "id": "M28-A10",
+      "scenario": "clone 第 k 个 extension 失败／copy-back 容量不足",
+      "acceptance": "clone 未发布且已创建对象恰释放一次；普通拷回预检失败不改原 GP"
+    },
+    {
+      "id": "M28-A11",
+      "scenario": "同 GP 三个连续 hop，随后池回收",
+      "acceptance": "各 hop 保持同 TransportId，全部本域 GP 使用结束后才退休；下一交易获得新 generation"
+    },
+    {
+      "id": "M28-A12",
+      "scenario": "不透明扩展参与外部结果",
+      "acceptance": "C4 仍只有注册值；opaque 保留与外部语义假设分别记录，不虚报 full payload replay 覆盖"
+    },
+    {
+      "id": "M28-A13",
+      "scenario": "T=100 COMPLETED/outTime=125 后 GP 无其他使用，T=101 同地址开始新交易",
+      "acceptance": "新物理实例身份可建立；125 的旧值事件/消费者仍得到旧快照，既不阻止合法复用，也不解析或改写新 GP"
+    },
+    {
+      "id": "M29-A01",
+      "scenario": "全部 base 返回类型",
+      "acceptance": "参数消费／改写完全按 Sync；END_RESP/ACCEPTED terminal"
+    },
+    {
+      "id": "M29-A02",
+      "scenario": "multi、同组件多实例",
+      "acceptance": "callback 关联到正确 ConnectionId"
+    },
+    {
+      "id": "M29-A03",
+      "scenario": "同向 hop 链／反向嵌套",
+      "acceptance": "前者只记账入队；后者诊断完整调用路径"
+    },
+    {
+      "id": "M29-A04",
+      "scenario": "base unknown ignorable、UNINITIALIZED、standalone unknown",
+      "acceptance": "分别忽略 ACCEPTED／契约失败／契约失败；分类不用注册数值猜测"
+    },
+    {
+      "id": "M29-A05",
+      "scenario": "phase 注册顺序、跨 TU/库变化",
+      "acceptance": "stable key 对应，不能按注册整数猜测"
+    },
+    {
+      "id": "M29-A06",
+      "scenario": "外部模型 contract violation",
+      "acceptance": "source/call/connection 清楚，证据不升级"
+    },
+    {
+      "id": "M29-A07",
+      "scenario": "nb callback 中推进时间",
+      "acceptance": "监视／失败策略检测，不能正常发布合法 trace"
+    },
+    {
+      "id": "M29-A08",
+      "scenario": "共享域 sender→receiver，再转发另一 hop",
+      "acceptance": "第一真实调用两侧复用 CallId、各用一次 local ticket；另一真实调用使用新 CallId 并保留关联"
+    },
+    {
+      "id": "M29-A09",
+      "scenario": "跨域及纯第三方 GP 入口",
+      "acceptance": "无私有 ID extension 也可接入；各域分配本地 ID，不重复 record_return"
+    },
+    {
+      "id": "M29-A10",
+      "scenario": "同值 phase/time 的两个真实调用",
+      "acceptance": "不按字段相同错误合并；返回分别关联原 call"
+    },
+    {
+      "id": "M29-A11",
+      "scenario": "unknown marker 带无关未初始化业务字段",
+      "acceptance": "在最小 base 安全检查后忽略；不读无关 buffer、不创建普通 admission、不 forward"
+    },
+    {
+      "id": "M29-A12",
+      "scenario": "UPDATED/BEGIN_RESP、UPDATED/END_REQ、END_RESP/COMPLETED",
+      "acceptance": "分别正确写新响应／不要求响应／使用 terminal ack，不从 Sync 单独推断响应阶段"
+    },
+    {
+      "id": "M29-A13",
+      "scenario": "多 bridge／跨域可见的反向嵌套与零时等待",
+      "acceptance": "原 native 调用路径被诊断；合法 return shortcut 不误报为反向调用"
+    },
+    {
+      "id": "M29-A14",
+      "scenario": "已排 future intent 在真实外调前取消",
+      "acceptance": "无虚构 WireCall、无提前 lane 占用，真实 sender callTime 取调用当时"
+    },
+    {
+      "id": "M29-A15",
+      "scenario": "target READ shadow 已变为新数据、GP 仍有旧字节，显式发送未来标注 BEGIN_RESP",
+      "acceptance": "native 对端在本次调用栈内读到完整新 data/status；WireCall 使用写回后快照，业务只在有效时间消费"
+    },
+    {
+      "id": "M30-A01",
+      "scenario": "多生成实例",
+      "acceptance": "共享同一个 domain/runtime/队列/pump"
+    },
+    {
+      "id": "M30-A02",
+      "scenario": "更早事件入队、取消当前队首",
+      "acceptance": "wake 重新 arm，旧通知不重复执行"
+    },
+    {
+      "id": "M30-A03",
+      "scenario": "同 Tick 持续反馈",
+      "acceptance": "有限 dispatch＋SC_ZERO_TIME，让外部 process 获得执行"
+    },
+    {
+      "id": "M30-A04",
+      "scenario": "sideband 同值写与真实变化",
+      "acceptance": "仅符合规则的 change 入队，保留 kernel update 顺序"
+    },
+    {
+      "id": "M30-A05",
+      "scenario": "相同外部 transcript 重放",
+      "acceptance": "同 domain trace 一致；任意外部重排不做无条件保证"
+    },
+    {
+      "id": "M30-A06",
+      "scenario": "提前 start／存在 drain 时销毁",
+      "acceptance": "明确拒绝或受控停止，无悬空 callback"
+    },
+    {
+      "id": "M30-A07",
+      "scenario": "budget 切开 batch，外部输入在让出时到达",
+      "acceptance": "恢复相同 BatchId/cursor；旧 batch 不吸收新输入、不提前 resolve"
+    },
+    {
+      "id": "M30-A08",
+      "scenario": "旧 wake 已 runnable 后 cancel/rearm 到更晚时刻",
+      "acceptance": "旧 callback 不执行旧队首、不消费新通知；新 deadline 到达时工作恰执行一次"
+    },
+    {
+      "id": "M30-A09",
+      "scenario": "构造期与重复 start",
+      "acceptance": "Ready 前无解释器／未完成 Host 调用；重复 start 不重复注册或清空活跃状态"
+    },
+    {
+      "id": "M30-A10",
+      "scenario": "同 delta 两次 sideband 写及初始化",
+      "acceptance": "只记录真实可见 signal update 和声明的初始采样；无 publish/watch 双重输入"
+    },
+    {
+      "id": "M30-A11",
+      "scenario": "空队列但 blocking waiter／raw grant 存在",
+      "acceptance": "不提前销毁；完成相应唤醒／失效后才能正常结束"
+    },
+    {
+      "id": "M30-A12",
+      "scenario": "同 Tick 零时间循环达 Zeno／段 fuel 耗尽，队列仍非空且有旧 runnable wake",
+      "acceptance": "一次报告 Stopped/具体原因并取消 wake，旧回调不重试；软 pump 分片仍可有限续跑，宿主在安全边界协调停止"
+    },
+    {
+      "id": "M31-A01",
+      "scenario": "MM-less blocking GP",
+      "acceptance": "正常通过受管内部请求，response/data copy-back 正确"
+    },
+    {
+      "id": "M31-A02",
+      "scenario": "非零 input delay 与 service delay",
+      "acceptance": "完成时间准确，只计费一次，返回 delay=0"
+    },
+    {
+      "id": "M31-A03",
+      "scenario": "SC_METHOD／nb 栈调用 blocking；SC_THREAD 内经受控 debug/getDmi/invalidation 间接调用另一桥",
+      "acceptance": "均在提交／wait 前失败，时间不推进；按整条已登记 C5 native 栈判定，不因 thread 身份或跨 façade 放行"
+    },
+    {
+      "id": "M31-A04",
+      "scenario": "b 写→nb 读→debug 改→b 读",
+      "acceptance": "访问同一功能状态"
+    },
+    {
+      "id": "M31-A05",
+      "scenario": "debug 读 RC／写 W1C／越界末端",
+      "acceptance": "无业务副作用，部分传输 count 精确"
+    },
+    {
+      "id": "M31-A06",
+      "scenario": "clone/copy-back 故障、回调释放",
+      "acceptance": "本桥引用平衡，合法结果独立于原 clone"
+    },
+    {
+      "id": "M31-A07",
+      "scenario": "两个并发 blocking 调用，先完成后等待",
+      "acceptance": "ticket/唤醒不串号，latch 防 lost wakeup；容量及 result consumer 最终可回收"
+    },
+    {
+      "id": "M31-A08",
+      "scenario": "call100/inDelay10 与 call105/inDelay0",
+      "acceptance": "共享业务按105、110的有效到达处理，不因宿主先调用而提前执行未来请求"
+    },
+    {
+      "id": "M31-A09",
+      "scenario": "原 GP 无 MM、带 READ mask／WRITE 数据和 extension",
+      "acceptance": "拷回只改允许响应字段，原指针/MM/请求字段保留；安全 opaque 扩展按政策保真"
+    },
+    {
+      "id": "M31-A10",
+      "scenario": "b 调用使用共享业务，内部又向下发 nb",
+      "acceptance": "transcript 分清真实 b 入口与真实下游 nb，不伪造四阶段调用"
+    },
+    {
+      "id": "M31-A11",
+      "scenario": "debug 零长度、缺普通字段、末地址后缀溢出、处理预算",
+      "acceptance": "零长度不解引用；合法请求执行；返回精确已完成前缀，无越界或伪报整长"
+    },
+    {
+      "id": "M31-A12",
+      "scenario": "原 blocking caller 退出但 clone 尚需 drain",
+      "acceptance": "迟到事件只用 owned clone/值，原 GP 借用已断开；正常运行不发生提前 free"
+    },
+    {
+      "id": "M32-A01",
+      "scenario": "成功 grant",
+      "acceptance": "真 pointer、inclusive 范围、pointer offset 和权限正确"
+    },
+    {
+      "id": "M32-A02",
+      "scenario": "managed-only／disabled",
+      "acceptance": "false，无虚假 dmi hint"
+    },
+    {
+      "id": "M32-A03",
+      "scenario": "n 字节访问",
+      "acceptance": "latencyPerByte×n checked，与固定服务延迟不混用"
+    },
+    {
+      "id": "M32-A04",
+      "scenario": "变更 backing/权限/latency",
+      "acceptance": "先 invalidate，再变更；所有相交 connection 收到通知"
+    },
+    {
+      "id": "M32-A05",
+      "scenario": "invalidation 内重申请",
+      "acceptance": "诊断／拒绝，不递归 grant"
+    },
+    {
+      "id": "M32-A06",
+      "scenario": "Crossbar 裁剪、回程 invalidation",
+      "acceptance": "范围与 pointer 偏移一致"
+    },
+    {
+      "id": "M32-A07",
+      "scenario": "timing-strict raw alias",
+      "acceptance": "拒绝或明确降级记录；不能默许"
+    },
+    {
+      "id": "M32-A08",
+      "scenario": "只有 address/command、无 MM 或数据数组的查询",
+      "acceptance": "符合 raw 查询资格即可处理，不误走 nb/data validator"
+    },
+    {
+      "id": "M32-A09",
+      "scenario": "成功输出 descriptor 后复用对象请求失败",
+      "acceptance": "返回 false、无新 grant；补充初始化政策不留下可误用的旧成功 pointer/权限"
+    },
+    {
+      "id": "M32-A10",
+      "scenario": "两 hop 裁剪、权限收窄和 latency 累计",
+      "acceptance": "区间包含查询地址、pointer offset 一致、权限为保守交集、单位保持每字节且溢出拒绝"
+    },
+    {
+      "id": "M32-A11",
+      "scenario": "全地址／部分重叠 invalidation",
+      "acceptance": "全地址通知不做溢出长度分配，所有相交 grant／别名收到上游通知"
+    },
+    {
+      "id": "M32-A12",
+      "scenario": "错 region、旧版本或重复 completion token",
+      "acceptance": "apply 拒绝，不提前改 backing；中途通知失败不能产生成功 token"
+    },
+    {
+      "id": "M32-A13",
+      "scenario": "普通 nb/b 响应 hint 与后续查询",
+      "acceptance": "hint 基于真实 raw 资格，跨 hop 保守传播；managed-only 始终 false；true 不当作已授予"
+    },
+    {
+      "id": "M32-A14",
+      "scenario": "invalidation 跨另一 C5 bridge 递归 getDmi",
+      "acceptance": "在 native 调用栈诊断，旧 backing 不提前释放，不把违规查询伪装成正常异步成功"
+    },
+    {
+      "id": "M32-A15",
+      "scenario": "有效 raw grant 跨 b/nb/debug 已提交写入及 lazy epoch reset/clear",
+      "acceptance": "各路径观察同一当前字节；仅改 epoch 而裸指针仍见旧值必须失败；表示切换先完成失效，再按当前状态物化／重授"
+    },
+    {
+      "id": "M33-A01",
+      "scenario": "两种不同 TYPES 的同构协议",
+      "acceptance": "通过显式双侧 socket，全部 exchange 保持"
+    },
+    {
+      "id": "M33-A02",
+      "scenario": "表面 phase 同名但握手不同",
+      "acceptance": "validateAdapter 失败，要求有状态 component"
+    },
+    {
+      "id": "M33-A03",
+      "scenario": "UPDATED/COMPLETED 返回及非零 delay",
+      "acceptance": "call/return 对应与时间准确，COMPLETED 不误 decode"
+    },
+    {
+      "id": "M33-A04",
+      "scenario": "extension 字段、endianness、长度边界",
+      "acceptance": "双向 codec 一致；外调前解码失败无发布，外调后失败保留已发生效果与诊断，不谎称全链回滚"
+    },
+    {
+      "id": "M33-A05",
+      "scenario": "跨 TU／vendor 注册顺序改变",
+      "acceptance": "映射依赖真实声明/key，非数值巧合"
+    },
+    {
+      "id": "M33-A06",
+      "scenario": "非线性／不可逆 DMI range；普通 codec 需逐次字节换序但 raw pointer 无法表达",
+      "acceptance": "deny 或明确不支持，不交付错 pointer 范围／数据表示；普通协议同构不等于 raw 可直通"
+    },
+    {
+      "id": "M33-A07",
+      "scenario": "内部发起 fw、外部发起 bw 的双侧 socket 调用与跨域接入",
+      "acceptance": "每次真实调用独立 domain-local ID，ticket 关联双方且返参回原来源侧；UPDATED shortcut 不变为新 bw 调用，无强制 GP ID extension，无双重 return"
+    },
+    {
+      "id": "M33-A08",
+      "scenario": "phase 相同但 guard/lane/terminal 语义不同",
+      "acceptance": "声明合同同构检查失败，不能靠 lossDeclaration 放行"
+    },
+    {
+      "id": "M33-A09",
+      "scenario": "clone 异步返回、地址转换及 opaque extension",
+      "acceptance": "返回沿原 route、正确阶段拷回；独立 buffer 存活、原只读字段保持、owned pin 恰释放一次"
+    },
+    {
+      "id": "M33-A10",
+      "scenario": "未知 base marker／standalone phase；vendor 使用 custom payload 或任意 phase class 并提供 codec",
+      "acceptance": "分别忽略不转发／契约失败；超出本 profile 的 native 类型在绑定／生成时拒绝，codec 不能放宽范围，不按名字或指针强转兼容"
+    },
+    {
+      "id": "M33-A11",
+      "scenario": "两种精确时间单位与 nonzero in/out delay",
+      "acceptance": "物理有效时间相同，outTime 仍是原 callTime+outDelay；离网格或溢出拒绝"
+    },
+    {
+      "id": "M33-A12",
+      "scenario": "通过 adapter 混用 b/nb/debug/raw query",
+      "acceptance": "共享功能状态，blocking/debug/MM 义务保留；不能由 nb 同构推断 DMI 可授予"
+    },
+    {
+      "id": "M34-A01",
+      "scenario": "每个标准库方法注册",
+      "acceptance": "签名、effect、reference、C++、source/test 可查"
+    },
+    {
+      "id": "M34-A02",
+      "scenario": "未知方法／错误 ABI／参数类型",
+      "acceptance": "在编译／装载／调用最早可判定点拒绝"
+    },
+    {
+      "id": "M34-A03",
+      "scenario": "object 写后 schedule 失败，或第二个 provider 的 commit preflight 失败",
+      "acceptance": "所有 provider backing/state/action 都保持段前状态；不能先安装第一个 provider"
+    },
+    {
+      "id": "M34-A04",
+      "scenario": "声明含 wait/socket 的 provider 或受测隐藏 effect",
+      "acceptance": "effect 闭包拒绝非法 context；能观测的运行违约有报告，不声称检测任意 native 隐藏副作用"
+    },
+    {
+      "id": "M34-A05",
+      "scenario": "Lean object step 与 C++ prepare+commit",
+      "acceptance": "值、对象新状态、actions 一致"
+    },
+    {
+      "id": "M34-A06",
+      "scenario": "第三方仅提供 C++ 回调",
+      "acceptance": "不允许标为已证明 provider"
+    },
+    {
+      "id": "M34-A07",
+      "scenario": "同段两次更新同 object 再读取",
+      "acceptance": "第二次基于暂存新状态；commit 只应用一次 delta/action；失败全段无变化"
+    },
+    {
+      "id": "M34-A08",
+      "scenario": "参数视图返回后失效、延迟 action 执行",
+      "acceptance": "未来仅使用有预算的 owned 数据，不保留 ArrayView/EventTxn 引用"
+    },
+    {
+      "id": "M34-A09",
+      "scenario": "注册冲突、冻结后注册、跨实例 ObjectId",
+      "acceptance": "最早可判定点拒绝，注册表与 object state 不半更新"
+    },
+    {
+      "id": "M34-A10",
+      "scenario": "debug intrinsic 试图 schedule 或普通 RC 访问",
+      "acceptance": "拒绝越权；允许的 peek/poke 同步完成且无业务 action"
+    },
+    {
+      "id": "M34-A11",
+      "scenario": "先暂存计数+1，再调用声明失败无效果的方法；该方法取得部分预留后返回 typed error",
+      "acceptance": "当前调用的预留/delta/action全撤销，计数暂存值仍可读；恢复分支commit后仅计数+1，无失败方法残留"
+    },
+    {
+      "id": "M35-A01",
+      "scenario": "上述 streaming/mask 正反读写",
+      "acceptance": "地址／使能逐字节正确，disabled READ 保留原值"
+    },
+    {
+      "id": "M35-A02",
+      "scenario": "任一受影响地址非法",
+      "acceptance": "普通 WRITE 零部分写，返回正确错误"
+    },
+    {
+      "id": "M35-A03",
+      "scenario": "IGNORE、长度0、width0、溢出及限制型粒度",
+      "acceptance": "普通零长/width0→BURST，未对齐base→ADDRESS；length=4/base=4/alignment=4不因内部byte地址5而被拒；IGNORE仍无误写"
+    },
+    {
+      "id": "M35-A04",
+      "scenario": "debug 越过末端",
+      "acceptance": "返回实际可传字节数，无普通业务 effect"
+    },
+    {
+      "id": "M35-A05",
+      "scenario": "b/nb/debug 路径切换，非零 backing 后 clear/reset",
+      "acceptance": "看到同一 storage；raw/managed 开启时仍一致；有效raw指针不能绕过lazy epoch看见旧字节（配合M32-A15）"
+    },
+    {
+      "id": "M35-A06",
+      "scenario": "reset 与 service finish 同批／不同 turn",
+      "acceptance": "按事件序与 epoch 处理，不逆序清除已提交事实"
+    },
+    {
+      "id": "M35-A07",
+      "scenario": "managed/AT 相同 service 竞争",
+      "acceptance": "数据与资源观察一致，wire trace 的差异按层说明"
+    },
+    {
+      "id": "M35-A08",
+      "scenario": "IGNORE 携带 width0、空 data/mask 和不可访问地址",
+      "acceptance": "默认 OK 且零 data/storage effect，不执行 READ/WRITE 分支或不必要的模/地址计算"
+    },
+    {
+      "id": "M35-A09",
+      "scenario": "回绕 WRITE 重复地址，mask 交替启用",
+      "acceptance": "最后一次 enabled 字节取胜；disabled 字节不覆盖前次写；普通 READ 错误不部分改 buffer"
+    },
+    {
+      "id": "M35-A10",
+      "scenario": "早先 validate 成功，执行前 reset/换 backing",
+      "acceptance": "执行点重新验证，旧业务不会写新 epoch；相应 cleanup/错误响应仍可完成"
+    },
+    {
+      "id": "M35-A11",
+      "scenario": "readBytes/writeBytes 空值、clear 与非零初值",
+      "acceptance": "空 utility 是 no-op；clear=全0；reset 恢复策略与初值声明准确区分"
+    },
+    {
+      "id": "M35-A12",
+      "scenario": "debug 大 length/末地址/起址越界/未初始化普通字段",
+      "acceptance": "只处理合法连续前缀、Count 准确，无溢出或普通 streaming/mask 读取"
+    },
+    {
+      "id": "M36-A01",
+      "scenario": "RO/RW/WO/W1C/W1S/RC 全组合",
+      "acceptance": "行为与字段政策逐位一致"
+    },
+    {
+      "id": "M36-A02",
+      "scenario": "局部 byte-enable 写与 RC 读",
+      "acceptance": "禁用字节位不受影响，读返回清前值"
+    },
+    {
+      "id": "M36-A03",
+      "scenario": "字段重叠、reset超界；offset=0/widthBits=64/allowedAccessBytes=[2]的对齐",
+      "acceptance": "静态／访问时拒绝，无部分修改；1位field合法，length=2/address=3在自然policy拒绝，显式alignmentBytes=1且其余条件合法时接受"
+    },
+    {
+      "id": "M36-A04",
+      "scenario": "debug 读 RC、写 W1C、IRQ 字段",
+      "acceptance": "原存储 peek/poke，无 RC/IRQ/kick"
+    },
+    {
+      "id": "M36-A05",
+      "scenario": "普通访问失败或 EventTxn prepare 失败",
+      "acceptance": "所有字段和输出保持不变"
+    },
+    {
+      "id": "M36-A06",
+      "scenario": "reset 再混合 b/nb/debug",
+      "acceptance": "同一寄存器状态，初值准确"
+    },
+    {
+      "id": "M36-A07",
+      "scenario": "跨 byte field、循环 mask、两种声明字节序",
+      "acceptance": "逐位映射正确；disabled READ 保持输入，RO/WO/W1C/W1S/RC 均符合 policy"
+    },
+    {
+      "id": "M36-A08",
+      "scenario": "debug 部分 field/跨空洞/末端、无普通 transport 字段",
+      "acceptance": "只完成合法连续前缀；Count准确，普通读写权限与业务 action 不误触发"
+    },
+    {
+      "id": "M36-A09",
+      "scenario": "policy允许的24/128位或非自然对齐访问",
+      "acceptance": "依预算与 TypeDesc 实施；若实际 profile 不支持则明确声明/拒绝，不声称 spec 仅8/16/32/64位"
+    },
+    {
+      "id": "M36-A10",
+      "scenario": "跨寄存器后半失败、RC/action准备失败",
+      "acceptance": "无前半写入、无提前RC清零、无部分响应/IRQ；允许路径一次提交"
+    },
+    {
+      "id": "M36-A11",
+      "scenario": "普通/debug的IGNORE、READ/WRITE零长、未知命令与并存错误",
+      "acceptance": "普通IGNORE→OK，零长→BURST，未知命令→COMMAND；debug IGNORE/未知命令→Count0；按固定顺序选首错且无副作用"
+    },
+    {
+      "id": "M37-A01",
+      "scenario": "serial 两请求 earliest=10/11，duration=5",
+      "acceptance": "start=10/15、finish=15/20、wait=0/4"
+    },
+    {
+      "id": "M37-A02",
+      "scenario": "多通道同时间平局",
+      "acceptance": "按稳定 channel ordinal，重复运行一致"
+    },
+    {
+      "id": "M37-A03",
+      "scenario": "四请求按到达序earliest均0，latency=10、II=2、capacity=2",
+      "acceptance": "start=[0,2,10,12]，finish=[10,12,20,22]；可重叠且满足II/capacity"
+    },
+    {
+      "id": "M37-A04",
+      "scenario": "reserve 后 schedule 失败",
+      "acceptance": "未遗留资源占用"
+    },
+    {
+      "id": "M37-A05",
+      "scenario": "取消运行 ticket",
+      "acceptance": "其他已发布 grant 时间不变，默认原 finish 释放"
+    },
+    {
+      "id": "M37-A06",
+      "scenario": "AT/managed 同资源到达",
+      "acceptance": "按 effective arrival/EventKey 一致仲裁"
+    },
+    {
+      "id": "M37-A07",
+      "scenario": "II=0、latency=0/非零、capacity=1/多槽",
+      "acceptance": "允许有界组合；并行度/预约预算正确，零时间超预算报告LimitReached而非无限循环"
+    },
+    {
+      "id": "M37-A08",
+      "scenario": "默认服务与显式 duration=0、duration覆盖",
+      "acceptance": "0按零服务处理；default helper使用声明latency；各时间字段单位明确"
+    },
+    {
+      "id": "M37-A09",
+      "scenario": "未来 arrival 的宿主调用先发生",
+      "acceptance": "只排 arrival，不能抢在已到达AT请求前预约；未来 earliest 的已到达请求按显式FCFS政策处理"
+    },
+    {
+      "id": "M37-A10",
+      "scenario": "Prepared/Committed/Running/Completed取消、重复/旧代取消",
+      "acceptance": "对应disposition、所有grant时间和容量准确；cleanup不重复归还，不释放协议责任"
+    },
+    {
+      "id": "M37-A11",
+      "scenario": "同段多次 reserve、后一schedule失败/溢出",
+      "acceptance": "读自己的预约视图，全部discard，无半个grant或owner"
+    },
+    {
+      "id": "M37-A12",
+      "scenario": "capacity=1的旧服务finish=10，Tick10的input请求先于internal完成通知执行，元数据仍有空间",
+      "acceptance": "新服务start=10；旧ticket在通知退役前仍计入元数据；两项容量不互相替代"
+    },
+    {
+      "id": "M38-A01",
+      "scenario": "capacity 次 push，再多一次",
+      "acceptance": "前者成功，最后 Full/false，size 不超限"
+    },
+    {
+      "id": "M38-A02",
+      "scenario": "FIFO 顺序／空 pop",
+      "acceptance": "顺序正确，空 none，无 underflow"
+    },
+    {
+      "id": "M38-A03",
+      "scenario": "push 后事件 prepare 失败",
+      "acceptance": "queue/value owner 都回到原状态"
+    },
+    {
+      "id": "M38-A04",
+      "scenario": "scope cancel 包含未发和已发交易",
+      "acceptance": "未发移除；已发 route/pin 转 drain，仍能回响应"
+    },
+    {
+      "id": "M38-A05",
+      "scenario": "队列满的 target request",
+      "acceptance": "请求保留／合法应答，不丢 ACCEPTED"
+    },
+    {
+      "id": "M38-A06",
+      "scenario": "alias handle 和多个 consumer",
+      "acceptance": "只释放本队列所有权，不影响别人的结果"
+    },
+    {
+      "id": "M38-A07",
+      "scenario": "MoveOwned/RetainReadOnly入队后Full或段失败",
+      "acceptance": "失败caller仍拥有原token；成功才移交/增加合法consumer，引用数准确"
+    },
+    {
+      "id": "M38-A08",
+      "scenario": "scope混有未发/已发entry，取消转移目标满",
+      "acceptance": "操作不半移除；已发route/pin/gate仍可定位，按预先保障的drain路径处理"
+    },
+    {
+      "id": "M38-A09",
+      "scenario": "非首尾entry取消、pop接收owner失败",
+      "acceptance": "剩余FIFO稳定；值不丢、不重复释放，pop失败保持原entry"
+    },
+    {
+      "id": "M38-A10",
+      "scenario": "entry已发/host call进行中但publication标记滞后，或send已commit尚未外调；旧generation",
+      "acceptance": "已发责任保留并转drain；未外调intent须同Plan撤销后才移除；新entry不被旧通知误删"
+    },
+    {
+      "id": "M38-A11",
+      "scenario": "控制操作扫描/报告超预算",
+      "acceptance": "明确资源或fuel结果，无隐式无限循环和部分成功"
+    },
+    {
+      "id": "M38-A12",
+      "scenario": "同段用同一consumer的两个别名向两个MoveOwned队列push",
+      "acceptance": "第二次InvalidConsumer，不能产生双重owner；该段失败后两队列均无新entry、caller仍有原consumer"
+    },
+    {
+      "id": "M39-A01",
+      "scenario": "latency=10、II=2、capacity=2，四请求按到达序earliest均0",
+      "acceptance": "acceptedAt=[0,2,10,12]，readyAt=[10,12,20,22]，与M37相同配置一致"
+    },
+    {
+      "id": "M39-A02",
+      "scenario": "capacity=1",
+      "acceptance": "在途从不>1，即使 II 更短"
+    },
+    {
+      "id": "M39-A03",
+      "scenario": "II=0与latency零/非零；capacity=0/time溢出",
+      "acceptance": "合法零II有界执行；非法capacity/溢出明确拒绝，无回绕"
+    },
+    {
+      "id": "M39-A04",
+      "scenario": "ready event prepare 失败",
+      "acceptance": "无 resource 残留"
+    },
+    {
+      "id": "M39-A05",
+      "scenario": "服务 ready 但 response gate 忙",
+      "acceptance": "响应等待，不重叠 BEGIN_RESP"
+    },
+    {
+      "id": "M39-A06",
+      "scenario": "取消某 ticket",
+      "acceptance": "后续已发布时间不变，旧 token 不能误通知新 ticket"
+    },
+    {
+      "id": "M39-A07",
+      "scenario": "相同Resource参数与Pipeline输入序列",
+      "acceptance": "acceptedAt/readyAt逐项等于grant.start/finish，wrapper不另配scheduler/预算"
+    },
+    {
+      "id": "M39-A08",
+      "scenario": "latency=0/II>0、latency=II=0的持续提交",
+      "acceptance": "前者保持发射间隔；后者受有限预算/后继turn约束，停因准确"
+    },
+    {
+      "id": "M39-A09",
+      "scenario": "ready重复、reset后旧epochready、取消后cleanup",
+      "acceptance": "业务至多完成一次，旧业务不提交；旧ready保留resource退役分支且只执行一次，协议cleanup独立结束"
+    },
+    {
+      "id": "M39-A10",
+      "scenario": "服务槽满但可预约、元数据真正满",
+      "acceptance": "前者得到未来acceptedAt；后者显式失败/有界背压，不混淆两个容量"
+    },
+    {
+      "id": "M40-A01",
+      "scenario": "地图首地址、末地址、区间外、溢出",
+      "acceptance": "decode与数学half-open一致；start=UINT64_MAX/size=1的单字节region可表示，size=2拒绝，不因一过末无法用UInt64表示而误拒单字节"
+    },
+    {
+      "id": "M40-A02",
+      "scenario": "多级地址改写＋OOO response",
+      "acceptance": "返回原 upstream/GP，地址恢复策略正确"
+    },
+    {
+      "id": "M40-A03",
+      "scenario": "多 binding 同 local endpoint ID",
+      "acceptance": "独立 ledger/gate，无串扰"
+    },
+    {
+      "id": "M40-A04",
+      "scenario": "downstream 服务满",
+      "acceptance": "有界 pending，已接受请求不丢"
+    },
+    {
+      "id": "M40-A05",
+      "scenario": "混合 b/nb/debug",
+      "acceptance": "同地图、同 storage，错误计数与返回一致"
+    },
+    {
+      "id": "M40-A06",
+      "scenario": "raw DMI 裁剪／反向失效",
+      "acceptance": "pointer 偏移、inclusive 范围与所有相交 grant 正确"
+    },
+    {
+      "id": "M40-A07",
+      "scenario": "未支持 endian/BUSWIDTH／非线性 DMI",
+      "acceptance": "明确拒绝／deny，不 reinterpret"
+    },
+    {
+      "id": "M40-A08",
+      "scenario": "首地址有效但transfer尾部/streaming落到另一region",
+      "acceptance": "不透明跨区误发；按声明error或显式child分裂，普通路径不部分写"
+    },
+    {
+      "id": "M40-A09",
+      "scenario": "异步下游在forward返回后读取请求、三级shortcut回程",
+      "acceptance": "每边界地址视图正确、持久route不依赖GP可变地址；同一GP身份贯穿透明路径"
+    },
+    {
+      "id": "M40-A10",
+      "scenario": "downstream已完成、upstreamgate忙/parent reset",
+      "acceptance": "owned响应与route保留，两个hop各自清理；drain仍能定位正确connection"
+    },
+    {
+      "id": "M40-A11",
+      "scenario": "route/response预留中途失败或外调后违约",
+      "acceptance": "前者无外部send和半个hop；后者保留调用事实，不假称回滚"
+    },
+    {
+      "id": "M40-A12",
+      "scenario": "debug跨region/空洞/大length、下游Count0/错误，混合b和nb",
+      "acceptance": "debug真实前缀count与同map一致，所有同步出口恢复原address；不加业务延迟，blocking正常共享服务"
+    },
+    {
+      "id": "M40-A13",
+      "scenario": "两个upstream alias grant、下游裁剪与invalidate",
+      "acceptance": "pointer偏移、权限交集、latency单位准确；所有相交grant均收到反向失效"
+    },
+    {
+      "id": "M40-A14",
+      "scenario": "上述query=0x1080而下游grant=[0,0x1F]，或query的connection/route不符",
+      "acceptance": "分别报告InvalidGrant/InvalidBinding，不因交集非空返回成功，无grant记录/裸pointer授权残留"
+    },
+    {
+      "id": "M41-A01",
+      "scenario": "once deadline／periodic 多周期",
+      "acceptance": "time 精确、无累计 wall-clock 漂移"
+    },
+    {
+      "id": "M41-A02",
+      "scenario": "period0/pulse0/溢出",
+      "acceptance": "拒绝且无输出变化"
+    },
+    {
+      "id": "M41-A03",
+      "scenario": "cancel前/后tick、同代重复及槽复用后的旧token",
+      "acceptance": "未执行当前代可取消；可识别同代已settled返回false，复用后StaleToken；旧代不能影响新timer"
+    },
+    {
+      "id": "M41-A04",
+      "scenario": "pulse clear event 分配失败",
+      "acceptance": "整段不提交，无半个 pulse"
+    },
+    {
+      "id": "M41-A05",
+      "scenario": "reset 与周期 timer",
+      "acceptance": "旧 epoch 不再发业务 tick，新 arm 独立"
+    },
+    {
+      "id": "M41-A06",
+      "scenario": "同值 set 与普通 pulse",
+      "acceptance": "sideband change 与真实 signal update 一致"
+    },
+    {
+      "id": "M41-A07",
+      "scenario": "rearm的新event分配失败",
+      "acceptance": "旧timer/active token仍有效，新generation不半发布"
+    },
+    {
+      "id": "M41-A08",
+      "scenario": "periodic执行数次后cancel旧token/cancelActive",
+      "acceptance": "旧token不误取消当前tick；cancelActive停止后续链且不回滚历史"
+    },
+    {
+      "id": "M41-A09",
+      "scenario": "active pulse后setLevel、reset、再发新pulse",
+      "acceptance": "明确输出值恢复，旧clear不覆盖新level/pulse；无永久高电平"
+    },
+    {
+      "id": "M41-A10",
+      "scenario": "sameTick tick/cancel/reset不同EventKey",
+      "acceptance": "按规范顺序至多执行一次tick，后到取消不改已发生结果"
+    },
+    {
+      "id": "M41-A11",
+      "scenario": "periodic下一deadline溢出或next event预算失败",
+      "acceptance": "明确失败/停止与写集结果，无静默周期丢失或无限预排"
+    },
+    {
+      "id": "M41-A12",
+      "scenario": "物理signal仍低，同段先setLevel(true)再pulse；或同段连续两次pulse",
+      "acceptance": "后次按最新shadow返回PulseBusy，整段discard；output/pulse记录保持段前状态，无新增clear事件"
+    },
+    {
+      "id": "M42-A01",
+      "scenario": "四阶段、直接响应、提前完成全部合法路径",
+      "acceptance": "helper 都能结束，ack 只在需要时发送"
+    },
+    {
+      "id": "M42-A02",
+      "scenario": "END_RESP 返回 ACCEPTED",
+      "acceptance": "仍终结，不等额外 callback"
+    },
+    {
+      "id": "M42-A03",
+      "scenario": "result 消费时 GP 已回收",
+      "acceptance": "返回 owning data/status，无旧指针"
+    },
+    {
+      "id": "M42-A04",
+      "scenario": "builder 未设置可选元数据",
+      "acceptance": "标准 base 请求仍可成功"
+    },
+    {
+      "id": "M42-A05",
+      "scenario": "handler 调用 transact",
+      "acceptance": "effect 闭包编译拒绝"
+    },
+    {
+      "id": "M42-A06",
+      "scenario": "dropOnTerminal",
+      "acceptance": "task 正常继续，最终释放调用者结果，无 frame/GP 提前回收"
+    },
+    {
+      "id": "M42-A07",
+      "scenario": "builder各分配点/无效endpoint/newTxn-result及gate注册容量失败",
+      "acceptance": "明确错误且无buffer/GP/consumer/ticket/半个waiter残留；输入move语义一致，注册失败不伪造Failed票据"
+    },
+    {
+      "id": "M42-A08",
+      "scenario": "gate Pending/Granted、已consume但未外调、已发请求、response后和terminal等待分别cancel/reset",
+      "acceptance": "ticket/permit随registration→恢复owner→intent恰转移/归还一次，不释放他人lane；已发移交drain；迟到gate通知不恢复response wait，迟到响应不覆盖本地结果（联用M16-A14/M43-A16）"
+    },
+    {
+      "id": "M42-A09",
+      "scenario": "两观察者使用同needsAck、helper与caller分别持consumer",
+      "acceptance": "END_RESP至多一次；helper只释放自己的token，其余结果仍可读"
+    },
+    {
+      "id": "M42-A10",
+      "scenario": "future标注response/terminal、WRITE response、disabled READ",
+      "acceptance": "实际数据已被安全复制，业务只在有效时间消费；WRITE输入不被copyback改写"
+    },
+    {
+      "id": "M42-A11",
+      "scenario": "零长builder、显式streaming、IGNORE、optional缺失/重复schema",
+      "acceptance": "完整字段初始化；零长由所选provider决定，streaming不被忽略；base不强制optional元数据"
+    },
+    {
+      "id": "M42-A12",
+      "scenario": "finishResponse入口结果容量失败，或dropOnTerminal后再读/释放别名",
+      "acceptance": "前者不发ack，caller原consumer仍有效且承担线上责任；后者拒绝，不复活consumer、不误释放别人的结果"
+    },
+    {
+      "id": "M42-A13",
+      "scenario": "第一次ack的非法TimeSpec/END_RESP事件预留失败，随后在可恢复路径或discard后的新段合法ack",
+      "acceptance": "第一次未消耗确认权限且无send；后续合法END_RESP恰一次，wire-terminal不因待发permit提前出现"
+    },
+    {
+      "id": "M43-A01",
+      "scenario": "timeout 后迟到 write response",
+      "acceptance": "无默认第二次 write；原请求正常 drain ack"
+    },
+    {
+      "id": "M43-A02",
+      "scenario": "无安全条件重试／明确幂等重试",
+      "acceptance": "前者拒绝，后者次数/backoff/deadline 有界"
+    },
+    {
+      "id": "M43-A03",
+      "scenario": "两端 mirroredRead",
+      "acceptance": "GP 独立，结果按声明顺序，出错路径也释放"
+    },
+    {
+      "id": "M43-A04",
+      "scenario": "aggregate task 与 timer 竞速",
+      "acceptance": "不使用未定义 grammar；一次 winner，child 按 scope 清理"
+    },
+    {
+      "id": "M43-A05",
+      "scenario": "fanOut 部分分配失败",
+      "acceptance": "已建 child 有 owner 并完成取消/drain，结果明确失败"
+    },
+    {
+      "id": "M43-A06",
+      "scenario": "TaskGroup 同 pool 递归等待",
+      "acceptance": "使用同容量源，提供死锁诊断而非保证进展"
+    },
+    {
+      "id": "M43-A07",
+      "scenario": "第i个child的args/frame/result/consumer/event准备分别失败",
+      "acceptance": "无未拥有child、无双release；未发布全回收，已发布前缀按真实状态取消/drain并返回receipt"
+    },
+    {
+      "id": "M43-A08",
+      "scenario": "aggregate spawn失败、failFast、空children、重复handle",
+      "acceptance": "所有出口typed outcome/pin/consumer平衡；TransferToParent返回目标可用的剩余能力而非已释放token；空集合立即完成，重复只读显式计数，无虚构Cancelled"
+    },
+    {
+      "id": "M43-A09",
+      "scenario": "response与timeout同ReadyKey/同Tick不同turn、COMPLETED先于注册",
+      "acceptance": "符合priority/ordinal且只选一次；latch不漏唤醒，后到callback不逆转"
+    },
+    {
+      "id": "M43-A10",
+      "scenario": "deadline≤now、Duration0、换算溢出、response赢但terminal晚",
+      "acceptance": "未发超时无外部调用，溢出明确错误；response winner后完成必要握手，不偷偷重新竞速"
+    },
+    {
+      "id": "M43-A11",
+      "scenario": "retry的RC读/去重key缺协议/不可靠Unsent判断",
+      "acceptance": "拒绝自动重试；有效安全合同才重试，所有attempt GP独立"
+    },
+    {
+      "id": "M43-A12",
+      "scenario": "单次timeout与总deadline、新attempt成功但前次drain未完成、backoff/cleanup预算满",
+      "acceptance": "仅剩余总预算内可重试，未配置单次预算的timeout不续期；outcome保留旧receipt与副作用不确定性，预算满停止增发，不提前free旧GP"
+    },
+    {
+      "id": "M43-A13",
+      "scenario": "两group共享pool、awaitIdle后再spawn、controller同pool",
+      "acceptance": "只等待登记快照，不取消controller/其他group，不重复配置容量；terminal错误不伪装task成功"
+    },
+    {
+      "id": "M43-A14",
+      "scenario": "ScopedOperation早return/error/cancel/返回handle",
+      "acceptance": "自动release自身terminal consumer；live明确cancel/transfer，strict close不等已移交drain，无借用结果逃逸"
+    },
+    {
+      "id": "M43-A15",
+      "scenario": "timed handler经helper隐含awaitSlot/fanIn/timeout",
+      "acceptance": "effect闭包编译拒绝；非阻塞fanOut/trySpawn满额显式错误"
+    },
+    {
+      "id": "M43-A16",
+      "scenario": "request gate 持续占用至 deadline 后，或 deadline 当 Tick 才 grant",
+      "acceptance": "deadline 内结束本地等待且没有该请求的 BEGIN_REQ；Pending／Granted 票据恰归还一次，不影响原持有者；随后 gate 迟到通知不恢复新 suspension"
+    },
+    {
+      "id": "M44-A01",
+      "scenario": "非法 return、double terminal、错误 lane",
+      "acceptance": "报告准确 call/connection/expected，不仅 phase 名"
+    },
+    {
+      "id": "M44-A02",
+      "scenario": "无 MM、错误请求字段改写",
+      "acceptance": "在对应 API 边界发现已覆盖违约"
+    },
+    {
+      "id": "M44-A03",
+      "scenario": "合法 shortcut/ignorable phase",
+      "acceptance": "无错误报警，implicit milestone 与 wire 区分"
+    },
+    {
+      "id": "M44-A04",
+      "scenario": "反向嵌套、nb 推进时间",
+      "acceptance": "完整调用链诊断与声明 stop policy"
+    },
+    {
+      "id": "M44-A05",
+      "scenario": "raw pointer 未经 bridge 读写",
+      "acceptance": "报告为不可观测范围，不声称100%覆盖"
+    },
+    {
+      "id": "M44-A06",
+      "scenario": "同一故障修改 Runtime transition 表",
+      "acceptance": "独立 oracle 能发现，非 DUT 与 oracle 同错全绿"
+    },
+    {
+      "id": "M44-A07",
+      "scenario": "完整 base 矩阵及两端 local ledger",
+      "acceptance": "接受所有合法组合并拒绝非法 return；END_RESP/ACCEPTED 恰好终结一次，不误报两端独立观察"
+    },
+    {
+      "id": "M44-A08",
+      "scenario": "call=100/in=10/out=25、future END_REQ 与 response snapshot",
+      "acceptance": "outTime=125；真实调用序与有效消费时间分别正确；未来消费不再访问已释放 buffer"
+    },
+    {
+      "id": "M44-A09",
+      "scenario": "recordThenStop、日志满、外部不返回／跨 ABI 异常",
+      "acceptance": "有界诊断和明确停止，保留未完责任；无后续正常成功或 proved trace 声称"
+    },
+    {
+      "id": "M44-A10",
+      "scenario": "同向转发、blocking 无 MM、unknown ignorable",
+      "acceptance": "合法路径无误报；仅 nb 无 MM 与反向嵌套等真实违约被拒绝"
+    },
+    {
+      "id": "M44-A11",
+      "scenario": "trace=off／过滤视图及缺少已要求的观察 hook",
+      "acceptance": "必需检查仍由直接 hook 发现同一违约；缺 hook 在启动拒绝，未执行的冗余规则不冒充检查通过"
+    },
+    {
+      "id": "M45-A01",
+      "scenario": "shortcut 和普通四阶段",
+      "acceptance": "API 记录准确，implicit 仅在 milestone"
+    },
+    {
+      "id": "M45-A02",
+      "scenario": "同输入 transcript 重放两次",
+      "acceptance": "稳定语义字段一致，包含返回和 callback 次序"
+    },
+    {
+      "id": "M45-A03",
+      "scenario": "同 Tick 外部回调换序",
+      "acceptance": "transcript 保留差别，不宣称顺序无关"
+    },
+    {
+      "id": "M45-A04",
+      "scenario": "descriptor 每条 instruction 失败定位",
+      "acceptance": "可跳回对应 DSL/helper SourceSpan"
+    },
+    {
+      "id": "M45-A05",
+      "scenario": "UInt64>2^53 时间／ID",
+      "acceptance": "JSON 往返精确，无精度截断"
+    },
+    {
+      "id": "M45-A06",
+      "scenario": "trace 缓冲满／缺返回",
+      "acceptance": "显式失败或不完整标记，不能产出通过报告"
+    },
+    {
+      "id": "M45-A07",
+      "scenario": "相同请求列表但对端返值／同步返回顺序不同",
+      "acceptance": "full transcript 保存差别；E-T35 只对相同完整环境输入给出重放保证"
+    },
+    {
+      "id": "M45-A08",
+      "scenario": "DUT 发错 call 或返值，replay 文件仍含旧正确结果",
+      "acceptance": "匹配处失败；不得喂旧反馈绕过错误输出；合法同向嵌套按实际 call/return 顺序成功重放"
+    },
+    {
+      "id": "M45-A09",
+      "scenario": "完整数据不同而 digest 相同，或只有 hash 无完整值",
+      "acceptance": "严格比较发现字节差异／拒绝不可执行的严格比较；hash-only 明示碰撞假设"
+    },
+    {
+      "id": "M45-A10",
+      "scenario": "业务 address 变化／本地身份重编号",
+      "acceptance": "address 差异保留；仅合法一一身份映射可归一化，不同 transport/hop/generation 不合并"
+    },
+    {
+      "id": "M45-A11",
+      "scenario": "仅前缀录制、fuel 截断或 sink 写失败",
+      "acceptance": "保留真实停止／完整性状态；不把有限前缀等价升级为完整运行通过"
+    },
+    {
+      "id": "M45-A12",
+      "scenario": "同域双端共享 CallId、跨域本域 ID、多 hop 与 consumer 别名",
+      "acceptance": "两端观察区分且不双 apply；parent 引用带域；consumer retain/release 与别名复制准确可观察"
+    },
+    {
+      "id": "M45-A13",
+      "scenario": "两个交错 blocking 调用、partial debug、DMI query/invalidation",
+      "acceptance": "以各自 invocation 对应真实返回时间/有效字段；无虚构 nb phase，debug 字节数精确，DMI 不序列化可复用裸 pointer"
+    },
+    {
+      "id": "M45-A14",
+      "scenario": "captureState=Complete 但 raw/opaque 外部 effect 未捕获，或缺必需接口 body",
+      "acceptance": "前者拒绝完整语义 replay 并记录 coverage 缺口，后者 schema 拒绝；边界日志不冒充 full replay 证据"
+    },
+    {
+      "id": "M46-A01",
+      "scenario": "完整 Memory/DMA build，入口模块含多个 system",
+      "acceptance": "从 Lean 至真实 SystemC binary，所选 Top/SystemId 在构建配置/descriptor/manifest 一致；歧义或不存在的选择拒绝，所有失败码透传"
+    },
+    {
+      "id": "M46-A02",
+      "scenario": "CLI 全部命令合法与错参",
+      "acceptance": "稳定输出／明确错误，帮助与实现一致"
+    },
+    {
+      "id": "M46-A03",
+      "scenario": "缺预算／未知 capability／不支持 schema",
+      "acceptance": "尽早拒绝，不静默默认无限"
+    },
+    {
+      "id": "M46-A04",
+      "scenario": "每项旧草案语义",
+      "acceptance": "迁移报告有源位置和新契约；不自动 free/drain 或 DMI 降级"
+    },
+    {
+      "id": "M46-A05",
+      "scenario": "空可选能力构建",
+      "acceptance": "不依赖可选库，Core/Ext 基础路径完整"
+    },
+    {
+      "id": "M46-A06",
+      "scenario": "打包解压重建",
+      "acceptance": "锁定依赖下产物/hash/source-map 可复核；topSystemId、top/instance 端口、sideband/address map/reset/region owner 元数据完整，不靠隐藏接线恢复"
+    },
+    {
+      "id": "M46-A07",
+      "scenario": "managed-access/dmi 合法值、未知值及 CLI/模型冲突",
+      "acceptance": "合法修改更新 capability/assumptions/manifest；未知或矛盾值拒绝；无静默降级"
+    },
+    {
+      "id": "M46-A08",
+      "scenario": "diff 只有 request list、缺反馈／fuel，或 trace=off",
+      "acceptance": "缺完整环境／预算拒绝；严格比较解析为 full 且记录来源，不伪造通过"
+    },
+    {
+      "id": "M46-A09",
+      "scenario": "原迁移表每一项、旧 manifest、生成写到中途失败",
+      "acceptance": "每项有定位与新契约；未确认语义差异不改写；无成功半包"
+    },
+    {
+      "id": "M46-A10",
+      "scenario": "--table/--kind/图输出及所有产物清单",
+      "acceptance": "未知枚举拒绝；完整 exchange/诊断与 schema 表一致；grammar/opcode/phase/ABI/证据附件无遗漏"
+    },
+    {
+      "id": "M46-A11",
+      "scenario": "按匹配决策应用迁移，再以改过的源/规则重用旧决策",
+      "acceptance": "前者产出独立可检查项目、决策/补丁/来源映射与新证据状态；后者拒绝，原源和旧证据不被覆盖或冒用"
+    },
+    {
+      "id": "M47-A01",
+      "scenario": "文件/参数/ABI/native 库或 sideband/address map/reset/region 元数据变化",
+      "acceptance": "发现不一致，元数据实际内容在 artifact 覆盖内，原证据不再默认为有效"
+    },
+    {
+      "id": "M47-A02",
+      "scenario": "tested 填 proved，无 theorem／kernel 记录／匹配 artifact",
+      "acceptance": "拒绝不受支撑的 proved 记录；保留原测试证据，不自动降格后宣称 gate 已通过"
+    },
+    {
+      "id": "M47-A03",
+      "scenario": "capability 别名／未知名称",
+      "acceptance": "已知别名有迁移记录；未知拒绝"
+    },
+    {
+      "id": "M47-A04",
+      "scenario": "整个 raw/managed 或 native/adapter 组均未启用",
+      "acceptance": "可选组记 N/A＋原因，基础发布按其完整门槛判断；N/A 不是 pass"
+    },
+    {
+      "id": "M47-A05",
+      "scenario": "同属性测试和外部假设并存",
+      "acceptance": "两者都显示，保证范围清楚"
+    },
+    {
+      "id": "M47-A06",
+      "scenario": "Core-only 在 Ext runtime",
+      "acceptance": "config/profile/trace 记录可用于兼容回归"
+    },
+    {
+      "id": "M47-A07",
+      "scenario": "仅启用组内一项并将另一项测试写 N/A",
+      "acceptance": "E-T21–25 或 E-T26–34 整组门槛仍触发；缺真实结果为 unsatisfied"
+    },
+    {
+      "id": "M47-A08",
+      "scenario": "C-T 缺项、独立 testbench 缺失或只跑选择子集",
+      "acceptance": "Core/Ext 发布拒绝；不能因现有测试 100% 通过而省略未执行需求"
+    },
+    {
+      "id": "M47-A09",
+      "scenario": "同一包改 topSystemId/profile/schema/timebase/native build id",
+      "acceptance": "核对所选系统在构建配置/descriptor/manifest 的对应；无效或失配的 Top 拒绝，未经 lock/证据重新对应不得复用旧保证"
+    },
+    {
+      "id": "M47-A10",
+      "scenario": "unsafe 外部组件、raw alias、缺完整值的 strict 报告",
+      "acceptance": "分别按 evidence 边界、timing-strict 政策和 full-data 要求拒绝不适当发布声称"
+    },
+    {
+      "id": "M47-A11",
+      "scenario": "descriptor/manifest/evidence 哈希闭合及文件自述更大预算",
+      "acceptance": "三种 hash 覆盖域可重复计算，无自引用循环；完整字节篡改可发现；文件不覆盖宿主读取上限"
+    },
+    {
+      "id": "M47-A12",
+      "scenario": "仅有 SystemC tag/接口测试却声明全标准 conformance，或切换正式标准 edition",
+      "acceptance": "要求明确标准基线/适用范围/条款证据及差异复核；不继承未覆盖的旧结论，不把 planned 当检查完成"
+    },
+    {
+      "id": "M48-A01",
+      "scenario": "执行 profile／已触发可选组的所需 ID",
+      "acceptance": "原 ID 集合完整；全部必需条目真实通过，0 fail/not-run/skip；解释失败不构成豁免"
+    },
+    {
+      "id": "M48-A02",
+      "scenario": "同环境四层执行",
+      "acceptance": "指定观察层 full-data 比较一致，限制停止不冒充完成"
+    },
+    {
+      "id": "M48-A03",
+      "scenario": "故意修改 DUT 协议／Memory 算法",
+      "acceptance": "独立 oracle 至少对应负例失败，确认可检测共享错误"
+    },
+    {
+      "id": "M48-A04",
+      "scenario": "故障 trace 缩减与 replay",
+      "acceptance": "相同 lock/seed/input 可复现同类差异"
+    },
+    {
+      "id": "M48-A05",
+      "scenario": "文档自测报告或 Python contract 示例",
+      "acceptance": "只能 design-check，不计入 C-T/E-T pass"
+    },
+    {
+      "id": "M48-A06",
+      "scenario": "Core-only 在 Ext runtime",
+      "acceptance": "E-T40 full trace 无回归"
+    },
+    {
+      "id": "M48-A07",
+      "scenario": "删掉 C-T30/E-T40 或只保留正常 shortcut 子集",
+      "acceptance": "suite 完整性／覆盖检查失败；原 ID 和所有原观察要求不得缺失"
+    },
+    {
+      "id": "M48-A08",
+      "scenario": "开启一个可选能力且组内测试标 N/A",
+      "acceptance": "整组门槛未满足；整组未启用时才允许组级 N/A"
+    },
+    {
+      "id": "M48-A09",
+      "scenario": "digest 相同而 value 不同、callback 或对端返值换序",
+      "acceptance": "strict full-trace 比较失败；hash-only 或请求列表不能掩盖差异"
+    },
+    {
+      "id": "M48-A10",
+      "scenario": "两端都 fuel 用尽、后端 fuel 单位不同／负例触发无关错误",
+      "acceptance": "不以同数值预算推断同语义终点或完整运行成功；只有预先声明的精确前缀／预期错误断言可令该用例通过"
+    },
+    {
+      "id": "M48-A11",
+      "scenario": "仅模型/ExecIR 共表对比且没有独立第三方 testbench",
+      "acceptance": "记录已有 tested 证据，但 Core/Ext 发布独立性门槛未满足"
+    },
+    {
+      "id": "M48-A12",
+      "scenario": "标准 edition 未锁定／适用条款未映射，仍请求发布 conformance 汇总",
+      "acceptance": "缺口可定位到条款/接口和所需方法，拒绝超出已有检查范围的通过结论；保留已完成的具体测试证据"
+    },
+    {
+      "id": "M49-A01",
+      "scenario": "运行上述适用对照",
+      "acceptance": "原始样本、输入、lock、配置、统计方法可重现"
+    },
+    {
+      "id": "M49-A02",
+      "scenario": "比较不同语义 raw/AT",
+      "acceptance": "明确标不同 profile，不声称同精度提速"
+    },
+    {
+      "id": "M49-A03",
+      "scenario": "trace off／优化布局",
+      "acceptance": "必需安全检查仍在，L1/L2 业务语义满足对应比较"
+    },
+    {
+      "id": "M49-A04",
+      "scenario": "热点分析",
+      "acceptance": "各项成本与 pool peak 有实测，AOT 建议有依据"
+    },
+    {
+      "id": "M49-A05",
+      "scenario": "外部无响应／Zeno／未完成 run",
+      "acceptance": "正确标停止，不算作完整成功工作量"
+    },
+    {
+      "id": "M49-A06",
+      "scenario": "任何“下降<5%”等声称",
+      "acceptance": "必须有适配 workload/机器/统计证据，否则仅列目标"
+    },
+    {
+      "id": "M49-A07",
+      "scenario": "同 seed 但不同反馈、AT/managed 不同 service/arrival 或 commit",
+      "acceptance": "不能通过同语义前置验证；报告真实环境／抽象差异，不计算同精度优化结论"
+    },
+    {
+      "id": "M49-A08",
+      "scenario": "四 phase/shortcut 对照",
+      "acceptance": "两者先各自通过协议 conformance，保留 wire 差异；只对已声明业务观察求等价"
+    },
+    {
+      "id": "M49-A09",
+      "scenario": "大量懒取消与反复 reset",
+      "acceptance": "tombstone/cleanup/event/drain 的容量和清理成本均入报告，无隐藏无界 heap"
+    },
+    {
+      "id": "M49-A10",
+      "scenario": "修改 ReadyKey 顺序、pin 释放或 Memory commit 的优化",
+      "acceptance": "对应 refinement／完整差分回归存在且 artifact 对应，否则不得替换正确性基线"
+    },
+    {
+      "id": "M49-A11",
+      "scenario": "warmup 改写 memory/随机状态、重复样本继承未完 drain",
+      "acceptance": "两变体记录并执行相同初态/连续样本政策；差异显式拒绝可比性，未清责任不靠清零计数隐藏"
+    }
+  ],
+  "regressions": [
+    {
+      "id": "C-T01",
+      "scenario": "call=100,inDelay=10,outDelay=25",
+      "requirement": "inTime=110、outTime=125，不能135"
+    },
+    {
+      "id": "C-T02",
+      "scenario": "ACCEPTED返参",
+      "requirement": "合法callee保持原参；caller忽略改写返参，输入milestone仍用inTime，不误用outDelay/返回phase"
+    },
+    {
+      "id": "C-T03",
+      "scenario": "BEGIN_REQ→UPDATED/BEGIN_RESP",
+      "requirement": "隐含requestReleased，无假END_REQ call"
+    },
+    {
+      "id": "C-T04",
+      "scenario": "BEGIN_REQ→COMPLETED",
+      "requirement": "安全快照可取，无后续END_RESP"
+    },
+    {
+      "id": "C-T05",
+      "scenario": "BEGIN_RESP→UPDATED/END_RESP",
+      "requirement": "只终结一次，按返回有效时间消费"
+    },
+    {
+      "id": "C-T06",
+      "scenario": "END_RESP→ACCEPTED",
+      "requirement": "该hop终结，不等不存在的callback"
+    },
+    {
+      "id": "C-T07",
+      "scenario": "END_REQ→UPDATED/COMPLETED",
+      "requirement": "拒绝非法返回组合"
+    },
+    {
+      "id": "C-T08",
+      "scenario": "未来END_REQ已调用后新BEGIN_REQ",
+      "requirement": "wire按调用顺序，业务按effective time"
+    },
+    {
+      "id": "C-T09",
+      "scenario": "multi binding及同组件多实例",
+      "requirement": "每connection gate/身份独立"
+    },
+    {
+      "id": "C-T10",
+      "scenario": "第N+1请求超过服务槽",
+      "requirement": "保留pending/背压，不丢ACCEPTED请求"
+    },
+    {
+      "id": "C-T11",
+      "scenario": "无MM的nb即时完成与blocking无MM",
+      "requirement": "nb仍拒绝，blocking由固定managed bridge处理"
+    },
+    {
+      "id": "C-T12",
+      "scenario": "对端回调内release",
+      "requirement": "自持call pin保证返参读取安全"
+    },
+    {
+      "id": "C-T13",
+      "scenario": "外部buffer所有权/GP回收",
+      "requirement": "未来结果使用独立快照"
+    },
+    {
+      "id": "C-T14",
+      "scenario": "timeout后迟到response",
+      "requirement": "本地保持timeout，线上正常drain/ack"
+    },
+    {
+      "id": "C-T15",
+      "scenario": "各协议阶段reset",
+      "requirement": "无提前free，无旧epoch写入新state"
+    },
+    {
+      "id": "C-T16",
+      "scenario": "完成先于await注册",
+      "requirement": "latch+注册原子，无lost wakeup"
+    },
+    {
+      "id": "C-T17",
+      "scenario": "ready await/零时间循环",
+      "requirement": "Fuel/Zeno明确返回，SystemC不被无限阻塞"
+    },
+    {
+      "id": "C-T18",
+      "scenario": "object写后schedule失败",
+      "requirement": "EventTxn无部分本地commit"
+    },
+    {
+      "id": "C-T19",
+      "scenario": "外调后对端违约",
+      "requirement": "记录fatal/contract failure，不声称外调回滚"
+    },
+    {
+      "id": "C-T20",
+      "scenario": "streaming与循环byte mask",
+      "requirement": "逐byte地址正确，disabled READ保留原值"
+    },
+    {
+      "id": "C-T21",
+      "scenario": "IGNORE/地址溢出/长度0",
+      "requirement": "无误写，标准响应或明确拒绝政策"
+    },
+    {
+      "id": "C-T22",
+      "scenario": "debug RC寄存器/部分传输",
+      "requirement": "无RC/IRQ，返回真实字节数"
+    },
+    {
+      "id": "C-T23",
+      "scenario": "混合b/nb/debug",
+      "requirement": "共享功能状态，MM/copyback正确"
+    },
+    {
+      "id": "C-T24",
+      "scenario": "同时间外部callback换序",
+      "requirement": "记录输入序，不假称任意重排等价"
+    },
+    {
+      "id": "C-T25",
+      "scenario": "unknown ignorable phase",
+      "requirement": "base ACCEPTED+ignore，不forward"
+    },
+    {
+      "id": "C-T26",
+      "scenario": "descriptor版本/type/tag/index非法",
+      "requirement": "启动拒绝，不执行坏bytecode"
+    },
+    {
+      "id": "C-T27",
+      "scenario": "generation/time/sequence/值溢出",
+      "requirement": "明确失败，不ABA或回绕"
+    },
+    {
+      "id": "C-T28",
+      "scenario": "host endian/BUSWIDTH差异",
+      "requirement": "受检codec或拒绝未测试配置"
+    },
+    {
+      "id": "C-T29",
+      "scenario": "跨hop响应顺序/地址转换",
+      "requirement": "独立ledger与正确backward route"
+    },
+    {
+      "id": "C-T30",
+      "scenario": "协议终结后消费结果",
+      "requirement": "durable result，不使用旧GP；原表finish字样不是恢复DSL指令"
+    },
+    {
+      "id": "E-T01",
+      "scenario": "已完成task/COMPLETED后注册",
+      "requirement": "立即读取latch结果，无漏唤醒"
+    },
+    {
+      "id": "E-T02",
+      "scenario": "同ReadyKey response/timeout",
+      "requirement": "priority/ordinal唯一winner"
+    },
+    {
+      "id": "E-T03",
+      "scenario": "同Tick不同turn",
+      "requirement": "先ready者胜，后到不逆转"
+    },
+    {
+      "id": "E-T04",
+      "scenario": "loser迟到及slot generation复用",
+      "requirement": "不恢复已终结waiter/新代任务"
+    },
+    {
+      "id": "E-T05",
+      "scenario": "All失败/取消/重复handle/空集合",
+      "requirement": "布局、顺序、pin、错误与零时间政策一致"
+    },
+    {
+      "id": "E-T06",
+      "scenario": "child scope取消controller继续",
+      "requirement": "controller仍可记录/返回，子业务取消"
+    },
+    {
+      "id": "E-T07",
+      "scenario": "handler尝试awaitSlot",
+      "requirement": "编译期拒绝，C++不阻塞"
+    },
+    {
+      "id": "E-T08",
+      "scenario": "frame终结而结果未消费",
+      "requirement": "frame可回收，结果有界保留"
+    },
+    {
+      "id": "E-T09",
+      "scenario": "timeout后迟到write response",
+      "requirement": "不自动重试，drain正常ack"
+    },
+    {
+      "id": "E-T10",
+      "scenario": "同pool递归spawn等待",
+      "requirement": "静态/运行时资源依赖诊断，不宣称必然进展"
+    },
+    {
+      "id": "E-T11",
+      "scenario": "同call不同sync/returnedPhase",
+      "requirement": "按完整exchange匹配"
+    },
+    {
+      "id": "E-T12",
+      "scenario": "base END_RESP/ACCEPTED",
+      "requirement": "terminal，不等额外completion"
+    },
+    {
+      "id": "E-T13",
+      "scenario": "反向nb嵌套",
+      "requirement": "明确协议违规，不排队掩盖"
+    },
+    {
+      "id": "E-T14",
+      "scenario": "unknown ignorable/mandatory",
+      "requirement": "前者ACCEPTED且ignore，后者拒绝"
+    },
+    {
+      "id": "E-T15",
+      "scenario": "不同protocol traits直接bind",
+      "requirement": "静态拒绝或显式合格adapter"
+    },
+    {
+      "id": "E-T16",
+      "scenario": "phase ID重排/跨TU/插件",
+      "requirement": "stable key正确codec"
+    },
+    {
+      "id": "E-T17",
+      "scenario": "用户协议release GP",
+      "requirement": "grammar/validator拒绝"
+    },
+    {
+      "id": "E-T18",
+      "scenario": "cancel单边silent terminal",
+      "requirement": "拒绝，改为drainOnly"
+    },
+    {
+      "id": "E-T19",
+      "scenario": "guard重叠/缺省priority",
+      "requirement": "拒绝或kernel检查互斥证据"
+    },
+    {
+      "id": "E-T20",
+      "scenario": "自定义响应buffer无效",
+      "requirement": "monitor/ASan覆盖路径检测，外部保证范围如实声明"
+    },
+    {
+      "id": "E-T21",
+      "scenario": "ABI结构/字节序/长度边界",
+      "requirement": "受检封送与布局一致，越界拒绝"
+    },
+    {
+      "id": "E-T22",
+      "scenario": "native异常/error ABI",
+      "requirement": "status/Expected报错，无异常跨ABI"
+    },
+    {
+      "id": "E-T23",
+      "scenario": "故意错误native结果",
+      "requirement": "reference差分失败，保留输入与两端值"
+    },
+    {
+      "id": "E-T24",
+      "scenario": "有测试无证书",
+      "requirement": "不能升格proved，assumptions保留"
+    },
+    {
+      "id": "E-T25",
+      "scenario": "未知vendor语义只改phase名",
+      "requirement": "拒绝，不同握手需有状态component"
+    },
+    {
+      "id": "E-T26",
+      "scenario": "raw成功grant",
+      "requirement": "真实pointer，inclusive范围/偏移正确"
+    },
+    {
+      "id": "E-T27",
+      "scenario": "managed-only查询标准DMI",
+      "requirement": "false，不伪造pointer/hint"
+    },
+    {
+      "id": "E-T28",
+      "scenario": "raw per-byte latency与managed service",
+      "requirement": "计费单位分开，checked转换，不把固定txn延迟误填"
+    },
+    {
+      "id": "E-T29",
+      "scenario": "invalidation前后与同步重申请",
+      "requirement": "先通知再改descriptor/backing，回调内不getDmi"
+    },
+    {
+      "id": "E-T30",
+      "scenario": "旧backing有in-flight pin",
+      "requirement": "pin期间旧版本存活，替换不UAF"
+    },
+    {
+      "id": "E-T31",
+      "scenario": "AT/managed共享resource",
+      "requirement": "相同到达/服务/commit条件下数据与资源序一致"
+    },
+    {
+      "id": "E-T32",
+      "scenario": "取消未admit/已admit/已commit",
+      "requirement": "按政策失败/完成；已commit不回滚，reset规则单列"
+    },
+    {
+      "id": "E-T33",
+      "scenario": "跨bus范围裁剪/失效回程",
+      "requirement": "地址与pointer偏移正确，所有相交连接收到失效"
+    },
+    {
+      "id": "E-T34",
+      "scenario": "timing-strict混raw alias",
+      "requirement": "拒绝或显式functional-only并改manifest"
+    },
+    {
+      "id": "E-T35",
+      "scenario": "开放SystemC同transcript重放",
+      "requirement": "call/return/回调序和配置齐全，语义trace一致"
+    },
+    {
+      "id": "E-T36",
+      "scenario": "批次因果链与zero-time预算",
+      "requirement": "后继晚于父，有限budget，让出SystemC"
+    },
+    {
+      "id": "E-T37",
+      "scenario": "重复reset/drain积压",
+      "requirement": "无重复释放，资源有界，未完责任如实报告"
+    },
+    {
+      "id": "E-T38",
+      "scenario": "配置/schema/hash失配",
+      "requirement": "构建/加载拒绝，不静默降级"
+    },
+    {
+      "id": "E-T39",
+      "scenario": "两IR/指令/source-map全覆盖",
+      "requirement": "每节点各层有实现和定位，无孤立opcode"
+    },
+    {
+      "id": "E-T40",
+      "scenario": "Core-only在Ext执行",
+      "requirement": "相同输入/profile下全语义trace无回归"
+    }
+  ]
+}

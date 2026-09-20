@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "source-map",
+  "type": "object",
+  "required": [
+    "schema",
+    "artifactHash",
+    "entries"
+  ],
+  "properties": {
+    "schema": {
+      "const": "leanat.source-map.v1"
+    }
+  }
+}
