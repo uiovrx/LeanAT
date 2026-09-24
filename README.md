@@ -37,4 +37,6 @@ For a smaller first build and an executable generated model, follow [the usage g
 | `tests/` | Executable regressions, comparator fixtures, and original acceptance requirements |
 | `scripts/`, `cmake/` | Dependency bootstrap, verification, and relocatable CMake package support |
 
-This is a source release. Dependencies, binaries, private workspace configuration, development conversations, and historical reports are not included. [MIT license](LICENSE); downloaded dependencies retain their own licenses.
+This is a source release. Dependencies, binaries, private workspace configuration, development conversations, and historical reports are not included. [Apache License 2.0](LICENSE); downloaded dependencies retain their own licenses.
+
+Copyright 2026 LeanAT contributors. Licensed under the Apache License, Version 2.0.

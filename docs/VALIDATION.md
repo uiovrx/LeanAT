@@ -45,4 +45,4 @@ The release preserves the compiler, reference semantics, native runtime, standar
 
 Excluded material includes downloaded dependencies, build products, caches, generated simulation artifacts, private workspace scripts, machine-specific toolchain reports, old specification copies, review discussions, and development logs. There is no dependency on the original workstation, WSL distribution name, development task, or private repository.
 
-The public snapshot uses fresh version-control history with a neutral contributor identity. No original Git history is needed to build or run it. MIT applies to the project source; Lean and SystemC are fetched separately and retain their upstream licenses.
+The public snapshot uses fresh version-control history with a neutral contributor identity. No original Git history is needed to build or run it. Apache-2.0 applies to the project source; Lean and SystemC are fetched separately and retain their upstream licenses.
