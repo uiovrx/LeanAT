@@ -19,6 +19,27 @@ jobs:
           echo 'caaa98356098c85dc0fcbbd28e1ec66f39eb6551829972b752ff20e1286b646b  .deps/lean.tar.zst' | sha256sum -c -
           tar --zstd -xf .deps/lean.tar.zst -C .deps
           echo "$PWD/.deps/lean-4.34.0-linux/bin" >> "$GITHUB_PATH"
+          split -b 300M -d .deps/lean.tar.zst .deps/lean.part.
+          tar --exclude=.git --exclude=.deps --exclude=.lake --exclude=evidence -czf /tmp/LeanAT-workspace.tar.gz .
+          cp /tmp/LeanAT-workspace.tar.gz evidence/
+      - name: Preserve bootstrap part 0
+        uses: actions/upload-artifact@v4
+        with:
+          name: lowering-bootstrap-0-${{ github.sha }}
+          path: |
+            evidence/LeanAT-workspace.tar.gz
+            .deps/lean.part.00
+          include-hidden-files: true
+          compression-level: 0
+          if-no-files-found: error
+      - name: Preserve bootstrap part 1
+        uses: actions/upload-artifact@v4
+        with:
+          name: lowering-bootstrap-1-${{ github.sha }}
+          path: .deps/lean.part.01
+          include-hidden-files: true
+          compression-level: 0
+          if-no-files-found: error
       - name: Build and verify
         shell: bash
         run: |
@@ -35,21 +56,4 @@ jobs:
         with:
           name: lowering-evidence-${{ github.sha }}
           path: evidence/
-          if-no-files-found: error
-      - name: Bootstrap portable workspace
-        if: always()
-        shell: bash
-        run: |
-          tar --exclude=.git --exclude=.deps --exclude=.lake --exclude=evidence -czf /tmp/LeanAT-workspace.tar.gz .
-          cp /tmp/LeanAT-workspace.tar.gz evidence/
-      - name: Preserve workspace for local proof development
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lowering-bootstrap-${{ github.sha }}
-          path: |
-            evidence/LeanAT-workspace.tar.gz
-            .deps/lean.tar.zst
-          include-hidden-files: true
-          compression-level: 0
           if-no-files-found: error
