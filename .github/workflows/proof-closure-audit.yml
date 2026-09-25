@@ -1,0 +1,55 @@
+name: Proof closure audit (isolated branch)
+on:
+  push:
+    branches: [proof-closure-audit-20260925]
+    paths: ['.github/workflows/proof-closure-audit.yml']
+permissions:
+  contents: read
+jobs:
+  audit-environment:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Fetch exact public source revision
+        shell: bash
+        env:
+          REVISION: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          git init source
+          git -C source remote add origin https://github.com/uiovrx/LeanAT.git
+          git -C source fetch --depth=1 origin "$REVISION"
+          git -C source checkout --detach FETCH_HEAD
+          git -C source archive --format=tar.gz --output="$GITHUB_WORKSPACE/source.tar.gz" HEAD
+          sha256sum source.tar.gz > source.sha256
+          git -C source rev-parse HEAD > revision.txt
+      - name: Publish frozen source for reproducible local review
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: leanat-proof-review-source
+          path: |
+            source.tar.gz
+            source.sha256
+            revision.txt
+          retention-days: 3
+      - name: Install declared system dependencies
+        run: sudo apt-get update && sudo apt-get install -y ninja-build zstd libgmp-dev
+      - name: Bootstrap pinned and checksum-verified dependencies
+        working-directory: source
+        run: bash scripts/bootstrap.sh --jobs 4
+      - name: Package local proof-checking environment
+        working-directory: source
+        run: |
+          set -euo pipefail
+          tar --zstd -cf "$GITHUB_WORKSPACE/proof-toolchain.tar.zst" .deps/lean-4.34.0-linux .deps/systemc-linux-install .deps/linux-toolchain-lock.json
+          cd "$GITHUB_WORKSPACE"
+          sha256sum proof-toolchain.tar.zst > proof-toolchain.sha256
+      - name: Publish verified toolchain
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: leanat-proof-review-toolchain
+          path: |
+            proof-toolchain.tar.zst
+            proof-toolchain.sha256
+          compression-level: 0
+          retention-days: 1
