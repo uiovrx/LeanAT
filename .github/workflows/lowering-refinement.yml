@@ -1,0 +1,55 @@
+name: Lowering refinement implementation
+on:
+  push:
+    branches: [proof/lowering-refinement-20260925]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .deps evidence
+          curl --fail --location --retry 3 https://github.com/leanprover/lean4/releases/download/v4.34.0/lean-4.34.0-linux.tar.zst -o .deps/lean.tar.zst
+          echo 'caaa98356098c85dc0fcbbd28e1ec66f39eb6551829972b752ff20e1286b646b  .deps/lean.tar.zst' | sha256sum -c -
+          tar --zstd -xf .deps/lean.tar.zst -C .deps
+          echo "$PWD/.deps/lean-4.34.0-linux/bin" >> "$GITHUB_PATH"
+      - name: Build and verify
+        shell: bash
+        run: |
+          set -euo pipefail
+          lean --version | tee evidence/lean-version.txt
+          git rev-parse HEAD | tee evidence/commit.txt
+          lake build 2>&1 | tee evidence/lake-build.log
+          if test -f scripts/verify-lowering.sh; then
+            bash scripts/verify-lowering.sh 2>&1 | tee evidence/verify-lowering.log
+          fi
+      - name: Preserve evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lowering-evidence-${{ github.sha }}
+          path: evidence/
+          if-no-files-found: error
+      - name: Bootstrap portable workspace
+        if: always()
+        shell: bash
+        run: |
+          tar --exclude=.git --exclude=.deps --exclude=.lake --exclude=evidence -czf /tmp/LeanAT-workspace.tar.gz .
+          cp /tmp/LeanAT-workspace.tar.gz evidence/
+      - name: Preserve workspace for local proof development
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lowering-bootstrap-${{ github.sha }}
+          path: |
+            evidence/LeanAT-workspace.tar.gz
+            .deps/lean.tar.zst
+          include-hidden-files: true
+          compression-level: 0
+          if-no-files-found: error
