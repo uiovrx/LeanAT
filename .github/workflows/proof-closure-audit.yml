@@ -44,12 +44,29 @@ jobs:
           tar --zstd -cf "$GITHUB_WORKSPACE/proof-toolchain.tar.zst" .deps/lean-4.34.0-linux .deps/systemc-linux-install .deps/linux-toolchain-lock.json
           cd "$GITHUB_WORKSPACE"
           sha256sum proof-toolchain.tar.zst > proof-toolchain.sha256
-      - name: Publish verified toolchain
+          split -b 256M proof-toolchain.tar.zst proof-toolchain.part.
+          sha256sum proof-toolchain.part.* > proof-toolchain-parts.sha256
+      - name: Publish verified toolchain part A
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: leanat-proof-review-toolchain
+          name: leanat-proof-review-toolchain-A
           path: |
-            proof-toolchain.tar.zst
+            proof-toolchain.part.aa
             proof-toolchain.sha256
+            proof-toolchain-parts.sha256
+          compression-level: 0
+          retention-days: 1
+      - name: Publish verified toolchain part B
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: leanat-proof-review-toolchain-B
+          path: proof-toolchain.part.ab
+          compression-level: 0
+          retention-days: 1
+      - name: Publish verified toolchain part C
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: leanat-proof-review-toolchain-C
+          path: proof-toolchain.part.ac
           compression-level: 0
           retention-days: 1
